@@ -34,7 +34,7 @@ public class signupLogic {
 		}
 		
 		//メール処理
-		boolean mailSendFlag = true;
+		boolean mailSendFlag = sendEmail(mail);
 		
 		return mailSendFlag;
 	}
@@ -61,5 +61,15 @@ public class signupLogic {
 			e.printStackTrace();
 			return "error";
 		}
+	}
+	
+	//メール送信処理
+	public boolean sendEmail(String mail) {
+		System.out.println("きた。");
+		
+		System.out.println("メールアドレス："+MailUtil.getUsername());
+		System.out.println("パスワード："+MailUtil.getPassword());
+		
+		return true;
 	}
 }
