@@ -64,11 +64,12 @@ public class signupLogic {
 	}
 	
 	//メール送信処理
-	public boolean sendEmail(String mail) {
-		System.out.println("きた。");
+	public boolean sendEmail(String mail) {		
+		MailUtil util = new MailUtil();
 		
-		System.out.println("メールアドレス："+MailUtil.getUsername());
-		System.out.println("パスワード："+MailUtil.getPassword());
+		String subject = "テスト配信";
+		String text = "これはテスト配信です。";
+		util.sendEmail(mail, subject, text);
 		
 		return true;
 	}
