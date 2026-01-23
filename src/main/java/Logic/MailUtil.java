@@ -36,10 +36,13 @@ public class MailUtil {
     
     public void sendEmail(String to, String subject, String text) {
     	Properties prop = new Properties();
+    	prop.put("mail.smtp.auth","true");
+    	prop.put("mail.smtp.starttls.enable","true");
+    	prop.put("mail.smtp.starttls.required", "true");
     	prop.put("mail.smtp.host",Loadprop.getProperty("mail.smtp.host"));
-    	prop.put("mail.smtp.port",Loadprop.getProperty("mail.smtp.port"));
-    	prop.put("mail.smtp.auth",Loadprop.getProperty("mail.smtp.auth"));
-    	prop.put("mail.smtp.starttls.enable",Loadprop.getProperty("mail.smtp.starttls.enable"));
+    	prop.put("mail.smtp.port","587");
+    	
+
     
     	final String username = Loadprop.getProperty("mail.username");
     	final String password = Loadprop.getProperty("mail.password");
