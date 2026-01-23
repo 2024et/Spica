@@ -1,0 +1,42 @@
+@charset "UTF-8";
+h1,h2,h3,h4,form,.center-btn{
+	text-align: center;
+}
+h1{
+	color:#99b3ff;
+}
+
+.req,.error-message{
+	color:red;
+}
+
+.signup-btn{
+	display:inline-block;
+	font-size:16px;
+	cursor:pointer;
+	padding:12px 40px;
+	background:#beedbe;
+	color:#000000;
+	border:2px solid #5d995d;
+}
+.signup-btn:hover{
+	background: #ffffff;
+	color:#000000;
+}
+
+.signin-btn{
+	display:inline-block;
+	font-size:16px;
+	cursor:pointer;
+	padding:12px 40px;
+	background:#ffffff;
+	color:#000000;
+	border:2px solid #5d995d;
+	text-decoration: none;
+}
+
+.signin-btn:hover{
+	background: #beedbe;
+	color:#000000;
+	
+}
