@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>団体選択画面</h1>
+<h1>一覧</h1>
 </body>
 </html>

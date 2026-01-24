@@ -8,6 +8,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import Logic.signinLogic;
+
 @WebServlet("/signinServlet")
 public class signinServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -17,8 +19,23 @@ public class signinServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		String mail = request.getParameter("mail");
+		String password = request.getParameter("password");
+		
+		
+		signinLogic logic = new signinLogic();
+		int completeFlag = logic.login(mail,password);
+		
+		if(completeFlag==2) {
+			request.setAttribute("errorMessage", "メールアドレスまたはパスワードが一致しませんでした。");
+		    request.getRequestDispatcher("/signin.jsp").forward(request, response);
+		    
+		}
+		if(completeFlag == 0) {
+			request.getRequestDispatcher("/financialServlet").forward(request, response);
+		}else {
+			request.getRequestDispatcher("/select_groupServlet").forward(request, response);
+		}
 	}
 
 }

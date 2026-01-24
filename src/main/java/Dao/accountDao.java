@@ -108,5 +108,35 @@ public class accountDao {
 			return false;
 		}
 	}
+	//ログイン
+	public accountBeans login(String email) {
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        accountBeans beans;
+		try {
+			Connection con = DBUtil.getConnection();
+			String sql = "SELECT * FROM account WHERE user_email = ?;";
+			
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, email);
+			rs = stmt.executeQuery();
+			if(rs.next()) {
+				
+				String id =rs.getString("id");
+				String group_id = rs.getString("group_id");
+				String name =rs.getString("user_name");
+				String pass =rs.getString("password");
+				String role = rs.getString("role_type");
+				
+				beans = new accountBeans(id,group_id,name,pass,email,role);
+				return beans;
+			}else {
+				return null;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 }
