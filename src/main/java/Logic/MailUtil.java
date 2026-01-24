@@ -34,7 +34,7 @@ public class MailUtil {
     }
     
     
-    public void sendEmail(String to, String subject, String text) {
+    public boolean sendEmail(String to, String subject, String text) {
     	Properties prop = new Properties();
     	prop.put("mail.smtp.auth","true");
     	prop.put("mail.smtp.starttls.enable","true");
@@ -60,15 +60,15 @@ public class MailUtil {
 			message.setFrom(new InternetAddress(username));
 	        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
 	        message.setSubject(subject);
-	        message.setText(text);
+	        //message.setText(text);
+	        message.setContent(text, "text/html; charset=UTF-8");
 
-	        // 送信
 	        Transport.send(message);
-	        System.out.println("Email sent successfully!");
+	        return true;
 		} catch (MessagingException e) {
-			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 			System.out.println("エラー:"+e);
+			return false;
 		}
 
     }

@@ -34,7 +34,7 @@ public class signupLogic {
 		}
 		
 		//メール処理
-		boolean mailSendFlag = sendEmail(mail);
+		boolean mailSendFlag = sendEmail(mail,id);
 		
 		return mailSendFlag;
 	}
@@ -64,12 +64,29 @@ public class signupLogic {
 	}
 	
 	//メール送信処理
-	public boolean sendEmail(String mail) {		
+	public boolean sendEmail(String mail,String id) {		
 		MailUtil util = new MailUtil();
 		
-		String subject = "テスト配信";
-		String text = "これはテスト配信です。";
-		util.sendEmail(mail, subject, text);
+		String subject = "【メールアドレス確認のお願い】Spica";
+		
+		String html =
+				"<html>" +
+				"<body style='font-family: Arial, sans-serif; background-color:#f5f5f5; padding:20px;'>" +
+
+				"<div style='max-width:600px; margin:0 auto; background:#ffffff; padding:24px; border-radius:8px;'>" +
+
+				"<h2 style='color:#333333;'>Spicaへの登録ありがとうございます。</h2>" +
+
+				"<p style='font-size:14px; color:#555555;'>以下の確認URLをタップして、登録を完了してください。<br>登録を完了することで、Spicaの利用を開始できます！</p>" +
+
+				"<a href='http://takumi-e.com:8080/Spica/confirmServlet?id=" + id +
+				"'>http://takumi-e.com:8080/Spica/confirmServlet?id=" + id + "</a>"+
+
+				"</div>" +
+				"</body>" +
+				"</html>";
+
+		util.sendEmail(mail, subject, html);
 		
 		return true;
 	}
