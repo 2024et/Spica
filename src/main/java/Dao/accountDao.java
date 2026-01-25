@@ -160,5 +160,25 @@ public class accountDao {
 			return null;
 		}
 	}
+	//パスワードの更新
+	public boolean updatePassword(String id, String password) {
+        PreparedStatement stmt = null;
+		try {
+			Connection con = DBUtil.getConnection();
+			String sql = "UPDATE account SET password = ? WHERE id = ?";
+			
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, password);
+			stmt.setString(2, id);
+			
+			
+			int result = stmt.executeUpdate();
+			if(result > 0) {return true;}
+			else {return false;}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 }
