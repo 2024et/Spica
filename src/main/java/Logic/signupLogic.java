@@ -86,8 +86,8 @@ public class signupLogic {
 				"</body>" +
 				"</html>";
 
-		util.sendEmail(mail, subject, html);
+		boolean completeFlag = util.sendEmail(mail, subject, html);
 		
-		return true;
+		return completeFlag;
 	}
 }
