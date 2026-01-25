@@ -7,7 +7,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
+import Beans.accountBeans;
 import Logic.signinLogic;
 
 @WebServlet("/signinServlet")
@@ -19,6 +21,7 @@ public class signinServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
 		String mail = request.getParameter("mail");
 		String password = request.getParameter("password");
 		
@@ -31,6 +34,8 @@ public class signinServlet extends HttpServlet {
 		    request.getRequestDispatcher("/signin.jsp").forward(request, response);
 		    
 		}
+		accountBeans beans = logic.getBeans();
+		session.setAttribute("userId", beans.getId());
 		if(completeFlag == 0) {
 			request.getRequestDispatcher("/financialServlet").forward(request, response);
 		}else {

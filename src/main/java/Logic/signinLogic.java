@@ -4,9 +4,10 @@ import Beans.accountBeans;
 import Dao.accountDao;
 
 public class signinLogic {
+	private accountBeans beans;
 	public int login(String email, String password) {
 		accountDao dao = new accountDao();
-		accountBeans beans = dao.login(email);
+		beans = dao.login(email);
 		
 		if(beans==null) {
 			return 2;
@@ -19,6 +20,7 @@ public class signinLogic {
 		if(!hashed_pwd.equals(beans.getPass())) {
 			return 2;
 		}
+		
 		System.out.println("role:"+beans.getRole());
 		if(!beans.getRole().equals("")) {
 			return 0;
@@ -26,5 +28,9 @@ public class signinLogic {
 			return 1;
 		}
 		
+	}
+	
+	public accountBeans getBeans() {
+		return beans;
 	}
 }
