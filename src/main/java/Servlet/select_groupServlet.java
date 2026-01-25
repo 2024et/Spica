@@ -23,11 +23,11 @@ public class select_groupServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		String userId = (String) session.getAttribute("userId");
 		
-		String action = request.getParameter("action");
+		String submit = request.getParameter("submit");
 		select_groupLogic logic = new select_groupLogic();
 		boolean completeFlag;
 		
-		if("join".equals(action)) {
+		if("join".equals(submit)) {
 			//既存団体に参加
 			String code = request.getParameter("invite");
 			
@@ -42,14 +42,14 @@ public class select_groupServlet extends HttpServlet {
 			    return;
 			}
 			
-		}else {
+		}else if("make".equals(submit)) {
 			//新規団体の作成
 			String name = request.getParameter("name");
 			
 			boolean checkName = logic.checkName(name);
 			
 			if(!checkName) {
-				request.setAttribute("join_errorMessage", "入力内容が不正です。");
+				request.setAttribute("make_errorMessage", "入力内容が不正です。");
 			    request.getRequestDispatcher("/select_group.jsp").forward(request, response);
 			    return;
 			}
@@ -60,11 +60,13 @@ public class select_groupServlet extends HttpServlet {
 				request.getRequestDispatcher("/financialServlet").forward(request, response);
 				return;
 			}else {
-				request.setAttribute("join_errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
+				request.setAttribute("make_errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
 			    request.getRequestDispatcher("/select_group.jsp").forward(request, response);
 			    return;
 			}
 			
+		}else {
+			request.getRequestDispatcher("/select_group.jsp").forward(request, response);
 		}
 	}
 

@@ -20,7 +20,11 @@ public class select_groupLogic {
 	
 	//入力内容の確認
 	public boolean checkName(String name) {
-		if (!name.matches("^[a-zA-Z0-9]$")) {
+	    if (name == null) {
+	        return false;
+	    }
+	    
+		if (name.matches("^[\\x20-\\x7E]*$")) {
 		    return false;
 		}
 		return true;

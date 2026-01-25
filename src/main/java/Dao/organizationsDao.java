@@ -12,7 +12,7 @@ public class organizationsDao {
         ResultSet rs = null;
 		try {
 			Connection con = DBUtil.getConnection();
-			String sql = "SELECT * FROM organizations WHERE invite_code = ?;";
+			String sql = "SELECT * FROM organizations WHERE invited_code = ?;";
 			
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1, code);

@@ -20,9 +20,7 @@ public class signinLogic {
 		if(!hashed_pwd.equals(beans.getPass())) {
 			return 2;
 		}
-		
-		System.out.println("role:"+beans.getRole());
-		if(!beans.getRole().equals("")) {
+		if(!beans.getGroup_id().equals("")) {
 			return 0;
 		}else {
 			return 1;

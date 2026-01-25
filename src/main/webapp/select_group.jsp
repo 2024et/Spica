@@ -24,7 +24,7 @@
     	<p class="error-message"><%= join_error %></p>
     <% } %>
 	
-	<button type="submit" name="submit" class="btn" value="join">　参加　</button>
+	<button type="submit" name="submit" class="btn" value="join">参加</button>
 </form>
 <hr>
 <h5>団体を新規作成する方</h5>
