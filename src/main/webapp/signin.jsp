@@ -29,7 +29,7 @@
 	<input type="submit" name="submit" class="signin-btn" value="ログイン">
 </form>
 <hr>
-<h4>アカウントをお持ちの方</h4>
+<h4>アカウントをお持ちでない方</h4>
 <div class="center-btn">
 	<a href="signupServlet" class="signup-btn">新規登録</a>
 </div>

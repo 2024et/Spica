@@ -1,33 +1,44 @@
 package Servlet;
 
+import java.io.IOException;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
-/**
- * Servlet implementation class requestServlet
- */
+import Logic.requestLogic;
+
 @WebServlet("/requestServlet")
 public class requestServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		request.getRequestDispatcher("/request.jsp").forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		String mail = request.getParameter("mail");
+		
+		requestLogic logic = new requestLogic();
+		int checkMail = logic.searchMail(mail);
+		
+		//メールアドレスが存在しない場合もエラー扱いとして表示
+		if(checkMail == 0 || checkMail == 2) {
+			request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
+		    request.getRequestDispatcher("/request.jsp").forward(request, response);
+		}
+		
+		boolean completeFlag = logic.sendMail(mail);
+		
+		if(completeFlag) {
+			request.setAttribute("Message", "パスワード再設定リクエストをメールにて送信しました。メールをご確認ください。");
+		    request.getRequestDispatcher("/request.jsp").forward(request, response);
+		}else {
+			request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
+		    request.getRequestDispatcher("/request.jsp").forward(request, response);
+		}
 	}
 
 }

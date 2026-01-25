@@ -138,5 +138,27 @@ public class accountDao {
 			return null;
 		}
 	}
+	//IDの取得
+	public String getUserID(String email) {
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+		try {
+			Connection con = DBUtil.getConnection();
+			String sql = "SELECT id FROM account WHERE user_email = ?;";
+			
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, email);
+			rs = stmt.executeQuery();
+			if(rs.next()) {
+				
+				return rs.getString("id");
+			}else {
+				return null;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 }
