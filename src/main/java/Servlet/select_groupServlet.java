@@ -7,27 +7,65 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
-/**
- * Servlet implementation class select_groupServlet
- */
+import Logic.select_groupLogic;
+
 @WebServlet("/select_groupServlet")
 public class select_groupServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getRequestDispatcher("/select_group.jsp").forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		HttpSession session = request.getSession();
+		String userId = (String) session.getAttribute("userId");
+		
+		String action = request.getParameter("action");
+		select_groupLogic logic = new select_groupLogic();
+		boolean completeFlag;
+		
+		if("join".equals(action)) {
+			//既存団体に参加
+			String code = request.getParameter("invite");
+			
+			completeFlag = logic.joinGroup(userId,code);
+			
+			if(completeFlag) {
+				request.getRequestDispatcher("/financialServlet").forward(request, response);
+				return;
+			}else {
+				request.setAttribute("join_errorMessage", "招待コードが正しくありません。");
+			    request.getRequestDispatcher("/select_group.jsp").forward(request, response);
+			    return;
+			}
+			
+		}else {
+			//新規団体の作成
+			String name = request.getParameter("name");
+			
+			boolean checkName = logic.checkName(name);
+			
+			if(!checkName) {
+				request.setAttribute("join_errorMessage", "入力内容が不正です。");
+			    request.getRequestDispatcher("/select_group.jsp").forward(request, response);
+			    return;
+			}
+			
+			completeFlag = logic.makeGroup(userId,name);
+			
+			if(completeFlag) {
+				request.getRequestDispatcher("/financialServlet").forward(request, response);
+				return;
+			}else {
+				request.setAttribute("join_errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
+			    request.getRequestDispatcher("/select_group.jsp").forward(request, response);
+			    return;
+			}
+			
+		}
 	}
 
 }

@@ -180,5 +180,25 @@ public class accountDao {
 			return false;
 		}
 	}
+	//団体に参加
+	public boolean joinGroup(String id, String code) {
+        PreparedStatement stmt = null;
+		try {
+			Connection con = DBUtil.getConnection();
+			String sql = "UPDATE account SET group_id = ? WHERE id = ?";
+			
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, code);
+			stmt.setString(2, id);
+			
+			
+			int result = stmt.executeUpdate();
+			if(result > 0) {return true;}
+			else {return false;}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 }

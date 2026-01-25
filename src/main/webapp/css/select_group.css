@@ -1,0 +1,27 @@
+@charset "UTF-8";
+h1,h2,h3,h4,h5,form,.center-btn,p{
+	text-align: center;
+}
+h1{
+	color:#99b3ff;
+}
+h5{
+	font-weight:bold ;
+}
+.req,.error-message{
+	color:red;
+}
+
+.btn{
+	display:inline-block;
+	font-size:16px;
+	cursor:pointer;
+	padding:12px 40px;
+	background:#beedbe;
+	color:#000000;
+	border:2px solid #5d995d;
+}
+.btn:hover{
+	background: #ffffff;
+	color:#000000;
+}
