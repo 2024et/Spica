@@ -25,6 +25,8 @@
     <% if (error != null) { %>
     	<p class="error-message"><%= error %></p>
     <% } %>
+    
+    <a href="requestServlet">パスワードを忘れた方</a><br><br>
 	
 	<input type="submit" name="submit" class="signin-btn" value="ログイン">
 </form>
