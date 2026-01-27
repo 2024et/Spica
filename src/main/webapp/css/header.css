@@ -1,0 +1,64 @@
+@charset "UTF-8";
+.header{
+	display:flex;
+	background-color:#DAE3F3;
+	align-items: flex-end;
+	justify-content: space-between;
+	
+}
+.information{
+	flex-direction: column;
+	margin:16px;
+}
+.navigation{
+	margin:16px;
+	
+}
+.general{
+	display:inline-block;
+	width:150px;
+	border:1px solid #4169e1;
+	background-color: #4169e1;
+	color:#ffffff;
+	font-size:15px;
+	text-align:center;
+	padding: 10px 3px;
+	margin:3px;
+	text-decoration: none;
+}
+.admin{
+	display:inline-block;
+	width:150px;
+	border:1px solid #73992c;
+	background-color: #73992c;
+	color:#ffffff;
+	font-size:15px;
+	text-align:center;
+	padding: 10px 3px;
+	margin:3px;
+	text-decoration: none;
+}
+.empty{
+	display:inline-block;
+	width:150px;
+	border:1px solid #DAE3F3;
+	font-size:15px;
+	text-align:center;
+	padding: 10px 3px;
+	margin:3px;
+	text-decoration: none;
+}
+
+.app_name{
+	font-size:17px;
+	text-decoration: none;
+	color:#234;
+}
+.group_name{
+	font-size:15px;
+	color:#234;
+}
+.user_name{
+	font-size:15px;
+	color:#234;
+}

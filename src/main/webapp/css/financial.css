@@ -1,0 +1,30 @@
+@charset "UTF-8";
+.fiscal {
+  display: flex;
+  justify-content:space-between;
+  margin:20px;
+}
+h2{
+	display:inline-block;
+	width:500px;
+	border: 2px solid #000000;
+	padding: 10px 3px;
+	margin:16px;
+}
+.search{
+	background-color:#DAE3F3;
+	
+}
+.searchArea{
+	display: flex;
+	justify-content:space-around;
+}
+.h3{
+	margin:16px;
+}
+.left{
+	margin:16px;
+}
+.right{
+	margin:16px;
+}
