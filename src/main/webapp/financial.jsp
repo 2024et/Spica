@@ -83,5 +83,181 @@
 	</tbody>
 </table>
 
+<button id="blBtn">詳細</button>
+
+<div id="ad-is-wrapper">
+	<div id="ad-is-inside">
+		<div id="message">
+			<h1>収支記録</h1>
+			<form action="financialServlet" method="post">
+				<table class="searchTable">
+					<tr>
+						<td>日付</td>
+						<td><input type="date" name="searchDate"></td>
+						<td>カテゴリ</td>
+						<td>
+							<select  class="textbox">
+	
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>プロジェクト</td>
+						<td>
+							<select  class="textbox">
+								
+							</select>
+						</td>
+						<td>店名</td>
+						<td><input type="text" name="store" class="textbox"></td>
+					</tr>
+					<tr>
+						<td>品目</td>
+						<td><input type="text" name="item" class="textbox"></td>
+						<td>入出金</td>
+						<td>
+							<select  class="textbox">
+								<option value="income">収入</option>
+								<option value="expend">支出</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>金額</td>
+						<td><input type="number" name="number" class="textbox"></td>
+						<td>メモ</td>
+						<td><textarea class="textbox"></textarea></td>
+					</tr>
+				</table>
+				<button type="submit" name="submit" id="close" class="reset-btn" value="reset">キャンセル</button>
+				<button type="submit" name="submit" class="display-btn" value="display">保存</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+<div id="ad-ed-wrapper">
+	<div id="ad-ed-inside">
+		<div id="message">
+			<h1>収支編集</h1>
+			<form action="financialServlet" method="post">
+				<table class="searchTable">
+					<tr>
+						<td>日付</td>
+						<td><input type="date" name="searchDate"></td>
+						<td>カテゴリ</td>
+						<td>
+							<select  class="textbox">
+	
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>プロジェクト</td>
+						<td>
+							<select  class="textbox">
+								
+							</select>
+						</td>
+						<td>店名</td>
+						<td><input type="text" name="store" class="textbox"></td>
+					</tr>
+					<tr>
+						<td>品目</td>
+						<td><input type="text" name="item" class="textbox"></td>
+						<td>入出金</td>
+						<td>
+							<select  class="textbox">
+								<option value="income">収入</option>
+								<option value="expend">支出</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>金額</td>
+						<td><input type="number" name="number" class="textbox"></td>
+						<td>メモ</td>
+						<td><textarea class="textbox"></textarea></td>
+					</tr>
+				</table>
+				<button type="submit" name="submit" class="reset-btn" value="reset">削除</button>
+				<button type="submit" name="submit" id="close" class="reset-btn" value="reset">キャンセル</button>
+				<button type="submit" name="submit" class="display-btn" value="display">保存</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+<div id="bl-wrapper">
+	<div id="bl-inside">
+		<div id="message">
+			<h1>収支詳細</h1>
+			<p>日付：</p>
+			<p>カテゴリ：</p>
+			<p>プロジェクト：</p>
+			<p>店名：</p>
+			<p>品目：</p>
+			<p>入出金：</p>
+			<p>金額：</p>
+			<button type="submit" name="submit" id="ad_EditBtn" class="reset-btn" value="reset">編集</button>
+			<button type="submit" name="submit" id="close" class="reset-btn" value="reset">閉じる</button>
+		</div>
+	</div>
+</div>
+
+
+<div id="ad_InsertBtn"><p>収支新規登録</p></div>
+
+<script>
+	const adInsertBtn = document.getElementById('ad_InsertBtn');
+	const adiswrapper = document.getElementById('ad-is-wrapper');
+	
+	const adEditBtn = document.getElementById('ad_EditBtn');
+	const adedwrapper = document.getElementById('ad-ed-wrapper');
+
+	const blBtn = document.getElementById('blBtn');
+	const blwrapper = document.getElementById('bl-wrapper');
+	
+	const close = document.getElementById('close');
+
+	adInsertBtn.addEventListener('click',()=>{
+		adiswrapper.style.display = "block";
+	});
+
+	adEditBtn.addEventListener('click',()=>{
+		adedwrapper.style.display = "block";
+		blwrapper.style.display = "none";
+	});
+
+	blBtn.addEventListener('click',()=>{
+		blwrapper.style.display = "block";
+	});
+	
+
+	adiswrapper.addEventListener('click',e=>{
+		if(e.target.id === adiswrapper.id || e.target.id === close.id ){
+			adiswrapper.style.display = "none";
+		}
+	});
+
+	adedwrapper.addEventListener('click',e=>{
+		if(e.target.id === adedwrapper.id || e.target.id === close.id ){
+			adedwrapper.style.display = "none";
+		}
+	});
+
+	blwrapper.addEventListener('click',e=>{
+
+		if(e.target.id === blwrapper.id || e.target.id === close.id ){
+			blwrapper.style.display = "none";
+		}
+	});
+		
+	
+</script>
+
+
 </body>
 </html>
