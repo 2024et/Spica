@@ -35,7 +35,7 @@ public class signinServlet extends HttpServlet {
 		    
 		}
 		accountBeans beans = logic.getBeans();
-		session.setAttribute("userId", beans.getId());
+		session.setAttribute("accountData", beans);
 		if(completeFlag == 0) {
 			request.getRequestDispatcher("/financialServlet").forward(request, response);
 		}else {

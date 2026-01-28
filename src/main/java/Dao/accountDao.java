@@ -71,10 +71,11 @@ public class accountDao {
 				String pass =rs.getString("password");
 				String email =rs.getString("user_email");
 				
+				String group_name = "";
 				String group_id = "";
 				String role = "";
 				
-				beans = new accountBeans(id,group_id,name,pass,email,role);
+				beans = new accountBeans(id,group_id,group_name,name,pass,email,role);
 				return beans;
 			}else {
 				return null;
@@ -115,7 +116,7 @@ public class accountDao {
         accountBeans beans;
 		try {
 			Connection con = DBUtil.getConnection();
-			String sql = "SELECT * FROM account WHERE user_email = ?;";
+			String sql = "SELECT ac.id AS id, ac.group_id AS group_id, og.name AS group_name, ac.user_name AS user_name, ac.password AS password, ac.role_type AS role_type FROM account AS ac INNER JOIN organizations AS og ON ac.group_id = og.invited_code WHERE ac.user_email = ?;";
 			
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1, email);
@@ -124,11 +125,12 @@ public class accountDao {
 				
 				String id =rs.getString("id");
 				String group_id = rs.getString("group_id");
+				String group_name = rs.getString("group_name");
 				String name =rs.getString("user_name");
 				String pass =rs.getString("password");
 				String role = rs.getString("role_type");
 				
-				beans = new accountBeans(id,group_id,name,pass,email,role);
+				beans = new accountBeans(id,group_id,group_name,name,pass,email,role);
 				return beans;
 			}else {
 				return null;

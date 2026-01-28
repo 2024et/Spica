@@ -12,8 +12,8 @@
 <div class="header">
 	<div class="information">
 		<h4><a href="financialServlet" class="app_name">Spica | 会計管理Webアプリ</a></h4>
-		<h4 class="group_name">団体名：</h4>
-		<h4 class="user_name">ユーザー名：</h4>
+		<h4 class="group_name">団体名：${accountData.group_name}</h4>
+		<h4 class="user_name">ユーザー名：${accountData.name}</h4>
 	</div>
 	<div class="navigation">
 		<div class="nav_up">

@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+import Beans.accountBeans;
 import Logic.select_groupLogic;
 
 @WebServlet("/select_groupServlet")
@@ -21,7 +22,9 @@ public class select_groupServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		String userId = (String) session.getAttribute("userId");
+		accountBeans accountData = (accountBeans) session.getAttribute("accountData");
+		
+		String userId = accountData.getId();
 		
 		String submit = request.getParameter("submit");
 		select_groupLogic logic = new select_groupLogic();
