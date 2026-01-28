@@ -1,4 +1,16 @@
 @charset "UTF-8";
+h2{
+	display:inline-block;
+	width:270px;
+	border: 2px solid #000000;
+	font-size:15px;
+	padding: 10px 3px;
+	margin:8px;
+}
+h3{
+	padding :0px 10px;
+}
+
 .finance{
 	display: flex;
 	flex-direction: row;
@@ -8,6 +20,7 @@
 }
 .data_area{
 	display: flex;
+	align-items: flex-end;
 }
 .fiscal {
   display: flex;
@@ -16,17 +29,13 @@
   width:50%;
   border:1px solid #234 ;
 }
-h2{
-	display:inline-block;
-	width:270px;
-	border: 2px solid #000000;
-	font-size:15px;
-	padding: 10px 3px;
-	margin:8px;
-}
+
 .income{
 	background-color: #006400;
 	color:#ffffff;
+}
+.data{
+	flex-direction: column;
 }
 .expend{
 	background-color: #990e2a ;
@@ -34,6 +43,7 @@ h2{
 }
 canvas{
 	border:1px solid #234 ;
+	height:300px;
 }
 
 .textbox{
@@ -41,12 +51,21 @@ canvas{
 }
 
 .search{
+	display: flex;
+	flex-direction: column;
 	border:1px solid #234 ;
 	width:50%;
 	margin:20px;
 }
 .searchTable{
 	margin:auto;
+}
+.searchTable td,.searchTable th{
+	padding: 18px;
+}
+.searchBtns{
+	text-align:right;
+	margin:16px;
 }
 
 .reset-btn{
@@ -60,6 +79,7 @@ canvas{
 	padding: 10px 3px;
 	margin:3px;
 	text-decoration: none;
+	
 }
 .display-btn{
 	display:inline-block;

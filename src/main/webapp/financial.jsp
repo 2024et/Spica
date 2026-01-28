@@ -61,12 +61,15 @@
 				<tr>
 					<td>キーワード</td>
 					<td><input type="text" name="keyword" class="textbox"></td>
-					<td><button type="submit" name="submit" class="reset-btn" value="reset">リセット</button></td>
-					<td><button type="submit" name="submit" class="display-btn" value="display">表示</button></td>
+					<td></td>
+					<td></td>
 				</tr>
 			</table>
 		</div>
-	
+		<div class="searchBtns">
+			<button type="submit" name="submit" class="reset-btn" value="reset">リセット</button>
+			<button type="submit" name="submit" class="display-btn" value="display">表示</button>
+		</div>
 		</form>
 	</div>
 </div>
