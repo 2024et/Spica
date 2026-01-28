@@ -13,7 +13,7 @@
 	<div class="fiscal">
 		<h3>今年度状況</h3>
 		<div class="data_area">
-			<div class="graph"><canvas></canvas></div>
+			<div class="balance_graph"><canvas></canvas></div>
 			<div class="data">
 				<h2 class="income">収入合計：￥</h2>
 				<h2 class="expend">支出合計：￥</h2>
@@ -74,6 +74,14 @@
 	</div>
 </div>
 
+<canvas class="spend_graph"></canvas>
+
+<table class="dataTable" border="1">
+	<thead><th>日付</th><th>プロジェクト</th><th>カテゴリ</th><th>店名</th><th>品目</th><th>入金</th><th>出金</th><th>詳細</th></thead>
+	<tbody>
+	
+	</tbody>
+</table>
 
 </body>
 </html>
