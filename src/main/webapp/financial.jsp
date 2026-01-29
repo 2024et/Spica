@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,7 +45,9 @@
 					<td>カテゴリ</td>
 					<td>
 						<select  class="textbox">
-							
+							<c:forEach var="c" items="${category}">
+								<option value="${c.name}">${c.name}</option>
+							</c:forEach>
 						</select>
 					</td>
 					<td>プロジェクト</td>
@@ -85,6 +90,7 @@
 
 <button id="blBtn">詳細</button>
 
+
 <div id="ad-is-wrapper">
 	<div id="ad-is-inside">
 		<div id="message">
@@ -93,11 +99,10 @@
 				<table class="searchTable">
 					<tr>
 						<td>日付</td>
-						<td><input type="date" name="searchDate"></td>
+						<td><input type="date" name="date"></td>
 						<td>カテゴリ</td>
 						<td>
 							<select  class="textbox">
-	
 							</select>
 						</td>
 					</tr>
@@ -129,8 +134,8 @@
 						<td><textarea class="textbox"></textarea></td>
 					</tr>
 				</table>
-				<button type="submit" name="submit" id="close" class="reset-btn" value="reset">キャンセル</button>
-				<button type="submit" name="submit" class="display-btn" value="display">保存</button>
+				<button type="submit" name="submit" id="close" class="reset-btn" value="cancel">キャンセル</button>
+				<button type="submit" name="submit" class="display-btn" value="save">保存</button>
 			</form>
 		</div>
 	</div>
