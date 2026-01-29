@@ -37,9 +37,12 @@ public class signinServlet extends HttpServlet {
 		accountBeans beans = logic.getBeans();
 		session.setAttribute("accountData", beans);
 		if(completeFlag == 0) {
-			request.getRequestDispatcher("/financialServlet").forward(request, response);
+			response.sendRedirect(request.getContextPath() + "/financialServlet");
+
 		}else {
-			request.getRequestDispatcher("/select_groupServlet").forward(request, response);
+			//request.getRequestDispatcher("/select_groupServlet").forward(request, response);//動作確認後削除
+			response.sendRedirect(request.getContextPath() + "/select_groupServlet");
+
 		}
 	}
 
