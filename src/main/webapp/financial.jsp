@@ -36,6 +36,7 @@
 					<td>収支区分</td>
 					<td>
 						<select  class="textbox">
+							<option value="">==未選択==</option>
 							<option value="income">収入</option>
 							<option value="expend">支出</option>
 						</select>
@@ -45,6 +46,7 @@
 					<td>カテゴリ</td>
 					<td>
 						<select  class="textbox">
+							<option value="">==未選択==</option>
 							<c:forEach var="c" items="${category}">
 								<option value="${c.name}">${c.name}</option>
 							</c:forEach>
@@ -53,7 +55,10 @@
 					<td>プロジェクト</td>
 					<td>
 						<select  class="textbox">
-							
+							<option value="">==未選択==</option>
+							<c:forEach var="p" items="${project}">
+								<option value="${p.name}">${p.name}</option>
+							</c:forEach>
 						</select>
 					</td>
 				</tr>
@@ -103,6 +108,10 @@
 						<td>カテゴリ</td>
 						<td>
 							<select  class="textbox">
+								<option value="">==未選択==</option>	
+								<c:forEach var="c" items="${category}">
+									<option value="${c.name}">${c.name}</option>
+								</c:forEach>
 							</select>
 						</td>
 					</tr>
@@ -110,7 +119,10 @@
 						<td>プロジェクト</td>
 						<td>
 							<select  class="textbox">
-								
+								<option value="">==未選択==</option>
+								<c:forEach var="p" items="${project}">
+									<option value="${p.name}">${p.name}</option>
+								</c:forEach>
 							</select>
 						</td>
 						<td>店名</td>
@@ -122,6 +134,7 @@
 						<td>入出金</td>
 						<td>
 							<select  class="textbox">
+								<option value="">==未選択==</option>
 								<option value="income">収入</option>
 								<option value="expend">支出</option>
 							</select>
@@ -154,7 +167,10 @@
 						<td>カテゴリ</td>
 						<td>
 							<select  class="textbox">
-	
+								<option value="">==未選択==</option>
+								<c:forEach var="c" items="${category}">
+									<option value="${c.name}">${c.name}</option>
+								</c:forEach>
 							</select>
 						</td>
 					</tr>
@@ -162,7 +178,10 @@
 						<td>プロジェクト</td>
 						<td>
 							<select  class="textbox">
-								
+								<option value="">==未選択==</option>
+								<c:forEach var="p" items="${project}">
+									<option value="${p.name}">${p.name}</option>
+								</c:forEach>
 							</select>
 						</td>
 						<td>店名</td>
@@ -174,6 +193,7 @@
 						<td>入出金</td>
 						<td>
 							<select  class="textbox">
+								<option value="">==未選択==</option>
 								<option value="income">収入</option>
 								<option value="expend">支出</option>
 							</select>

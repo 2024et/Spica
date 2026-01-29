@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpSession;
 
 import Beans.accountBeans;
 import Beans.categoryBeans;
+import Beans.projectBeans;
 import Logic.financialLogic;
 
 @WebServlet("/financialServlet")
@@ -19,14 +20,14 @@ public class financialServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("aaaa");
 		HttpSession session = request.getSession();
 		accountBeans accountData = (accountBeans) session.getAttribute("accountData");
-		System.out.println("iiii");
 		financialLogic logic = new financialLogic();
 		List<categoryBeans> category = logic.getCategoryData(accountData.getGroup_id());
+		List<projectBeans> project = logic.getProjectData(accountData.getGroup_id());
 		
 		request.setAttribute("category", category);
+		request.setAttribute("project", project);
 		request.getRequestDispatcher("/financial.jsp").forward(request, response);
 	}
 
