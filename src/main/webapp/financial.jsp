@@ -89,7 +89,31 @@
 <table class="dataTable" border="1">
 	<thead><th>日付</th><th>プロジェクト</th><th>カテゴリ</th><th>店名</th><th>品目</th><th>入金</th><th>出金</th><th>詳細</th></thead>
 	<tbody>
-	
+		<c:forEach var="c" items="${balance}">
+			<td>${c.created_at}</td>
+			<td>${c.project}</td>
+			<td>${c.category}</td>
+			<td>${c.name}</td>
+			<td>${c.item}</td>
+		    <c:choose>
+		        <c:when test="${c.type eq 'income'}">
+		            <td>${c.amount}</td>
+		        </c:when>
+		        <c:otherwise>
+		            <td></td>
+		        </c:otherwise>
+		    </c:choose>
+		    <c:choose>
+		        <c:when test="${c.type eq 'expend'}">
+		            <td>${c.amount}</td>
+		        </c:when>
+		        <c:otherwise>
+		            <td></td>
+		        </c:otherwise>
+		    </c:choose>
+		    <td>${c.memo}</td>
+		</c:forEach>
+		
 	</tbody>
 </table>
 

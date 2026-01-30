@@ -28,8 +28,11 @@ public class financialServlet extends HttpServlet {
 		List<categoryBeans> category = logic.getCategoryData(accountData.getGroup_id());
 		List<projectBeans> project = logic.getProjectData(accountData.getGroup_id());
 		
+		List<balanceBeans> balance = logic.getBalanceData(accountData.getGroup_id());
+		
 		request.setAttribute("category", category);
 		request.setAttribute("project", project);
+		request.setAttribute("balance", balance);
 		request.getRequestDispatcher("/financial.jsp").forward(request, response);
 	}
 

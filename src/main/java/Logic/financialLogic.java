@@ -24,6 +24,12 @@ public class financialLogic {
 		return dao.getProjectData(group_id);
 	}
 	
+	//収支データの収集
+	public List<balanceBeans> getBalanceData(String group_id){
+		financialDao dao = new financialDao();
+		return dao.getBalanceData(group_id);
+	}
+	
 	//収支新規登録
 	public boolean insertBalanceData(balanceBeans beans) {
 		
@@ -51,4 +57,6 @@ public class financialLogic {
 		}
 		return true;	
 	}
+	
+	
 }
