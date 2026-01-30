@@ -164,13 +164,23 @@ h3{
 #ad-is-inside,#ad-ed-inside{
 	background: #C5E0B4;
 }
-#bl-inside{
-	background: white;
-}
 
 #message a {
   background: purple;
   color: white;
   text-decoration: none;
   padding: 6px 10px;
+}
+
+
+.popupDetail{
+	display: none;
+	position: absolute;
+	background-color: #fff7f7;
+	border: 2px solid #c40000;
+	border-radius: 12px;
+	padding: 10px;
+	font-size: 12px;
+	z-index: 1001;
+	box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }

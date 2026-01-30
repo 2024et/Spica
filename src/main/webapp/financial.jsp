@@ -90,7 +90,7 @@
 	<thead><th>日付</th><th>プロジェクト</th><th>カテゴリ</th><th>店名</th><th>品目</th><th>入金</th><th>出金</th><th>詳細</th></thead>
 	<tbody>
 		<c:forEach var="c" items="${balance}">
-		<tr>
+		<tr onmouseover="openPopup('${c.id}',event)" onmouseout="closePopup('${c.id}')">
 			<td>${c.created_at}</td>
 			<td>${c.project}</td>
 			<td>${c.category}</td>
@@ -118,8 +118,20 @@
 		
 	</tbody>
 </table>
-
-<button id="blBtn">詳細</button>
+<c:forEach var="c" items="${balance}">
+	<div id="popup_${c.id}" class="popupDetail">
+		<h1>収支詳細</h1>
+		<p>日付：${c.created_at}</p>
+		<p>カテゴリ：${c.category}</p>
+		<p>プロジェクト：${c.project}</p>
+		<p>店名：${c.name}</p>
+		<p>品目：${c.item}</p>
+		<p>入出金：${c.type}</p>
+		<p>金額：${c.amount}</p>
+		<button type="submit" name="submit" id="ad_EditBtn" class="reset-btn" value="reset">編集</button>
+		<button type="submit" name="submit" id="close" class="reset-btn" value="reset">閉じる</button>
+	</div>
+</c:forEach>
 
 
 <div id="ad-is-wrapper">
@@ -241,23 +253,10 @@
 </div>
 
 
-<div id="bl-wrapper">
-	<div id="bl-inside">
-		<div id="message">
-			<h1>収支詳細</h1>
-			<p>日付：</p>
-			<p>カテゴリ：</p>
-			<p>プロジェクト：</p>
-			<p>店名：</p>
-			<p>品目：</p>
-			<p>入出金：</p>
-			<p>金額：</p>
-			<button type="submit" name="submit" id="ad_EditBtn" class="reset-btn" value="reset">編集</button>
-			<button type="submit" name="submit" id="close" class="reset-btn" value="reset">閉じる</button>
-		</div>
-	</div>
-</div>
-
+<!-- 一時的な空白エリア  -->
+<br><br><br><br>
+<br><br><br><br>
+<br><br><br><br>
 
 <div id="ad_InsertBtn"><p>収支新規登録</p></div>
 
@@ -305,7 +304,22 @@
 			blwrapper.style.display = "none";
 		}
 	});
-		
+
+	function openPopup(id,envet){
+		const popup = document.getElementById("popup_"+id);
+		if(popup){
+	        popup.style.left = event.pageX + "px";
+	        popup.style.top = event.pageY + "px";
+			popup.style.display = "block";
+		}
+	}
+
+	function closePopup(id){
+		const popup = document.getElementById("popup_"+id);
+		if(popup){
+			popup.style.display = "none";
+		}
+	}
 	
 </script>
 
