@@ -90,6 +90,7 @@
 	<thead><th>日付</th><th>プロジェクト</th><th>カテゴリ</th><th>店名</th><th>品目</th><th>入金</th><th>出金</th><th>詳細</th></thead>
 	<tbody>
 		<c:forEach var="c" items="${balance}">
+		<tr>
 			<td>${c.created_at}</td>
 			<td>${c.project}</td>
 			<td>${c.category}</td>
@@ -112,6 +113,7 @@
 		        </c:otherwise>
 		    </c:choose>
 		    <td>${c.memo}</td>
+		   </tr>
 		</c:forEach>
 		
 	</tbody>
