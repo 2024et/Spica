@@ -107,7 +107,7 @@
 						<td><input type="date" name="date"></td>
 						<td>カテゴリ</td>
 						<td>
-							<select  class="textbox">
+							<select  class="textbox" name="category">
 								<option value="">==未選択==</option>	
 								<c:forEach var="c" items="${category}">
 									<option value="${c.name}">${c.name}</option>
@@ -118,7 +118,7 @@
 					<tr>
 						<td>プロジェクト</td>
 						<td>
-							<select  class="textbox">
+							<select  class="textbox" name="project">
 								<option value="">==未選択==</option>
 								<c:forEach var="p" items="${project}">
 									<option value="${p.name}">${p.name}</option>
@@ -133,7 +133,7 @@
 						<td><input type="text" name="item" class="textbox"></td>
 						<td>入出金</td>
 						<td>
-							<select  class="textbox">
+							<select  class="textbox" name="type">
 								<option value="">==未選択==</option>
 								<option value="income">収入</option>
 								<option value="expend">支出</option>
@@ -144,7 +144,7 @@
 						<td>金額</td>
 						<td><input type="number" name="number" class="textbox"></td>
 						<td>メモ</td>
-						<td><textarea class="textbox"></textarea></td>
+						<td><textarea class="textbox" name="memo"></textarea></td>
 					</tr>
 				</table>
 				<button type="submit" name="submit" id="close" class="reset-btn" value="cancel">キャンセル</button>

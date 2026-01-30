@@ -2,10 +2,13 @@ package Logic;
 
 import java.util.List;
 
+import Beans.balanceBeans;
 import Beans.categoryBeans;
 import Beans.projectBeans;
 import Dao.categoryDao;
+import Dao.financialDao;
 import Dao.projectDao;
+import Dao.transactionDao;
 
 public class financialLogic {
 	
@@ -19,5 +22,33 @@ public class financialLogic {
 	public List<projectBeans> getProjectData(String group_id) {
 		projectDao dao = new projectDao();
 		return dao.getProjectData(group_id);
+	}
+	
+	//収支新規登録
+	public boolean insertBalanceData(balanceBeans beans) {
+		
+		//finance_recordへのデータ追加
+		financialDao fi_dao = new financialDao();
+		String type = "収支";
+		boolean fi_completeFlag = fi_dao.insertBalanceData_financial(beans,type);
+		
+		if(!fi_completeFlag) {
+			return false;
+		}
+		
+		//transactionへのデータ追加
+		transactionDao tr_dao = new transactionDao();
+		boolean tr_completeFlag = tr_dao.insertBalanceData_transaction(beans);
+		
+		if(!tr_completeFlag) {
+			//transactionと同時に登録しないといけないため、transaction失敗時はfinance_recordから該当データを削除する。
+			boolean deleteFlag = fi_dao.deleteBalanceData(beans);
+			if(!deleteFlag) {
+				System.out.println("深刻なエラーが発生");
+				/////////////////////処理を考える////////////////////////////
+			}
+			return false;
+		}
+		return true;	
 	}
 }
