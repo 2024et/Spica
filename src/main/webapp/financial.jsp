@@ -90,7 +90,7 @@
 	<thead><th>日付</th><th>プロジェクト</th><th>カテゴリ</th><th>店名</th><th>品目</th><th>入金</th><th>出金</th><th>詳細</th></thead>
 	<tbody>
 		<c:forEach var="c" items="${balance}">
-		<tr onmouseover="openPopup('${c.id}',event)" onmouseout="closePopup('${c.id}')">
+		<tr onmouseover="openPopup('${c.id}',event)">
 			<td>${c.created_at}</td>
 			<td>${c.project}</td>
 			<td>${c.category}</td>
@@ -119,7 +119,7 @@
 	</tbody>
 </table>
 <c:forEach var="c" items="${balance}">
-	<div id="popup_${c.id}" class="popupDetail">
+	<div id="popup_${c.id}" class="popupDetail" onmouseout="closePopup_Delay('${c.id}')">
 		<h1>収支詳細</h1>
 		<p>日付：${c.created_at}</p>
 		<p>カテゴリ：${c.category}</p>
@@ -128,8 +128,8 @@
 		<p>品目：${c.item}</p>
 		<p>入出金：${c.type}</p>
 		<p>金額：${c.amount}</p>
-		<button type="submit" name="submit" id="ad_EditBtn" class="reset-btn" value="reset">編集</button>
-		<button type="submit" name="submit" id="close" class="reset-btn" value="reset">閉じる</button>
+		<button type="button" name="submit" id="ad_EditBtn" class="reset-btn" onclick="closePopup('${c.id}')">編集</button>
+		<button type="button" name="submit" id="close" class="reset-btn">閉じる</button>
 	</div>
 </c:forEach>
 
@@ -261,6 +261,8 @@
 <div id="ad_InsertBtn"><p>収支新規登録</p></div>
 
 <script>
+	let currentPopup = null;
+
 	const adInsertBtn = document.getElementById('ad_InsertBtn');
 	const adiswrapper = document.getElementById('ad-is-wrapper');
 	
@@ -305,20 +307,34 @@
 		}
 	});
 
-	function openPopup(id,envet){
+	
+
+	function openPopup(id, event){
 		const popup = document.getElementById("popup_"+id);
-		if(popup){
-	        popup.style.left = event.pageX + "px";
-	        popup.style.top = event.pageY + "px";
-			popup.style.display = "block";
+		if(currentPopup != null){
+			closePopup(currentPopup);
 		}
+		if(popup){
+		    popup.style.left = event.pageX + "px";
+		    popup.style.top  = event.pageY + "px";
+			popup.style.display = "block";
+			currentPopup = id;
+		}
+	}
+
+	function closePopup_Delay(id){
+		let hideTimer = setTimeout(() =>{
+			closePopup(id);
+		},3000);
 	}
 
 	function closePopup(id){
 		const popup = document.getElementById("popup_"+id);
-		if(popup){
-			popup.style.display = "none";
+		if(popup)
+			popup.style.display = "none";	
+			currentPopup = null;
 		}
+		
 	}
 	
 </script>
