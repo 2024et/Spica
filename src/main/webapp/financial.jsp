@@ -128,6 +128,7 @@
 		<p>品目：${c.item}</p>
 		<p>入出金：${c.type}</p>
 		<p>金額：${c.amount}</p>
+		<p>メモ：${c.memo}</p>
 		<button type="button" name="submit" id="ad_EditBtn" class="reset-btn" onclick="closePopup('${c.id}')">編集</button>
 		<button type="button" name="submit" id="close" class="reset-btn">閉じる</button>
 	</div>
@@ -192,66 +193,66 @@
 	</div>
 </div>
 
-
-<div id="ad-ed-wrapper">
-	<div id="ad-ed-inside">
-		<div id="message">
-			<h1>収支編集</h1>
-			<form action="financialServlet" method="post">
-				<table class="searchTable">
-					<tr>
-						<td>日付</td>
-						<td><input type="date" name="searchDate"></td>
-						<td>カテゴリ</td>
-						<td>
-							<select  class="textbox">
-								<option value="">==未選択==</option>
-								<c:forEach var="c" items="${category}">
-									<option value="${c.name}">${c.name}</option>
-								</c:forEach>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td>プロジェクト</td>
-						<td>
-							<select  class="textbox">
-								<option value="">==未選択==</option>
-								<c:forEach var="p" items="${project}">
-									<option value="${p.name}">${p.name}</option>
-								</c:forEach>
-							</select>
-						</td>
-						<td>店名</td>
-						<td><input type="text" name="store" class="textbox"></td>
-					</tr>
-					<tr>
-						<td>品目</td>
-						<td><input type="text" name="item" class="textbox"></td>
-						<td>入出金</td>
-						<td>
-							<select  class="textbox">
-								<option value="">==未選択==</option>
-								<option value="income">収入</option>
-								<option value="expend">支出</option>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td>金額</td>
-						<td><input type="number" name="number" class="textbox"></td>
-						<td>メモ</td>
-						<td><textarea class="textbox"></textarea></td>
-					</tr>
-				</table>
-				<button type="submit" name="submit" class="reset-btn" value="reset">削除</button>
-				<button type="submit" name="submit" id="close" class="reset-btn" value="reset">キャンセル</button>
-				<button type="submit" name="submit" class="display-btn" value="display">保存</button>
-			</form>
+<c:forEach var="c" items="${balance}">
+	<div id="ad-ed-wrapper">
+		<div id="ad-ed-inside">
+			<div id="message">
+				<h1>収支編集</h1>
+				<form action="financialServlet" method="post">
+					<table class="searchTable">
+						<tr>
+							<td>日付</td>
+							<td><input type="date" name="searchDate" value="${c.created_at}"></td>
+							<td>カテゴリ</td>
+							<td>
+								<select  class="textbox">
+									<option value="${c.category}">${c.category}</option>
+									<c:forEach var="ca" items="${category}">
+										<option value="${ca.name}">${ca.name}</option>
+									</c:forEach>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>プロジェクト</td>
+							<td>
+								<select  class="textbox">
+									<option value="${c.project}">${c.project}</option>
+									<c:forEach var="p" items="${project}">
+										<option value="${p.name}">${p.name}</option>
+									</c:forEach>
+								</select>
+							</td>
+							<td>店名</td>
+							<td><input type="text" name="store" class="textbox" value="${c.name}"></td>
+						</tr>
+						<tr>
+							<td>品目</td>
+							<td><input type="text" name="item" class="textbox" value="${c.item}"></td>
+							<td>入出金</td>
+							<td>
+								<select  class="textbox">
+									<option value="${c.type}">${c.type}</option>
+									<option value="income">収入</option>
+									<option value="expend">支出</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>金額</td>
+							<td><input type="number" name="number" class="textbox" value="${c.amount}"></td>
+							<td>メモ</td>
+							<td><textarea class="textbox">${c.memo}</textarea></td>
+						</tr>
+					</table>
+					<button type="submit" name="submit" class="reset-btn" value="reset">削除</button>
+					<button type="submit" name="submit" id="close" class="reset-btn" value="reset">キャンセル</button>
+					<button type="submit" name="submit" class="display-btn" value="display">保存</button>
+				</form>
+			</div>
 		</div>
 	</div>
-</div>
-
+</c:forEach>
 
 <!-- 一時的な空白エリア  -->
 <br><br><br><br>
@@ -262,52 +263,6 @@
 
 <script>
 	let currentPopup = null;
-
-	const adInsertBtn = document.getElementById('ad_InsertBtn');
-	const adiswrapper = document.getElementById('ad-is-wrapper');
-	
-	const adEditBtn = document.getElementById('ad_EditBtn');
-	const adedwrapper = document.getElementById('ad-ed-wrapper');
-
-	const blBtn = document.getElementById('blBtn');
-	const blwrapper = document.getElementById('bl-wrapper');
-	
-	const close = document.getElementById('close');
-
-	adInsertBtn.addEventListener('click',()=>{
-		adiswrapper.style.display = "block";
-	});
-
-	adEditBtn.addEventListener('click',()=>{
-		adedwrapper.style.display = "block";
-		blwrapper.style.display = "none";
-	});
-
-	blBtn.addEventListener('click',()=>{
-		blwrapper.style.display = "block";
-	});
-	
-
-	adiswrapper.addEventListener('click',e=>{
-		if(e.target.id === adiswrapper.id || e.target.id === close.id ){
-			adiswrapper.style.display = "none";
-		}
-	});
-
-	adedwrapper.addEventListener('click',e=>{
-		if(e.target.id === adedwrapper.id || e.target.id === close.id ){
-			adedwrapper.style.display = "none";
-		}
-	});
-
-	blwrapper.addEventListener('click',e=>{
-
-		if(e.target.id === blwrapper.id || e.target.id === close.id ){
-			blwrapper.style.display = "none";
-		}
-	});
-
-	
 
 	function openPopup(id, event){
 		const popup = document.getElementById("popup_"+id);
@@ -330,12 +285,41 @@
 
 	function closePopup(id){
 		const popup = document.getElementById("popup_"+id);
-		if(popup)
+		if(popup){
 			popup.style.display = "none";	
 			currentPopup = null;
 		}
-		
 	}
+
+	const adInsertBtn = document.getElementById('ad_InsertBtn');
+	const adiswrapper = document.getElementById('ad-is-wrapper');
+	
+	const adEditBtn = document.getElementById('ad_EditBtn');
+	const adedwrapper = document.getElementById('ad-ed-wrapper');
+	
+	const close = document.getElementById('close');
+
+	adInsertBtn.addEventListener('click',()=>{
+		adiswrapper.style.display = "block";
+	});
+
+	adEditBtn.addEventListener('click',()=>{
+		adedwrapper.style.display = "block";
+	});
+	
+
+	adiswrapper.addEventListener('click',e=>{
+		if(e.target.id === adiswrapper.id || e.target.id === close.id ){
+			adiswrapper.style.display = "none";
+		}
+	});
+
+	adedwrapper.addEventListener('click',e=>{
+		if(e.target.id === adedwrapper.id || e.target.id === close.id ){
+			adedwrapper.style.display = "none";
+		}
+	});
+
 	
 </script>
 
