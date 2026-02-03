@@ -58,5 +58,32 @@ public class financialLogic {
 		return true;	
 	}
 	
+	//収支編集
+	public boolean editBalanceData(balanceBeans beans) {
+		//finance_recordへデータの更新
+		financialDao fi_dao = new financialDao();
+		String type = "収支";
+		boolean fi_completeFlag = fi_dao.editBalanceData_financial(beans,type);
+		
+		if(!fi_completeFlag) {
+			return false;
+		}
+		
+		//transactionへのデータの更新
+		transactionDao tr_dao = new transactionDao();
+		boolean tr_completeFlag = tr_dao.editBalanceData_transaction(beans);
+		
+		if(!tr_completeFlag) {
+			//transactionと同時に更新しないといけないため、transaction失敗時はfinance_recordからも該当データを削除する。
+			boolean deleteFlag = fi_dao.deleteBalanceData(beans);
+			if(!deleteFlag) {
+				System.out.println("深刻なエラーが発生");
+				////////////////////処理を考える//////////////////////////
+			}
+			return false;
+		}
+		return true;
+	}
+	
 	
 }

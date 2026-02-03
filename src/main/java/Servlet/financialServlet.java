@@ -43,32 +43,74 @@ public class financialServlet extends HttpServlet {
 		String submit = request.getParameter("submit");
 		financialLogic logic = new financialLogic();
 		
+		String id, date, category, project, store, item, type, memo;
+		int amount;
+		String group_id = accountData.getGroup_id();
+		
 		if("save".equals(submit)) {
 			//収支新規記録
-			String date = request.getParameter("date");
-			String category = request.getParameter("category");
-			String project = request.getParameter("project");
-			String store = request.getParameter("store");
-			String item = request.getParameter("item");
-			String type = request.getParameter("type");
-			int amount = Integer.parseInt(request.getParameter("number"));
-			String memo = request.getParameter("memo");
+			date = request.getParameter("date");
+			category = request.getParameter("category");
+			project = request.getParameter("project");
+			store = request.getParameter("store");
+			item = request.getParameter("item");
+			type = request.getParameter("type");
+			amount = Integer.parseInt(request.getParameter("number"));
+			memo = request.getParameter("memo");
 			
 			signupLogic id_logic = new signupLogic();
 			
-			String id = id_logic.RandomID();
-			String group_id = accountData.getGroup_id();
+			id = id_logic.RandomID();
+			
 			
 			balanceBeans beans = new balanceBeans(id,group_id,date,store,item,amount,project,category,memo,type);
 			
 			boolean insertFlag = logic.insertBalanceData(beans);
 			
 			if(insertFlag) {
-				request.getRequestDispatcher("/financial.jsp").forward(request, response);
+				response.sendRedirect(request.getContextPath() + "/financialServlet");
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
-				request.getRequestDispatcher("/financial.jsp").forward(request, response);
+				response.sendRedirect(request.getContextPath() + "/financialServlet");
 			}
+		}else if("edit".equals(submit)) {
+			//収支編集
+			id = request.getParameter("id");
+			date = request.getParameter("date");
+			category = request.getParameter("category");
+			project = request.getParameter("project");
+			store = request.getParameter("store");
+			item = request.getParameter("item");
+			type = request.getParameter("type");
+			amount = Integer.parseInt(request.getParameter("number"));
+			memo = request.getParameter("memo");
+			balanceBeans beans = new balanceBeans(id,group_id,date,store,item,amount,project,category,memo,type);
+			
+			boolean editFlag = logic.editBalanceData(beans);
+			
+			if(editFlag) {
+				response.sendRedirect(request.getContextPath() + "/financialServlet");
+			}else {
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
+				response.sendRedirect(request.getContextPath() + "/financialServlet");
+			}
+			
+		}else if("search".equals(submit)) {
+			//収支検索
+			String startDate = request.getParameter("startDate");
+			String endDate = request.getParameter("endDateate");
+			category = request.getParameter("category");
+			project = request.getParameter("project");
+			store = request.getParameter("store");
+			item = request.getParameter("item");
+			type = request.getParameter("type");
+			String keyword = request.getParameter("keyword");
+			
+		}else if("delete".equals(submit)) {
+			//収支削除
+			id = request.getParameter("id");
+		}else {
+			response.sendRedirect(request.getContextPath() + "/financialServlet");
 		}
 	}
 

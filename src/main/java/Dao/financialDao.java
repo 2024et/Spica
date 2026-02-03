@@ -60,7 +60,7 @@ public class financialDao {
         PreparedStatement stmt = null;
 		try {
 			Connection con = DBUtil.getConnection();
-			String sql = "INSERT INTO finance_record (id,group_id,created_at,name,item,amount,type) VALUES (?,?,?,?,?,?,?)";
+			String sql = "INSERT INTO finance_record (id,group_id,created_at,name,item,amount,type) VALUES (?,?,?,?,?,?,?);";
 			
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1, beans.getId());
@@ -70,6 +70,33 @@ public class financialDao {
 			stmt.setString(5, beans.getItem());
 			stmt.setInt(6, beans.getAmount());
 			stmt.setString(7, type);
+			
+			
+			int result = stmt.executeUpdate();
+			if(result > 0) {return true;}
+			else {return false;}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	//収支の編集
+	public boolean editBalanceData_financial(balanceBeans beans,String type) {
+        PreparedStatement stmt = null;
+		try {
+			Connection con = DBUtil.getConnection();
+			String sql = "UPDATE finance_record SET id = ?, group_id = ?, created_at = ?, name = ?, item = ?, amount = ?, type = ? WHERE id = ?;";
+			
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, beans.getId());
+			stmt.setString(2, beans.getGroup_id());
+			stmt.setString(3, beans.getCreated_at());
+			stmt.setString(4, beans.getName());
+			stmt.setString(5, beans.getItem());
+			stmt.setInt(6, beans.getAmount());
+			stmt.setString(7, type);
+			stmt.setString(8, beans.getId());
 			
 			
 			int result = stmt.executeUpdate();

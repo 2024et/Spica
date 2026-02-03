@@ -35,7 +35,7 @@
 					<td><input type="date" name="startDate">から<input type="date" name="endDate"></td>
 					<td>収支区分</td>
 					<td>
-						<select  class="textbox">
+						<select  class="textbox" name="type">
 							<option value="">==未選択==</option>
 							<option value="income">収入</option>
 							<option value="expend">支出</option>
@@ -45,7 +45,7 @@
 				<tr>
 					<td>カテゴリ</td>
 					<td>
-						<select  class="textbox">
+						<select  class="textbox" name="category">
 							<option value="">==未選択==</option>
 							<c:forEach var="c" items="${category}">
 								<option value="${c.name}">${c.name}</option>
@@ -54,7 +54,7 @@
 					</td>
 					<td>プロジェクト</td>
 					<td>
-						<select  class="textbox">
+						<select  class="textbox" name="project">
 							<option value="">==未選択==</option>
 							<c:forEach var="p" items="${project}">
 								<option value="${p.name}">${p.name}</option>
@@ -78,7 +78,7 @@
 		</div>
 		<div class="searchBtns">
 			<button type="submit" name="submit" class="reset-btn" value="reset">リセット</button>
-			<button type="submit" name="submit" class="display-btn" value="display">表示</button>
+			<button type="submit" name="submit" class="display-btn" value="search">表示</button>
 		</div>
 		</form>
 	</div>
@@ -129,8 +129,8 @@
 		<p>入出金：${c.type}</p>
 		<p>金額：${c.amount}</p>
 		<p>メモ：${c.memo}</p>
-		<button type="button" name="submit" id="ad_EditBtn" class="reset-btn" onclick="closePopup('${c.id}')">編集</button>
-		<button type="button" name="submit" id="close" class="reset-btn">閉じる</button>
+		<button type="button" class="ad_EditBtn reset-btn" data-id="${c.id}">編集</button>
+		<button type="button" class="reset-btn">閉じる</button>
 	</div>
 </c:forEach>
 
@@ -186,7 +186,7 @@
 						<td><textarea class="textbox" name="memo"></textarea></td>
 					</tr>
 				</table>
-				<button type="submit" name="submit" id="close" class="reset-btn" value="cancel">キャンセル</button>
+				<button type="submit" name="submit" class="close-btn" value="cancel">キャンセル</button>
 				<button type="submit" name="submit" class="display-btn" value="save">保存</button>
 			</form>
 		</div>
@@ -194,18 +194,19 @@
 </div>
 
 <c:forEach var="c" items="${balance}">
-	<div id="ad-ed-wrapper">
+	<div class="ad-ed-wrapper" id="ad-ed-wrapper-${c.id}">
 		<div id="ad-ed-inside">
 			<div id="message">
 				<h1>収支編集</h1>
 				<form action="financialServlet" method="post">
+				<input type="hidden" name="id" value="${c.id}" />
 					<table class="searchTable">
 						<tr>
 							<td>日付</td>
-							<td><input type="date" name="searchDate" value="${c.created_at}"></td>
+							<td><input type="date" name="date" value="${c.created_at}"></td>
 							<td>カテゴリ</td>
 							<td>
-								<select  class="textbox">
+								<select  class="textbox" name="category">
 									<option value="${c.category}">${c.category}</option>
 									<c:forEach var="ca" items="${category}">
 										<option value="${ca.name}">${ca.name}</option>
@@ -216,7 +217,7 @@
 						<tr>
 							<td>プロジェクト</td>
 							<td>
-								<select  class="textbox">
+								<select  class="textbox" name="project">
 									<option value="${c.project}">${c.project}</option>
 									<c:forEach var="p" items="${project}">
 										<option value="${p.name}">${p.name}</option>
@@ -231,7 +232,7 @@
 							<td><input type="text" name="item" class="textbox" value="${c.item}"></td>
 							<td>入出金</td>
 							<td>
-								<select  class="textbox">
+								<select  class="textbox" name="type">
 									<option value="${c.type}">${c.type}</option>
 									<option value="income">収入</option>
 									<option value="expend">支出</option>
@@ -242,12 +243,12 @@
 							<td>金額</td>
 							<td><input type="number" name="number" class="textbox" value="${c.amount}"></td>
 							<td>メモ</td>
-							<td><textarea class="textbox">${c.memo}</textarea></td>
+							<td><textarea class="textbox" name="memo">${c.memo}</textarea></td>
 						</tr>
 					</table>
-					<button type="submit" name="submit" class="reset-btn" value="reset">削除</button>
-					<button type="submit" name="submit" id="close" class="reset-btn" value="reset">キャンセル</button>
-					<button type="submit" name="submit" class="display-btn" value="display">保存</button>
+					<button type="submit" name="submit" class="reset-btn" value="delete">削除</button>
+					<button type="button" class="edit-close-btn close-btn" data-id="${c.id}">キャンセル</button>
+					<button type="submit" name="submit" class="display-btn" value="edit">保存</button>
 				</form>
 			</div>
 		</div>
@@ -262,6 +263,11 @@
 <div id="ad_InsertBtn"><p>収支新規登録</p></div>
 
 <script>
+console.log(
+		  'edit-close-btn count =',
+		  document.querySelectorAll('.edit-close-btn').length
+		);
+
 	let currentPopup = null;
 
 	function openPopup(id, event){
@@ -280,7 +286,7 @@
 	function closePopup_Delay(id){
 		let hideTimer = setTimeout(() =>{
 			closePopup(id);
-		},3000);
+		},10000);
 	}
 
 	function closePopup(id){
@@ -293,32 +299,50 @@
 
 	const adInsertBtn = document.getElementById('ad_InsertBtn');
 	const adiswrapper = document.getElementById('ad-is-wrapper');
-	
-	const adEditBtn = document.getElementById('ad_EditBtn');
-	const adedwrapper = document.getElementById('ad-ed-wrapper');
-	
-	const close = document.getElementById('close');
 
 	adInsertBtn.addEventListener('click',()=>{
 		adiswrapper.style.display = "block";
 	});
-
-	adEditBtn.addEventListener('click',()=>{
-		adedwrapper.style.display = "block";
-	});
-	
 
 	adiswrapper.addEventListener('click',e=>{
 		if(e.target.id === adiswrapper.id || e.target.id === close.id ){
 			adiswrapper.style.display = "none";
 		}
 	});
+	
+	document.querySelectorAll('.ad_EditBtn').forEach(btn => {
+		  btn.addEventListener('click', (e) => {
+		    e.stopPropagation(); 
+		    const id = btn.dataset.id;
 
-	adedwrapper.addEventListener('click',e=>{
-		if(e.target.id === adedwrapper.id || e.target.id === close.id ){
-			adedwrapper.style.display = "none";
-		}
+		    console.log("id:"+id);
+		   
+		    const wrapper = document.getElementById("ad-ed-wrapper-"+id);
+		    if(wrapper){
+		      wrapper.style.display = "block";
+		      closePopup(id);
+		    }
+		  });
+		});
+
+	document.querySelectorAll('.edit-close-btn').forEach(btn => {
+	  btn.addEventListener('click', (e) => {
+	    e.stopPropagation();
+
+	    const id = btn.dataset.id;
+	    console.log("closeBtnId:", id);
+
+	    const wrapper = document.getElementById("ad-ed-wrapper-"+id);
+	    if(wrapper){
+	      wrapper.style.display = "none";
+	    }
+	  });
 	});
+
+		
+
+
+
 
 	
 </script>
