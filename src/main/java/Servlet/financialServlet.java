@@ -117,6 +117,8 @@ public class financialServlet extends HttpServlet {
 		}else if("delete".equals(submit)) {
 			//収支削除
 			id = request.getParameter("id");
+			
+			boolean deleteFlag = logic.deleteBalanceData(id,group_id);
 		}else {
 			response.sendRedirect(request.getContextPath() + "/financialServlet");
 		}

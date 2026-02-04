@@ -9,10 +9,9 @@ import Beans.balanceBeans;
 public class transactionDao {
 
 	//新規収支の追加
-	public boolean insertBalanceData_transaction(balanceBeans beans) {
+	public boolean insertBalanceData_transaction(Connection con,balanceBeans beans) {
         PreparedStatement stmt = null;
 		try {
-			Connection con = DBUtil.getConnection();
 			String sql = "INSERT INTO transaction (id,project,category,memo,type) VALUES (?,?,?,?,?);";
 			
 			stmt = con.prepareStatement(sql);

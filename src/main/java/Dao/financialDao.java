@@ -56,10 +56,9 @@ public class financialDao {
 	}
 	
 	//新規収支の追加
-	public boolean insertBalanceData_financial(balanceBeans beans, String type) {
+	public boolean insertBalanceData_financial(Connection con,balanceBeans beans, String type) {
         PreparedStatement stmt = null;
 		try {
-			Connection con = DBUtil.getConnection();
 			String sql = "INSERT INTO finance_record (id,group_id,created_at,name,item,amount,type) VALUES (?,?,?,?,?,?,?);";
 			
 			stmt = con.prepareStatement(sql);

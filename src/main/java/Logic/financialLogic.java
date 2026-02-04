@@ -1,10 +1,13 @@
 package Logic;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 import Beans.balanceBeans;
 import Beans.categoryBeans;
 import Beans.projectBeans;
+import Dao.DBUtil;
 import Dao.categoryDao;
 import Dao.financialDao;
 import Dao.projectDao;
@@ -32,57 +35,66 @@ public class financialLogic {
 	
 	//収支新規登録
 	public boolean insertBalanceData(balanceBeans beans) {
-		
-		//finance_recordへのデータ追加
 		financialDao fi_dao = new financialDao();
-		String type = "収支";
-		boolean fi_completeFlag = fi_dao.insertBalanceData_financial(beans,type);
-		
-		if(!fi_completeFlag) {
-			return false;
-		}
-		
-		//transactionへのデータ追加
 		transactionDao tr_dao = new transactionDao();
-		boolean tr_completeFlag = tr_dao.insertBalanceData_transaction(beans);
-		
-		if(!tr_completeFlag) {
-			//transactionと同時に登録しないといけないため、transaction失敗時はfinance_recordから該当データを削除する。
-			boolean deleteFlag = fi_dao.deleteBalanceData(beans);
-			if(!deleteFlag) {
-				System.out.println("深刻なエラーが発生");
-				/////////////////////処理を考える////////////////////////////
+		String type = "収支";
+		try {
+			Connection con = DBUtil.getConnection();
+			con.setAutoCommit(false);
+			
+			boolean fi_completeFlag = fi_dao.insertBalanceData_financial(con,beans,type);
+			
+			if(!fi_completeFlag) {
+				con.rollback();
+				return false;
 			}
+			
+			boolean tr_completeFlag = tr_dao.insertBalanceData_transaction(con,beans);
+					
+			if(!tr_completeFlag) {
+				con.rollback();
+				return false;
+			}
+			
+			con.commit();
+			return true;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
 			return false;
 		}
-		return true;	
 	}
 	
 	//収支編集
 	public boolean editBalanceData(balanceBeans beans) {
-		//finance_recordへデータの更新
 		financialDao fi_dao = new financialDao();
-		String type = "収支";
-		boolean fi_completeFlag = fi_dao.editBalanceData_financial(beans,type);
-		
-		if(!fi_completeFlag) {
-			return false;
-		}
-		
-		//transactionへのデータの更新
 		transactionDao tr_dao = new transactionDao();
-		boolean tr_completeFlag = tr_dao.editBalanceData_transaction(beans);
-		
-		if(!tr_completeFlag) {
-			//transactionと同時に更新しないといけないため、transaction失敗時はfinance_recordからも該当データを削除する。
-			boolean deleteFlag = fi_dao.deleteBalanceData(beans);
-			if(!deleteFlag) {
-				System.out.println("深刻なエラーが発生");
-				////////////////////処理を考える//////////////////////////
+		String type = "収支";
+		try {
+			Connection con = DBUtil.getConnection();
+			con.setAutoCommit(false);
+			
+			boolean fi_completeFlag = fi_dao.editBalanceData_financial(beans,type);
+			
+			if(!fi_completeFlag) {
+				con.rollback();
+				return false;
 			}
+			
+			boolean tr_completeFlag = tr_dao.editBalanceData_transaction(beans);
+					
+			if(!tr_completeFlag) {
+				con.rollback();
+				return false;
+			}
+			
+			con.commit();
+			return true;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
 			return false;
 		}
-		return true;
 	}
 	
 	//収支検索
@@ -90,6 +102,13 @@ public class financialLogic {
 		financialDao dao = new financialDao();
 		return dao.searchBalanceData_financial(group_id,startDate,endDate,category,project,store,item,type,keyword);
 		
+	}
+	
+	//収支削除
+	public boolean deleteBalanceData(String id, String group_id) {
+		financialDao fi_dao = new financialDao();
+		//一時的にtrue
+		return true;
 	}
 	
 	
