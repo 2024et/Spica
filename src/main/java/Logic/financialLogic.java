@@ -85,5 +85,12 @@ public class financialLogic {
 		return true;
 	}
 	
+	//収支検索
+	public List<balanceBeans> searchBalanceData(String group_id, String startDate, String endDate, String category, String project, String store, String item, String type, String keyword) {
+		financialDao dao = new financialDao();
+		return dao.searchBalanceData_financial(group_id,startDate,endDate,category,project,store,item,type,keyword);
+		
+	}
+	
 	
 }

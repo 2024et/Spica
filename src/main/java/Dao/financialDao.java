@@ -108,6 +108,110 @@ public class financialDao {
 		}
 	}
 	
+	//収支の検索
+	public List<balanceBeans> searchBalanceData_financial(String group_id, String startDate, String endDate, String category, String project, String name, String item, String type, String keyword) {
+		List<balanceBeans> list = new ArrayList<>();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+		List<String> columns = new ArrayList<>();
+		List<Object> prams = new ArrayList<>();
+		String sql = "SELECT fi.id AS id, fi.group_id AS group_id, fi.created_at AS created_at, fi.name AS name, fi.item AS item, fi.amount AS amount, tr.project AS project, tr.category AS category, tr.memo AS memo, tr.type AS type FROM finance_record AS fi INNER JOIN transaction AS tr ON fi.id = tr.id";
+		
+		columns.add("fi.group_id = ?");
+		prams.add(group_id);
+		
+		if(startDate != null && !startDate.isEmpty()) {
+			columns.add("fi.created_at >= ?");
+			prams.add(startDate);
+		}
+		
+		if(endDate != null && !endDate.isEmpty()) {
+			columns.add("fi.created_at <= ?");
+			prams.add(endDate);
+		}
+		
+		if(category != null && !category.isEmpty()) {
+			columns.add("tr.category = ?");
+			prams.add(category);
+		}
+		
+		if(project != null && !project.isEmpty()) {
+			columns.add("tr.project = ?");
+			prams.add(project);
+		}
+		
+		if(name != null && !name.isEmpty()) {
+			columns.add("fi.name = ?");
+			prams.add(name);
+		}
+		
+		if(item != null && !item.isEmpty()) {
+			columns.add("fi.item = ?");
+			prams.add(item);
+		}
+		
+		if(type != null && !type.isEmpty()) {
+			columns.add("tr.type = ?");
+			prams.add(type);
+		}
+		
+		if(keyword != null && !keyword.isEmpty()) {
+			columns.add("(fi.name LIKE ? OR fi.item LIKE ? OR tr.category LIKE ? OR tr.project LIKE ?)");
+			String likeKeyword = "%" + keyword + "%";
+			prams.add(likeKeyword);
+			prams.add(likeKeyword);
+			prams.add(likeKeyword);
+			prams.add(likeKeyword);
+		}
+		
+		sql += " WHERE " + String.join(" AND ", columns);
+		
+		
+		try {
+			Connection con = DBUtil.getConnection();
+			
+			stmt = con.prepareStatement(sql);
+			for(int i = 0; i < prams.size(); i++) {
+				stmt.setObject(i+1, prams.get(i));
+			}
+			
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+            	String id = rs.getString("id");
+            	String created_at = rs.getString("created_at");
+            	String s_name = rs.getString("name");
+            	String s_item = rs.getString("item");
+            	int amount = rs.getInt("amount");
+            	String s_project = rs.getString("project");
+            	String s_category = rs.getString("category");
+            	String memo = rs.getString("memo");            	
+            	String s_type = rs.getString("type");
+            	
+            	balanceBeans beans = new balanceBeans(
+                        id,
+                        group_id,
+                        created_at,
+                        s_name,
+                        s_item,
+                        amount,
+                        s_project,
+                        s_category,
+                        memo,
+                        s_type
+                    );
+            	list.add(beans);  
+            }
+			return list;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		
+	}
+	
 	//収支データの削除
 	public boolean deleteBalanceData(balanceBeans beans) {
         PreparedStatement stmt = null;

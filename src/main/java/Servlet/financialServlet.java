@@ -96,9 +96,14 @@ public class financialServlet extends HttpServlet {
 			}
 			
 		}else if("search".equals(submit)) {
+			List<categoryBeans> data_category = logic.getCategoryData(accountData.getGroup_id());
+			List<projectBeans> data_project = logic.getProjectData(accountData.getGroup_id());
+			request.setAttribute("category", data_category);
+			request.setAttribute("project", data_project);
+			
 			//収支検索
 			String startDate = request.getParameter("startDate");
-			String endDate = request.getParameter("endDateate");
+			String endDate = request.getParameter("endDate");
 			category = request.getParameter("category");
 			project = request.getParameter("project");
 			store = request.getParameter("store");
@@ -106,6 +111,9 @@ public class financialServlet extends HttpServlet {
 			type = request.getParameter("type");
 			String keyword = request.getParameter("keyword");
 			
+			List<balanceBeans> searchData = logic.searchBalanceData(group_id,startDate,endDate,category,project,store,item,type,keyword);
+			request.setAttribute("balance", searchData);
+			request.getRequestDispatcher("/financial.jsp").forward(request, response);
 		}else if("delete".equals(submit)) {
 			//収支削除
 			id = request.getParameter("id");
