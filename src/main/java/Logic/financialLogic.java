@@ -10,6 +10,7 @@ import Beans.projectBeans;
 import Dao.DBUtil;
 import Dao.categoryDao;
 import Dao.financialDao;
+import Dao.logDao;
 import Dao.projectDao;
 import Dao.transactionDao;
 
@@ -34,9 +35,10 @@ public class financialLogic {
 	}
 	
 	//収支新規登録
-	public boolean insertBalanceData(balanceBeans beans) {
+	public boolean insertBalanceData(balanceBeans beans,String log) {
 		financialDao fi_dao = new financialDao();
 		transactionDao tr_dao = new transactionDao();
+		logDao log_dao = new logDao();
 		String type = "収支";
 		try {
 			Connection con = DBUtil.getConnection();
@@ -56,6 +58,13 @@ public class financialLogic {
 				return false;
 			}
 			
+			boolean log_completeFlag = log_dao.insertLog(con,beans.getGroup_id(),log);
+			
+			if(!log_completeFlag) {
+				con.rollback();
+				return false;
+			}
+			
 			con.commit();
 			return true;
 			
@@ -66,9 +75,10 @@ public class financialLogic {
 	}
 	
 	//収支編集
-	public boolean editBalanceData(balanceBeans beans) {
+	public boolean editBalanceData(balanceBeans beans, String log) {
 		financialDao fi_dao = new financialDao();
 		transactionDao tr_dao = new transactionDao();
+		logDao log_dao = new logDao();
 		String type = "収支";
 		try {
 			Connection con = DBUtil.getConnection();
@@ -84,6 +94,13 @@ public class financialLogic {
 			boolean tr_completeFlag = tr_dao.editBalanceData_transaction(beans);
 					
 			if(!tr_completeFlag) {
+				con.rollback();
+				return false;
+			}
+			
+			boolean log_completeFlag = log_dao.insertLog(con,beans.getGroup_id(),log);
+			
+			if(!log_completeFlag) {
 				con.rollback();
 				return false;
 			}
@@ -105,9 +122,10 @@ public class financialLogic {
 	}
 	
 	//収支削除
-	public boolean deleteBalanceData(String id) {
+	public boolean deleteBalanceData(String id,String group_id,String log) {
 		financialDao fi_dao = new financialDao();
 		transactionDao tr_dao = new transactionDao();
+		logDao log_dao = new logDao();
 		
 		try {
 			Connection con = DBUtil.getConnection();
@@ -123,6 +141,13 @@ public class financialLogic {
 			boolean tr_completeFlag = tr_dao.deleteBalanceData_transaction(con,id);
 					
 			if(!tr_completeFlag) {
+				con.rollback();
+				return false;
+			}
+			
+			boolean log_completeFlag = log_dao.insertLog(con,group_id,log);
+			
+			if(!log_completeFlag) {
 				con.rollback();
 				return false;
 			}

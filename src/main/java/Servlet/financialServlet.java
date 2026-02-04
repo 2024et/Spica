@@ -43,7 +43,7 @@ public class financialServlet extends HttpServlet {
 		String submit = request.getParameter("submit");
 		financialLogic logic = new financialLogic();
 		
-		String id, date, category, project, store, item, type, memo;
+		String id, date, category, project, store, item, type, memo, log;
 		int amount;
 		String group_id = accountData.getGroup_id();
 		
@@ -63,9 +63,13 @@ public class financialServlet extends HttpServlet {
 			id = id_logic.RandomID();
 			
 			
+			
+			
 			balanceBeans beans = new balanceBeans(id,group_id,date,store,item,amount,project,category,memo,type);
 			
-			boolean insertFlag = logic.insertBalanceData(beans);
+			log = accountData.getName()+"さんが収支データを追加しました。";
+			
+			boolean insertFlag = logic.insertBalanceData(beans,log);
 			
 			if(insertFlag) {
 				response.sendRedirect(request.getContextPath() + "/financialServlet");
@@ -86,7 +90,9 @@ public class financialServlet extends HttpServlet {
 			memo = request.getParameter("memo");
 			balanceBeans beans = new balanceBeans(id,group_id,date,store,item,amount,project,category,memo,type);
 			
-			boolean editFlag = logic.editBalanceData(beans);
+			log = accountData.getName()+"さんが収支データを編集しました。";
+			
+			boolean editFlag = logic.editBalanceData(beans,log);
 			
 			if(editFlag) {
 				response.sendRedirect(request.getContextPath() + "/financialServlet");
@@ -118,7 +124,9 @@ public class financialServlet extends HttpServlet {
 			//収支削除
 			id = request.getParameter("id");
 			
-			boolean deleteFlag = logic.deleteBalanceData(id);
+			log = accountData.getName()+"さんが収支データを削除しました。";
+			
+			boolean deleteFlag = logic.deleteBalanceData(id,group_id,log);
 			if(deleteFlag) {
 				response.sendRedirect(request.getContextPath() + "/financialServlet");
 			}else {
