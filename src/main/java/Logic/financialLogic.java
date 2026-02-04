@@ -105,10 +105,35 @@ public class financialLogic {
 	}
 	
 	//収支削除
-	public boolean deleteBalanceData(String id, String group_id) {
+	public boolean deleteBalanceData(String id) {
 		financialDao fi_dao = new financialDao();
-		//一時的にtrue
-		return true;
+		transactionDao tr_dao = new transactionDao();
+		
+		try {
+			Connection con = DBUtil.getConnection();
+			con.setAutoCommit(false);
+			
+			boolean fi_completeFlag = fi_dao.deleteBalanceData_financial(con,id);
+			
+			if(!fi_completeFlag) {
+				con.rollback();
+				return false;
+			}
+			
+			boolean tr_completeFlag = tr_dao.deleteBalanceData_transaction(con,id);
+					
+			if(!tr_completeFlag) {
+				con.rollback();
+				return false;
+			}
+			
+			con.commit();
+			return true;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 	
 	

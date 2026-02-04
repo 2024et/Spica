@@ -55,4 +55,22 @@ public class transactionDao {
 			return false;
 		}
 	}
+	
+	//収支データの削除
+	public boolean deleteBalanceData_transaction(Connection con,String id) {
+        PreparedStatement stmt = null;
+		try {
+			String sql = "DELETE FROM transaction WHERE id = ?";
+			
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, id);
+			
+			int result = stmt.executeUpdate();
+			if(result > 0) {return true;}
+			else {return false;}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 }

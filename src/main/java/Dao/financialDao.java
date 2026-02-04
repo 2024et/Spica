@@ -212,14 +212,13 @@ public class financialDao {
 	}
 	
 	//収支データの削除
-	public boolean deleteBalanceData(balanceBeans beans) {
+	public boolean deleteBalanceData_financial(Connection con,String id) {
         PreparedStatement stmt = null;
 		try {
-			Connection con = DBUtil.getConnection();
 			String sql = "DELETE FROM finance_record WHERE id = ?";
 			
 			stmt = con.prepareStatement(sql);
-			stmt.setString(1, beans.getId());
+			stmt.setString(1, id);
 			
 			int result = stmt.executeUpdate();
 			if(result > 0) {return true;}
