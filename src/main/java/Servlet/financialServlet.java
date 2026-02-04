@@ -43,6 +43,11 @@ public class financialServlet extends HttpServlet {
 		String submit = request.getParameter("submit");
 		financialLogic logic = new financialLogic();
 		
+		List<categoryBeans> data_category = logic.getCategoryData(accountData.getGroup_id());
+		List<projectBeans> data_project = logic.getProjectData(accountData.getGroup_id());
+		request.setAttribute("category", data_category);
+		request.setAttribute("project", data_project);
+		
 		String id, date, category, project, store, item, type, memo, log;
 		int amount;
 		String group_id = accountData.getGroup_id();
@@ -61,9 +66,6 @@ public class financialServlet extends HttpServlet {
 			signupLogic id_logic = new signupLogic();
 			
 			id = id_logic.RandomID();
-			
-			
-			
 			
 			balanceBeans beans = new balanceBeans(id,group_id,date,store,item,amount,project,category,memo,type);
 			
@@ -102,11 +104,6 @@ public class financialServlet extends HttpServlet {
 			}
 			
 		}else if("search".equals(submit)) {
-			List<categoryBeans> data_category = logic.getCategoryData(accountData.getGroup_id());
-			List<projectBeans> data_project = logic.getProjectData(accountData.getGroup_id());
-			request.setAttribute("category", data_category);
-			request.setAttribute("project", data_project);
-			
 			//収支検索
 			String startDate = request.getParameter("startDate");
 			String endDate = request.getParameter("endDate");
