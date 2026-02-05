@@ -22,6 +22,12 @@ import Logic.signupLogic;
 @WebServlet("/financialServlet")
 public class financialServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	private List<balanceBeans> thisYearBalanceList;
+	private int thisYearIncome;
+	private int thisYearExpend;
+	private int thisYearNetBalance;
+;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
@@ -30,19 +36,20 @@ public class financialServlet extends HttpServlet {
 		List<categoryBeans> category = logic.getCategoryData(accountData.getGroup_id());
 		List<projectBeans> project = logic.getProjectData(accountData.getGroup_id());
 		
-		List<balanceBeans> balance = logic.getBalanceData(accountData.getGroup_id());
+		thisYearBalanceList = logic.getBalanceData(accountData.getGroup_id());
 		
-		int income = logic.incomeSum(balance);
-		int expend = logic.expendSum(balance);
-		int balance_thisyear = logic.balance(income, expend);
+		int thisYearIncome = logic.incomeSum(thisYearBalanceList);
+		int thisYearExpend = logic.expendSum(thisYearBalanceList);
+		int thisYearNetBalance = logic.balance(thisYearIncome, thisYearExpend);
 				
 		request.setAttribute("category", category);
 		request.setAttribute("project", project);
-		request.setAttribute("balance", balance);
+		request.setAttribute("thisYearBalanceGraph", thisYearBalanceList);
+		request.setAttribute("balance", thisYearBalanceList);
 		
-		request.setAttribute("income", income);
-		request.setAttribute("expend", expend);
-		request.setAttribute("balance_thisyear", balance_thisyear);
+		request.setAttribute("income", thisYearIncome);
+		request.setAttribute("expend", thisYearExpend);
+		request.setAttribute("balance_thisyear", thisYearNetBalance);
 		request.getRequestDispatcher("/financial.jsp").forward(request, response);
 	}
 
@@ -83,6 +90,9 @@ public class financialServlet extends HttpServlet {
 			
 			boolean insertFlag = logic.insertBalanceData(beans,log);
 			
+			request.setAttribute("income", thisYearIncome);
+			request.setAttribute("expend", thisYearExpend);
+			request.setAttribute("thisYearBalanceGraph", thisYearBalanceList);
 			if(insertFlag) {
 				response.sendRedirect(request.getContextPath() + "/financialServlet");
 			}else {
@@ -106,6 +116,9 @@ public class financialServlet extends HttpServlet {
 			
 			boolean editFlag = logic.editBalanceData(beans,log);
 			
+			request.setAttribute("income", thisYearIncome);
+			request.setAttribute("expend", thisYearExpend);
+			request.setAttribute("thisYearBalanceGraph", thisYearBalanceList);
 			if(editFlag) {
 				response.sendRedirect(request.getContextPath() + "/financialServlet");
 			}else {
@@ -138,6 +151,9 @@ public class financialServlet extends HttpServlet {
 			
 			request.setAttribute("searchArchive", map);
 			request.setAttribute("balance", searchData);
+			request.setAttribute("income", thisYearIncome);
+			request.setAttribute("expend", thisYearExpend);
+			request.setAttribute("thisYearBalanceGraph", thisYearBalanceList);
 			request.getRequestDispatcher("/financial.jsp").forward(request, response);
 		}else if("delete".equals(submit)) {
 			//収支削除
@@ -146,6 +162,10 @@ public class financialServlet extends HttpServlet {
 			log = accountData.getName()+"さんが収支データを削除しました。";
 			
 			boolean deleteFlag = logic.deleteBalanceData(id,group_id,log);
+			
+			request.setAttribute("income", thisYearIncome);
+			request.setAttribute("expend", thisYearExpend);
+			request.setAttribute("thisYearBalanceGraph", thisYearBalanceList);
 			if(deleteFlag) {
 				response.sendRedirect(request.getContextPath() + "/financialServlet");
 			}else {

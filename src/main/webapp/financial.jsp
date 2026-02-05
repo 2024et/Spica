@@ -9,6 +9,7 @@
 <meta charset="UTF-8">
 <title>Spica</title>
 <link rel="stylesheet" href="css/financial.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 <jsp:include page="header.jsp" />
@@ -16,7 +17,7 @@
 	<div class="fiscal">
 		<h3>今年度状況</h3>
 		<div class="data_area">
-			<div class="balance_graph"><canvas></canvas></div>
+			<div class="balance_graph"><canvas id="thisYearChart"></canvas></div>
 			<div class="data">
 				<h2 class="income">収入合計：￥${income}</h2>
 				<h2 class="expend">支出合計：￥${expend}</h2>
@@ -88,7 +89,7 @@
 	</div>
 </div>
 
-<canvas class="spend_graph"></canvas>
+<canvas class="spend_graph" id="searchBalanceGraph"></canvas>
 
 <table class="dataTable" border="1">
 	<thead><th>日付</th><th>プロジェクト</th><th>カテゴリ</th><th>店名</th><th>品目</th><th>入金</th><th>出金</th><th>詳細</th></thead>
@@ -307,6 +308,53 @@ console.log(
 	function resetSearchArea(){
 		document.querySelector("search").reset();
 	}
+
+	//グラフ
+	const thisYearLabels = [];
+	const thisYearData = [];
+
+	<c:forEach var="b" items="${thisYearBalanceGraph}">
+		thisYearLabels.push("${b.created_at}");
+		thisYearData.push(${b.amount});
+	</c:forEach>
+
+	const ctx = document.getElementById('thisYearChart');
+
+	new Chart(ctx, {
+	    type: 'line',
+	    data: {
+	        labels: thisYearLabels,
+	        datasets: [{
+	            label: '金額',
+	            data: thisYearData,
+	            borderWidth: 2
+	        }]
+	    }
+	});
+
+	const searchLabels = [];
+	const searchData = [];
+
+	<c:forEach var="b" items="${balance}">
+		searchLabels.push("${b.created_at}");
+		searchData.push(${b.amount});
+	</c:forEach>
+
+	const ctx2 = document.getElementById('searchBalanceGraph');
+
+	new Chart(ctx2, {
+	    type: 'bar',
+	    data: {
+	        labels: searchLabels,
+	        datasets: [{
+	            label: '金額',
+	            data: searchData,
+	            borderWidth: 2
+	        }]
+	    }
+	});
+
+	
 
 	const adInsertBtn = document.getElementById('ad_InsertBtn');
 	const adiswrapper = document.getElementById('ad-is-wrapper');
