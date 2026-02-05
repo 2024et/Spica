@@ -18,27 +18,27 @@
 		<div class="data_area">
 			<div class="balance_graph"><canvas></canvas></div>
 			<div class="data">
-				<h2 class="income">収入合計：￥</h2>
-				<h2 class="expend">支出合計：￥</h2>
-				<h2 class="balance">残高合計：￥</h2>
+				<h2 class="income">収入合計：￥${income}</h2>
+				<h2 class="expend">支出合計：￥${expend}</h2>
+				<h2 class="balance">残高合計：￥${balance_thisyear}</h2>
 			</div>
 		</div>
 	</div>
 	
 	<div class="search">
-		<form action="financialServlet" method="post">
+		<form action="financialServlet" method="post" id="search">
 		<h3>検索</h3>
 		<div class="searchArea">
 			<table class="searchTable">
 				<tr>
 					<td>日付</td>
-					<td><input type="date" name="startDate">から<input type="date" name="endDate"></td>
+					<td><input type="date" name="startDate" value="${searchArchive.startDate}">から<input type="date" name="endDate" value="${searchArchive.endDate}"></td>
 					<td>収支区分</td>
 					<td>
 						<select  class="textbox" name="type">
 							<option value="">==未選択==</option>
-							<option value="income">収入</option>
-							<option value="expend">支出</option>
+							<option value="income" ${searchArchive.type == 'income' ? 'selected' : ''}>収入</option>
+							<option value="expend" ${searchArchive.type == 'expend' ? 'selected' : ''}>支出</option>
 						</select>
 					</td>
 				</tr>
@@ -48,7 +48,9 @@
 						<select  class="textbox" name="category">
 							<option value="">==未選択==</option>
 							<c:forEach var="c" items="${category}">
-								<option value="${c.name}">${c.name}</option>
+								<option value="${c.name}"
+									<c:if test="${c.name == searchArchive.category}">selected</c:if>>${c.name}
+								</option>
 							</c:forEach>
 						</select>
 					</td>
@@ -57,27 +59,29 @@
 						<select  class="textbox" name="project">
 							<option value="">==未選択==</option>
 							<c:forEach var="p" items="${project}">
-								<option value="${p.name}">${p.name}</option>
+								<option value="${p.name}"
+									<c:if test="${p.name == searchArchive.project}">selected</c:if>>${p.name}
+								</option>
 							</c:forEach>
 						</select>
 					</td>
 				</tr>
 				<tr>
 					<td>店名</td>
-					<td><input type="text" name="store" class="textbox"></td>
+					<td><input type="text" name="store" class="textbox" value="${searchArchive.store}"></td>
 					<td>品目</td>
-					<td><input type="text" name="item" class="textbox"></td>
+					<td><input type="text" name="item" class="textbox" value="${searchArchive.item}"></td>
 				</tr>
 				<tr>
 					<td>キーワード</td>
-					<td><input type="text" name="keyword" class="textbox"></td>
+					<td><input type="text" name="keyword" class="textbox" value="${searchArchive.keyword}"></td>
 					<td></td>
 					<td></td>
 				</tr>
 			</table>
 		</div>
 		<div class="searchBtns">
-			<button type="submit" name="submit" class="reset-btn" value="reset">リセット</button>
+			<button type="submit" name="button" class="reset-btn" onclick="resetSearchArea">リセット</button>
 			<button type="submit" name="submit" class="display-btn" value="search">表示</button>
 		</div>
 		</form>
@@ -130,7 +134,7 @@
 		<p>金額：${c.amount}</p>
 		<p>メモ：${c.memo}</p>
 		<button type="button" class="ad_EditBtn reset-btn" data-id="${c.id}">編集</button>
-		<button type="button" class="reset-btn">閉じる</button>
+		<button type="button" class="close-btn" onclick="closePopup('${c.id}')" >閉じる</button>
 	</div>
 </c:forEach>
 
@@ -143,10 +147,10 @@
 				<table class="searchTable">
 					<tr>
 						<td>日付</td>
-						<td><input type="date" name="date"></td>
+						<td><input type="date" name="date" required></td>
 						<td>カテゴリ</td>
 						<td>
-							<select  class="textbox" name="category">
+							<select  class="textbox" name="category" required>
 								<option value="">==未選択==</option>	
 								<c:forEach var="c" items="${category}">
 									<option value="${c.name}">${c.name}</option>
@@ -165,14 +169,14 @@
 							</select>
 						</td>
 						<td>店名</td>
-						<td><input type="text" name="store" class="textbox"></td>
+						<td><input type="text" name="store" class="textbox" ></td>
 					</tr>
 					<tr>
 						<td>品目</td>
-						<td><input type="text" name="item" class="textbox"></td>
+						<td><input type="text" name="item" class="textbox" maxlength="300" ></td>
 						<td>入出金</td>
 						<td>
-							<select  class="textbox" name="type">
+							<select  class="textbox" name="type" required>
 								<option value="">==未選択==</option>
 								<option value="income">収入</option>
 								<option value="expend">支出</option>
@@ -181,12 +185,12 @@
 					</tr>
 					<tr>
 						<td>金額</td>
-						<td><input type="number" name="number" class="textbox"></td>
+						<td><input type="number" name="number" class="textbox" required></td>
 						<td>メモ</td>
 						<td><textarea class="textbox" name="memo"></textarea></td>
 					</tr>
 				</table>
-				<button type="submit" name="submit" class="close-btn" value="cancel">キャンセル</button>
+				<button type="button" id="close" class="close-btn" value="cancel">キャンセル</button>
 				<button type="submit" name="submit" class="display-btn" value="save">保存</button>
 			</form>
 		</div>
@@ -246,7 +250,7 @@
 							<td><textarea class="textbox" name="memo">${c.memo}</textarea></td>
 						</tr>
 					</table>
-					<button type="submit" name="submit" class="reset-btn" value="delete">削除</button>
+					<button type="submit" name="submit" class="reset-btn" onclick="confirmDelete();" value="delete">削除</button>
 					<button type="button" class="edit-close-btn close-btn" data-id="${c.id}">キャンセル</button>
 					<button type="submit" name="submit" class="display-btn" value="edit">保存</button>
 				</form>
@@ -255,12 +259,11 @@
 	</div>
 </c:forEach>
 
-<!-- 一時的な空白エリア  -->
-<br><br><br><br>
-<br><br><br><br>
-<br><br><br><br>
-
 <div id="ad_InsertBtn"><p>収支新規登録</p></div>
+
+<footer>
+    <p>©2026 EBATA TAKUMI</p>
+</footer>
 
 <script>
 console.log(
@@ -297,8 +300,17 @@ console.log(
 		}
 	}
 
+	function confirmDelete(){
+	 return alert("本当に削除しますか？");
+	}
+
+	function resetSearchArea(){
+		document.querySelector("search").reset();
+	}
+
 	const adInsertBtn = document.getElementById('ad_InsertBtn');
 	const adiswrapper = document.getElementById('ad-is-wrapper');
+	const close = document.getElementById('close');
 
 	adInsertBtn.addEventListener('click',()=>{
 		adiswrapper.style.display = "block";
@@ -314,8 +326,6 @@ console.log(
 		  btn.addEventListener('click', (e) => {
 		    e.stopPropagation(); 
 		    const id = btn.dataset.id;
-
-		    console.log("id:"+id);
 		   
 		    const wrapper = document.getElementById("ad-ed-wrapper-"+id);
 		    if(wrapper){
@@ -330,7 +340,6 @@ console.log(
 	    e.stopPropagation();
 
 	    const id = btn.dataset.id;
-	    console.log("closeBtnId:", id);
 
 	    const wrapper = document.getElementById("ad-ed-wrapper-"+id);
 	    if(wrapper){

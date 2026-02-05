@@ -35,7 +35,9 @@
 <div class="center-btn">
 	<a href="signupServlet" class="signup-btn">新規登録</a>
 </div>
-
+<footer>
+    <p>©2026 EBATA TAKUMI</p>
+</footer>
 
 <% String message = (String) request.getAttribute("Message"); %>
 <% if (message != null) { %>

@@ -11,16 +11,19 @@ import Beans.balanceBeans;
 
 public class financialDao {
 	//収支データの取得
-	public List<balanceBeans> getBalanceData(String group_id){
+	public List<balanceBeans> getBalanceData(String group_id,String year){
 		List<balanceBeans> list = new ArrayList<>();
         PreparedStatement stmt = null;
         ResultSet rs = null;
+       
+        
 		try {
 			Connection con = DBUtil.getConnection();
-			String sql = "SELECT fi.id AS id, fi.group_id AS group_id, fi.created_at AS created_at, fi.name AS name, fi.item AS item, fi.amount AS amount, tr.project AS project, tr.category AS category, tr.memo AS memo, tr.type AS type FROM finance_record AS fi INNER JOIN transaction AS tr ON fi.id = tr.id WHERE fi.group_id = ?;";
+			String sql = "SELECT fi.id AS id, fi.group_id AS group_id, fi.created_at AS created_at, fi.name AS name, fi.item AS item, fi.amount AS amount, tr.project AS project, tr.category AS category, tr.memo AS memo, tr.type AS type FROM finance_record AS fi INNER JOIN transaction AS tr ON fi.id = tr.id WHERE fi.group_id = ? AND fi.created_at >= ? ORDER BY fi.created_at DESC;";
 			
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1, group_id);
+			stmt.setString(2, year);
 			rs = stmt.executeQuery();
 			while (rs.next()) {
             	String id = rs.getString("id");
@@ -164,7 +167,7 @@ public class financialDao {
 			prams.add(likeKeyword);
 		}
 		
-		sql += " WHERE " + String.join(" AND ", columns);
+		sql += " WHERE " + String.join(" AND ", columns) + " ORDER BY fi.created_at DESC;";
 		
 		
 		try {

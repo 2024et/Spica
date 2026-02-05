@@ -34,5 +34,8 @@ String id = (String)request.getAttribute("id");
 	
 	<input type="submit" name="submit" class="update-btn" value="　更新　">
 </form>
+<footer>
+    <p>©2026 EBATA TAKUMI</p>
+</footer>
 </body>
 </html>

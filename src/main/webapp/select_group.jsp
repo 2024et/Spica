@@ -40,5 +40,8 @@
 	
 	<button type="submit" name="submit" class="btn" value="make">新規作成</button>
 </form>
+<footer>
+    <p>©2026 EBATA TAKUMI</p>
+</footer>
 </body>
 </html>

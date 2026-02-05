@@ -1,7 +1,9 @@
 package Servlet;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -30,9 +32,17 @@ public class financialServlet extends HttpServlet {
 		
 		List<balanceBeans> balance = logic.getBalanceData(accountData.getGroup_id());
 		
+		int income = logic.incomeSum(balance);
+		int expend = logic.expendSum(balance);
+		int balance_thisyear = logic.balance(income, expend);
+				
 		request.setAttribute("category", category);
 		request.setAttribute("project", project);
 		request.setAttribute("balance", balance);
+		
+		request.setAttribute("income", income);
+		request.setAttribute("expend", expend);
+		request.setAttribute("balance_thisyear", balance_thisyear);
 		request.getRequestDispatcher("/financial.jsp").forward(request, response);
 	}
 
@@ -115,6 +125,18 @@ public class financialServlet extends HttpServlet {
 			String keyword = request.getParameter("keyword");
 			
 			List<balanceBeans> searchData = logic.searchBalanceData(group_id,startDate,endDate,category,project,store,item,type,keyword);
+			
+			Map<String, Object> map = new HashMap<>();
+			map.put("startDate", startDate);
+			map.put("endDate", endDate);
+			map.put("category", category);
+			map.put("project", project);
+			map.put("store", store);
+			map.put("item", item);
+			map.put("type", type);
+			map.put("keyword", keyword);
+			
+			request.setAttribute("searchArchive", map);
 			request.setAttribute("balance", searchData);
 			request.getRequestDispatcher("/financial.jsp").forward(request, response);
 		}else if("delete".equals(submit)) {

@@ -88,7 +88,7 @@ h3{
 	margin:16px;
 }
 
-.reset-btn{
+.reset-btn,.close-btn{
 	display:inline-block;
 	width:100px;
 	border:1px solid #4169e1;
@@ -183,4 +183,15 @@ h3{
 	font-size: 12px;
 	z-index: 1001;
 	box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+footer{
+ 	width: 100%;
+	padding: 20px 0; 
+	background: #f7f7f7; 
+	text-align: center;
+}
+footer p{
+	margin: 0; 
+	font-size: 14px; 
+	color: #555;
 }

@@ -39,7 +39,9 @@
 	<a href="signinServlet" class="signin-btn">ログイン</a>
 </div>
 
-
+<footer>
+    <p>©2026 EBATA TAKUMI</p>
+</footer>
 <% String message = (String) request.getAttribute("Message"); %>
 <% if (message != null) { %>
    	<script>alert("<%= message %>");</script>

@@ -2,6 +2,10 @@ package Logic;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import Beans.balanceBeans;
@@ -31,7 +35,70 @@ public class financialLogic {
 	//収支データの収集
 	public List<balanceBeans> getBalanceData(String group_id){
 		financialDao dao = new financialDao();
-		return dao.getBalanceData(group_id);
+		String year = this_year();
+		if(year.equals("error")) {
+			return null;
+		}
+		String this_year = year + "-04-01";
+		return dao.getBalanceData(group_id,this_year);
+	}
+	
+	//今年度を取得
+	public String this_year() {
+        Date now = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+        Date today;
+		try {
+			today = format.parse(format.format(now));
+	        int year = 0;
+	        SimpleDateFormat mm = new SimpleDateFormat("MM");
+	        String dateStr = mm.format(today);
+	        int month = Integer.parseInt(dateStr);
+	        
+	        Calendar calendar = Calendar.getInstance();
+	        calendar.setTime(today);
+	        
+	        if(month < 4) {
+	        	calendar.add(Calendar.YEAR, -1);
+	        	year = calendar.get(Calendar.YEAR);
+	        }else {
+	        	year = calendar.get(Calendar.YEAR);
+	        }
+	        
+	        return String.valueOf(year);
+	        
+		} catch (ParseException e) {
+			e.printStackTrace();
+			System.out.println(e);
+			return "error";
+		}
+	}
+	
+	//収入合計算出
+	public int incomeSum(List<balanceBeans> list) {
+		int sum = 0;
+		for(balanceBeans beans : list) {
+			if("income".equals(beans.getType())) {
+				sum += beans.getAmount();
+			}
+		}
+		return sum;
+	}
+	
+	//支出合計算出
+	public int expendSum(List<balanceBeans> list) {
+		int sum = 0;
+		for(balanceBeans beans : list) {
+			if("expend".equals(beans.getType())) {
+				sum += beans.getAmount();
+			}
+		}
+		return sum;
+	}
+	
+	//残高算出
+	public int balance(int income, int expend) {
+		return income - expend;
 	}
 	
 	//収支新規登録
