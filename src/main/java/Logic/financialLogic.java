@@ -6,7 +6,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import Beans.balanceBeans;
 import Beans.categoryBeans;
@@ -226,6 +228,94 @@ public class financialLogic {
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+
+	//収支グラフ整形(INCOME)
+	public Map<String, Integer> BalanceGraphFormatIncome(List<balanceBeans> list){
+		Map<String, Integer> BalanceDataIncome = new LinkedHashMap<>();
+		
+		for(int i = 4; i <=12; i++) {
+			int incomeTotal = 0;
+			String iMonth = String.format("%02d", i);
+			for(balanceBeans beans : list) {
+				String month = beans.getCreated_at().substring(5,7);
+				if(month.equals(iMonth) && "income".equals(beans.getType())) {
+					incomeTotal += beans.getAmount();
+				}
+
+			}
+			BalanceDataIncome.put(i+"月",incomeTotal);
+		}
+		for(int i = 1; i <=3; i++) {
+			int incomeTotal = 0;
+			String iMonth = String.format("%02d", i);
+			for(balanceBeans beans : list) {
+				String month = beans.getCreated_at().substring(5,7);
+				if(month.equals(iMonth) && "income".equals(beans.getType())) {
+					incomeTotal += beans.getAmount();
+				}
+			}
+			BalanceDataIncome.put(i+"月",incomeTotal);
+		}		
+		
+		return BalanceDataIncome;
+	}
+	
+	//収支グラフ整形(EXPEND)
+	public Map<String, Integer> BalanceGraphFormatExpend(List<balanceBeans> list){
+		Map<String, Integer> BalanceDataExpend = new LinkedHashMap<>();
+		
+		for(int i = 4; i <=12; i++) {
+			int expendTotal = 0;
+			String iMonth = String.format("%02d", i);
+			for(balanceBeans beans : list) {
+				String month = beans.getCreated_at().substring(5,7);
+				if(month.equals(iMonth) && "expend".equals(beans.getType())) {
+					expendTotal += beans.getAmount();
+				}
+			}
+			BalanceDataExpend.put(i+"月",expendTotal);
+		}
+		for(int i = 1; i <=3; i++) {
+			int expendTotal = 0;
+			String iMonth = String.format("%02d", i);
+			for(balanceBeans beans : list) {
+				String month = beans.getCreated_at().substring(5,7);
+				if(month.equals(iMonth) && "expend".equals(beans.getType())) {
+					expendTotal += beans.getAmount();
+				}
+			}
+			BalanceDataExpend.put(i+"月",expendTotal);
+		}
+
+		return BalanceDataExpend;
+	}
+	//今年度収支グラフ整形
+	public Map<String, Integer> thisYearBalanceDataFormat(List<balanceBeans> beans){
+		Map<String, Integer> thisYearBalanceDataIncome = new LinkedHashMap<>();
+		Map<String, Integer> thisYearBalanceDataExpend = new LinkedHashMap<>();
+		thisYearBalanceDataIncome = BalanceGraphFormatIncome(beans);
+		thisYearBalanceDataExpend = BalanceGraphFormatExpend(beans);
+		
+		Map<String, Integer> thisYearBalanceData = new LinkedHashMap<>();
+		int nowBalance = 0;
+		for(int i = 4;i <= 12;i++) {
+			String month = i+"月";
+			nowBalance += thisYearBalanceDataIncome.get(month);
+			nowBalance -= thisYearBalanceDataExpend.get(month);
+			thisYearBalanceData.put(month, nowBalance);			
+		}
+		
+		for(int i = 1;i <= 3;i++) {
+			String month = i+"月";
+			nowBalance += thisYearBalanceDataIncome.get(month);
+			nowBalance -= thisYearBalanceDataExpend.get(month);
+			thisYearBalanceData.put(month, nowBalance);			
+		}
+		
+		return thisYearBalanceData;
+		
 	}
 	
 	

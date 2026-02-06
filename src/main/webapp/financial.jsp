@@ -314,8 +314,8 @@ console.log(
 	const thisYearData = [];
 
 	<c:forEach var="b" items="${thisYearBalanceGraph}">
-		thisYearLabels.push("${b.created_at}");
-		thisYearData.push(${b.amount});
+    thisYearLabels.push("${b.key}");
+    thisYearData.push(${b.value});
 	</c:forEach>
 
 	const ctx = document.getElementById('thisYearChart');
@@ -325,34 +325,13 @@ console.log(
 	    data: {
 	        labels: thisYearLabels,
 	        datasets: [{
-	            label: '金額',
+	            label: '残高推移',
 	            data: thisYearData,
 	            borderWidth: 2
 	        }]
 	    }
 	});
 
-	const searchLabels = [];
-	const searchData = [];
-
-	<c:forEach var="b" items="${balance}">
-		searchLabels.push("${b.created_at}");
-		searchData.push(${b.amount});
-	</c:forEach>
-
-	const ctx2 = document.getElementById('searchBalanceGraph');
-
-	new Chart(ctx2, {
-	    type: 'bar',
-	    data: {
-	        labels: searchLabels,
-	        datasets: [{
-	            label: '金額',
-	            data: searchData,
-	            borderWidth: 2
-	        }]
-	    }
-	});
 
 	
 

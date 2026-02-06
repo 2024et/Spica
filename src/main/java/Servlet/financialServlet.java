@@ -41,10 +41,12 @@ public class financialServlet extends HttpServlet {
 		int thisYearIncome = logic.incomeSum(thisYearBalanceList);
 		int thisYearExpend = logic.expendSum(thisYearBalanceList);
 		int thisYearNetBalance = logic.balance(thisYearIncome, thisYearExpend);
+		
+		Map<String,Integer> thisYearBalanceGraph = logic.thisYearBalanceDataFormat(thisYearBalanceList);
 				
 		request.setAttribute("category", category);
 		request.setAttribute("project", project);
-		request.setAttribute("thisYearBalanceGraph", thisYearBalanceList);
+		request.setAttribute("thisYearBalanceGraph", thisYearBalanceGraph);
 		request.setAttribute("balance", thisYearBalanceList);
 		
 		request.setAttribute("income", thisYearIncome);
