@@ -315,8 +315,66 @@ public class financialLogic {
 		}
 		
 		return thisYearBalanceData;
+	}
+	
+	//年度算出
+	public int getFiscalYear(String date) {
+		String data_year = date.substring(0,4);
+		int year = Integer.parseInt(data_year);
+		String data_month = date.substring(5,7);
+		int month = Integer.parseInt(data_month);
+		if(month >= 4 && month <= 12) {
+			return year;
+		}else {
+			return year -1;
+		}
 		
 	}
 	
+	//検索結果収入グラフ整形
+	public Map<Integer,Integer> searchBalanceDataFormatIncome(List<balanceBeans> beans){
+		Map<Integer, Integer> searchBalanceDataIncome = new LinkedHashMap<>();
+		String latestDate = beans.get(0).getCreated_at();
+		String oldestDate = beans.get(beans.size()-1).getCreated_at();
+		int latestFiscalYear = getFiscalYear(latestDate);
+		int oldestFiscalYear = getFiscalYear(oldestDate);
+		int total = 0;
+		for(int i = 0;i <= latestFiscalYear - oldestFiscalYear; i++) {
+			int targetYear = oldestFiscalYear + i;
+			for(balanceBeans data : beans) {
+				String date = data.getCreated_at();
+				int year = getFiscalYear(date);
+				if(year ==targetYear) {
+					
+					total += data.getAmount();
+				}
+				
+			}
+			searchBalanceDataIncome.put(targetYear, total);
+		}
+		return searchBalanceDataIncome;
+	}
+	//検索結果支出グラフ整形
+	public Map<Integer,Integer> searchBalanceDataFormatExpend(List<balanceBeans> beans){
+		Map<Integer, Integer> searchBalanceDataExpend = new LinkedHashMap<>();
+		String latestDate = beans.get(0).getCreated_at();
+		String oldestDate = beans.get(beans.size()-1).getCreated_at();
+		int latestFiscalYear = getFiscalYear(latestDate);
+		int oldestFiscalYear = getFiscalYear(oldestDate);
+		int total = 0;
+		for(int i = 0;i <= latestFiscalYear - oldestFiscalYear; i++) {
+			int targetYear = oldestFiscalYear + i;
+			for(balanceBeans data : beans) {
+				String date = data.getCreated_at();
+				int year = getFiscalYear(date);
+				if(year ==targetYear) {
+					total += data.getAmount();
+				}
+				
+			}
+			searchBalanceDataExpend.put(targetYear, total);
+		}
+		return searchBalanceDataExpend;
+	}
 	
 }

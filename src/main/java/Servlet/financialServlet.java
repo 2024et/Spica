@@ -23,10 +23,6 @@ import Logic.signupLogic;
 public class financialServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private List<balanceBeans> thisYearBalanceList;
-	private int thisYearIncome;
-	private int thisYearExpend;
-	private int thisYearNetBalance;
 ;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -36,7 +32,7 @@ public class financialServlet extends HttpServlet {
 		List<categoryBeans> category = logic.getCategoryData(accountData.getGroup_id());
 		List<projectBeans> project = logic.getProjectData(accountData.getGroup_id());
 		
-		thisYearBalanceList = logic.getBalanceData(accountData.getGroup_id());
+		List<balanceBeans> thisYearBalanceList = logic.getBalanceData(accountData.getGroup_id());
 		
 		int thisYearIncome = logic.incomeSum(thisYearBalanceList);
 		int thisYearExpend = logic.expendSum(thisYearBalanceList);
@@ -58,9 +54,17 @@ public class financialServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		accountBeans accountData = (accountBeans) session.getAttribute("accountData");
+	
 		
 		String submit = request.getParameter("submit");
 		financialLogic logic = new financialLogic();
+		
+		List<balanceBeans> thisYearBalanceList = logic.getBalanceData(accountData.getGroup_id());
+		int thisYearIncome = logic.incomeSum(thisYearBalanceList);
+		int thisYearExpend = logic.expendSum(thisYearBalanceList);
+		int thisYearNetBalance = logic.balance(thisYearIncome, thisYearExpend);
+		Map<String,Integer> thisYearBalanceGraph = logic.thisYearBalanceDataFormat(thisYearBalanceList);
+		
 		
 		List<categoryBeans> data_category = logic.getCategoryData(accountData.getGroup_id());
 		List<projectBeans> data_project = logic.getProjectData(accountData.getGroup_id());
@@ -94,7 +98,8 @@ public class financialServlet extends HttpServlet {
 			
 			request.setAttribute("income", thisYearIncome);
 			request.setAttribute("expend", thisYearExpend);
-			request.setAttribute("thisYearBalanceGraph", thisYearBalanceList);
+			request.setAttribute("thisYearBalanceGraph", thisYearBalanceGraph);
+			request.setAttribute("balance", thisYearBalanceList);
 			if(insertFlag) {
 				response.sendRedirect(request.getContextPath() + "/financialServlet");
 			}else {
@@ -120,7 +125,9 @@ public class financialServlet extends HttpServlet {
 			
 			request.setAttribute("income", thisYearIncome);
 			request.setAttribute("expend", thisYearExpend);
-			request.setAttribute("thisYearBalanceGraph", thisYearBalanceList);
+			request.setAttribute("balance_thisyear", thisYearNetBalance);
+			request.setAttribute("thisYearBalanceGraph", thisYearBalanceGraph);
+			request.setAttribute("balance", thisYearBalanceList);
 			if(editFlag) {
 				response.sendRedirect(request.getContextPath() + "/financialServlet");
 			}else {
@@ -141,21 +148,29 @@ public class financialServlet extends HttpServlet {
 			
 			List<balanceBeans> searchData = logic.searchBalanceData(group_id,startDate,endDate,category,project,store,item,type,keyword);
 			
-			Map<String, Object> map = new HashMap<>();
-			map.put("startDate", startDate);
-			map.put("endDate", endDate);
-			map.put("category", category);
-			map.put("project", project);
-			map.put("store", store);
-			map.put("item", item);
-			map.put("type", type);
-			map.put("keyword", keyword);
+			Map<String, Object> archive = new HashMap<>();
+			archive.put("startDate", startDate);
+			archive.put("endDate", endDate);
+			archive.put("category", category);
+			archive.put("project", project);
+			archive.put("store", store);
+			archive.put("item", item);
+			archive.put("type", type);
+			archive.put("keyword", keyword);
 			
-			request.setAttribute("searchArchive", map);
-			request.setAttribute("balance", searchData);
+			Map<Integer,Integer> income = logic.searchBalanceDataFormatIncome(searchData);
+			Map<Integer,Integer> expend = logic.searchBalanceDataFormatExpend(searchData);
+			
+			request.setAttribute("searchArchive", archive);
+			request.setAttribute("searchIncome", income);
+			request.setAttribute("searchExpend", expend);
+			
 			request.setAttribute("income", thisYearIncome);
 			request.setAttribute("expend", thisYearExpend);
-			request.setAttribute("thisYearBalanceGraph", thisYearBalanceList);
+			request.setAttribute("balance_thisyear", thisYearNetBalance);
+			request.setAttribute("thisYearBalanceGraph", thisYearBalanceGraph);
+			request.setAttribute("balance", thisYearBalanceList);
+			request.setAttribute("balance", searchData);
 			request.getRequestDispatcher("/financial.jsp").forward(request, response);
 		}else if("delete".equals(submit)) {
 			//収支削除
@@ -167,6 +182,7 @@ public class financialServlet extends HttpServlet {
 			
 			request.setAttribute("income", thisYearIncome);
 			request.setAttribute("expend", thisYearExpend);
+			request.setAttribute("thisYearBalanceGraph", thisYearBalanceGraph);
 			request.setAttribute("thisYearBalanceGraph", thisYearBalanceList);
 			if(deleteFlag) {
 				response.sendRedirect(request.getContextPath() + "/financialServlet");

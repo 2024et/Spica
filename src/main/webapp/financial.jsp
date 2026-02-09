@@ -309,7 +309,7 @@ console.log(
 		document.querySelector("search").reset();
 	}
 
-	//グラフ
+	//今年度残高推移グラフ
 	const thisYearLabels = [];
 	const thisYearData = [];
 
@@ -332,7 +332,53 @@ console.log(
 	    }
 	});
 
+	//検索結果収支推移グラフ
+	const searchLabels = [];
+	const searchDataIncome = [];
+	const searchDataExpend = [];
+	
+	const ctx2 = document.getElementById("searchBalanceGraph");
 
+	<c:forEach var="b" items="${searchIncome}">
+		searchLabels.push("${b.key}");
+		searchDataIncome.push(${b.value});
+	</c:forEach>
+	
+	<c:forEach var="b" items="${searchExpend}">
+		searchDataExpend.push(${b.value});
+	</c:forEach>
+	
+	const searchBalanceGraph = new Chart(ctx2, {
+	    type: 'bar',
+	    data: {
+		    labels:searchLabels,
+	        datasets: [
+	            {
+	                label: '収入',
+	                data: searchDataIncome,
+	                backgroundColor: 'rgba(75, 192, 192, 0.6)',
+	                borderColor: 'rgb(75, 192, 192)',
+	                borderWidth: 1
+	            },
+	            {
+	                label: '支出',
+	                data: searchDataExpend,
+	                backgroundColor: 'rgba(255, 99, 132, 0.6)',
+	                borderColor: 'rgb(255, 99, 132)',
+	                borderWidth: 1
+	            }
+	        ]
+	    },
+	    options: {
+	        responsive: true,
+	        scales: {
+	            y: {
+	                beginAtZero: true
+	            }
+	        }
+	    }
+	});
+	
 	
 
 	const adInsertBtn = document.getElementById('ad_InsertBtn');
