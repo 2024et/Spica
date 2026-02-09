@@ -1,4 +1,5 @@
 @charset "UTF-8";
+
 /*見出し*/
 h2{
 	display:inline-block;
@@ -15,68 +16,80 @@ h3{
 .finance{
 	display: flex;
 	flex-direction: row;
-	
 	justify-content: space-between;
-	
 }
+
 .data_area{
 	display: flex;
 	align-items: flex-end;
 }
+
 .fiscal {
-  display: flex;
-  flex-direction: column;
-  margin:20px;
-  width:50%;
-  border:1px solid #234 ;
+	display: flex;
+	flex-direction: column;
+	margin:20px;
+	width:50%;
+	border:1px solid #234;
 }
 
 .income{
 	background-color: #006400;
 	color:#ffffff;
 }
+
 .data{
 	flex-direction: column;
 }
+
 .expend{
-	background-color: #990e2a ;
+	background-color: #990e2a;
 	color:#ffffff;
 }
+
 .balance_graph{
-	border:1px solid #234 ;
+	border:1px solid #234;
 	height:300px;
-	width: 1800px;
+	width: 100%;
+	max-width: 500px;
 	margin:16px;
 }
+
 .spend_graph{
-	border:1px solid #234 ;
+	border:1px solid #234;
 	width: 100%;
 	height: 300px;
 }
 
 .textbox{
 	width:250px;
+	max-width: 100%;
 }
 
 .search{
 	display: flex;
 	flex-direction: column;
-	border:1px solid #234 ;
+	border:1px solid #234;
 	width:50%;
 	margin:20px;
 }
+
 /*テーブル*/
 .searchTable{
 	margin:auto;
+	width: 100%;
 }
+
 .searchTable td,.searchTable th{
 	padding: 18px;
+	vertical-align: middle;
 }
+
 .dataTable{
 	border-collapse: collapse;
 	width:100%;
 	padding:18px;
 }
+
 .dataTable th{
 	background-color:#4169e1;
 	color:#ffffff;
@@ -99,8 +112,8 @@ h3{
 	padding: 10px 3px;
 	margin:3px;
 	text-decoration: none;
-	
 }
+
 .display-btn{
 	display:inline-block;
 	width:100px;
@@ -116,62 +129,64 @@ h3{
 
 #ad_InsertBtn{
 	display: flex;
-  	width: 110px;
-  	height: 110px;
-  	position: fixed;
+	width: 110px;
+	height: 110px;
+	position: fixed;
 	right: 0;
 	bottom: 0;
 	background: #73992c;
 	opacity: 0.6;
 	border-radius: 50%;
-	align-items: center;      
-	justify-content: center; 
+	align-items: center;
+	justify-content: center;
 }
+
 #ad_InsertBtn p{
-  margin: 0;
-  color:white;
-  font-weight: bold;
-  text-align:center;
+	margin: 0;
+	color:white;
+	font-weight: bold;
+	text-align:center;
 }
+
 /*ポップアップ*/
 #blBtn {
-  display: block;
-  margin: 20px auto;
-  background-color: purple;
-  color: white;
-  border: 0;
-  padding: 6px 10px;
+	display: block;
+	margin: 20px auto;
+	background-color: purple;
+	color: white;
+	border: 0;
+	padding: 6px 10px;
 }
 
 #ad-is-wrapper,.ad-ed-wrapper {
-  background-color: rgba(0, 0, 0, .5);
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: none;
+	background-color: rgba(0, 0, 0, .5);
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: none;
 }
 
 #ad-is-inside,#ad-ed-inside {
-  text-align: center;
-  width: 100%;
-  max-width: 900px;
-  margin: 10% auto;
-  padding: 20px;
-  position: relative;
+	text-align: center;
+	width: 100%;
+	max-width: 900px;
+	margin: 10% auto;
+	padding: 20px;
+	position: relative;
 }
+
 #ad-is-inside,#ad-ed-inside{
 	background: #C5E0B4;
 }
 
 #message a {
-  background: purple;
-  color: white;
-  text-decoration: none;
-  padding: 6px 10px;
+	background: purple;
+	color: white;
+	text-decoration: none;
+	padding: 6px 10px;
 }
-
 
 .popupDetail{
 	display: none;
@@ -184,14 +199,156 @@ h3{
 	z-index: 1001;
 	box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
+
 footer{
- 	width: 100%;
-	padding: 20px 0; 
-	background: #f7f7f7; 
+	width: 100%;
+	padding: 20px 0;
+	background: #f7f7f7;
 	text-align: center;
 }
+
 footer p{
-	margin: 0; 
-	font-size: 14px; 
+	margin: 0;
+	font-size: 14px;
 	color: #555;
+}
+
+/* レスポンシブ対応 */
+@media screen and (max-width: 1024px) {
+	.finance{
+		flex-direction: column;
+	}
+	
+	.fiscal, .search{
+		width: calc(100% - 40px);
+		margin: 20px;
+	}
+	
+	.data_area{
+		flex-direction: column;
+		align-items: stretch;
+	}
+	
+	.balance_graph{
+		max-width: 100%;
+		width: calc(100% - 32px);
+	}
+	
+	h2{
+		width: calc(100% - 16px);
+		max-width: 270px;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.searchTable td, .searchTable th{
+		padding: 10px 5px;
+		font-size: 14px;
+	}
+	
+	.searchTable{
+		display: block;
+		overflow-x: auto;
+	}
+	
+	.textbox{
+		width: 100%;
+		min-width: 150px;
+	}
+	
+	.searchBtns{
+		text-align: center;
+	}
+	
+	.reset-btn, .close-btn, .display-btn{
+		width: 45%;
+		max-width: 100px;
+	}
+	
+	h3{
+		font-size: 16px;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	.fiscal, .search{
+		margin: 10px;
+		width: calc(100% - 20px);
+	}
+	
+	.balance_graph{
+		height: 200px;
+		margin: 8px;
+		width: calc(100% - 16px);
+	}
+	
+	.spend_graph{
+		height: 200px;
+	}
+	
+	h2{
+		font-size: 13px;
+		padding: 8px 3px;
+		margin: 5px auto;
+		display: block;
+		width: calc(100% - 10px);
+	}
+	
+	.searchTable{
+		font-size: 12px;
+	}
+	
+	.searchTable td, .searchTable th{
+		display: block;
+		width: 100%;
+		padding: 8px 5px;
+	}
+	
+	.searchTable tr{
+		display: block;
+		margin-bottom: 15px;
+		border-bottom: 1px solid #ddd;
+		padding-bottom: 10px;
+	}
+	
+	.textbox{
+		width: 100%;
+		box-sizing: border-box;
+	}
+	
+	#ad_InsertBtn{
+		width: 80px;
+		height: 80px;
+	}
+	
+	#ad_InsertBtn p{
+		font-size: 12px;
+	}
+}
+@media screen and (min-width: 1025px) {
+    .searchTable td:nth-child(1),
+    .searchTable td:nth-child(3) {
+        width: 100px;
+        white-space: nowrap;
+    }
+    
+    .searchTable td:nth-child(2),
+    .searchTable td:nth-child(4) {
+        width: auto;
+    }
+    
+    .searchTable {
+        table-layout: fixed;
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 769px) {
+    .searchTable tr {
+        display: table-row;
+    }
+    
+    .searchTable td {
+        display: table-cell;
+    }
 }
