@@ -4,8 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import Beans.accountBeans;
+import Beans.noticeBeans;
 
 public class accountDao {
 	
@@ -200,6 +203,38 @@ public class accountDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
+		}
+	}
+	//通知の取得
+	public List<noticeBeans> getNotice(String user_id){
+		List<noticeBeans> list = new ArrayList<>();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+		try {
+			Connection con = DBUtil.getConnection();
+			String sql = "SELECT * FROM notice WHERE user_id = ? ORDER BY created_at DESC;";
+			
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, user_id);
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+            	String id = rs.getString("id");
+            	String created_at = rs.getString("created_at");
+            	String message = rs.getString("message");
+            	
+            	noticeBeans beans = new noticeBeans(
+                        id,
+                        user_id,
+                        created_at,
+                        message
+                        );
+            	list.add(beans);  
+            }
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
 		}
 	}
 

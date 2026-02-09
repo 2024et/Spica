@@ -28,7 +28,7 @@
 			<a href="" class="general">会計報告</a>
 			<a href="" class="general">予算報告</a>
 			<a href="" class="general">購入申請</a>
-			<a href="" class="general">アカウント</a>
+			<a href="accountServlet" class="general">アカウント</a>
 		</div>
 	</div>
 </div>
