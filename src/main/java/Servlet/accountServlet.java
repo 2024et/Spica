@@ -78,9 +78,9 @@ public class accountServlet extends HttpServlet {
 			}
 			
 			//再ログイン
-			int reLoginFlag = signin_logic.login(accountData.getEmail(), hashed_password);
-			if(reLoginFlag == 2) {
-				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
+			accountBeans new_accountData = acc_logic.login_system(accountData.getEmail());
+			if(new_accountData == null) {
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：AC-cp1000");
 			    request.getRequestDispatcher("/account.jsp").forward(request, response);
 			    return;
 			}
@@ -107,7 +107,7 @@ public class accountServlet extends HttpServlet {
 				    request.getRequestDispatcher("/account.jsp").forward(request, response);
 				    return;
 				}else if(mailDupliFlag==2) {
-					request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
+					request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：AC-mD1000");
 				    request.getRequestDispatcher("/account.jsp").forward(request, response);
 				    return;
 				}
@@ -117,7 +117,7 @@ public class accountServlet extends HttpServlet {
 			boolean acc_updateFlag = acc_logic.changeInformation(accountData.getId(),name, email, code);
 			
 			if(!acc_updateFlag) {
-				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：AC-ci2000");
 			    request.getRequestDispatcher("/account.jsp").forward(request, response);
 			    return;
 			}
@@ -129,7 +129,7 @@ public class accountServlet extends HttpServlet {
 			}
 			accountBeans new_accountData = acc_logic.login_system(email);
 			if(new_accountData == null) {
-				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：AC-ci1000");
 			    request.getRequestDispatcher("/account.jsp").forward(request, response);
 			    return;
 			}

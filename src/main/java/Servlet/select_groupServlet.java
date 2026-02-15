@@ -63,7 +63,7 @@ public class select_groupServlet extends HttpServlet {
 				request.getRequestDispatcher("/financialServlet").forward(request, response);
 				return;
 			}else {
-				request.setAttribute("make_errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
+				request.setAttribute("make_errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：");
 			    request.getRequestDispatcher("/select_group.jsp").forward(request, response);
 			    return;
 			}
