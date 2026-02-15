@@ -18,7 +18,8 @@
     margin: 0 auto;
     padding: 20px;
     position: relative;
-    background: #C5E0B4;
+    background: #DAE3F3;
+	border:1px solid #4169e1;
     border-radius: 8px;
 }
 
@@ -26,7 +27,7 @@
     width: 100%;
 }
 
-.pass-close-btn,.acc-close-btn {
+.pass-close-btn,.acc-close-btn,.change-btn {
     padding: 10px 20px;
     margin: 5px;
     font-size: 16px;

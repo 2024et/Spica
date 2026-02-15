@@ -46,9 +46,25 @@
 <div id="pw-ch-wrapper">
 	<div id="pw-ch-inside">
 		<div id="message">
-			<h1>パスワード変更</h1>
+			<h1>パスワードの再設定</h1>
 			<form action="accountServlet" method="post">
+				<table>
+					<tr>
+						<td>現在のパスワード</td>
+						<td><input type="password" name="currentPassword"></td>
+					</tr>
+					<tr>
+						<td>新しいパスワード</td>
+						<td><input type="password" name="newPassword_1"></td>
+					</tr>
+					<tr>
+						<td>確認用パスワード</td>
+						<td><input type="password" name="newPassword_2"></td>
+					</tr>
+				</table>
+				<a href="requestServlet">現在のパスワードを忘れた方</a><br>
 				<button type="button" class="pass-close-btn">キャンセル</button>
+				<button type="submit" name="submit" class="change-btn" value="pass">保存</button>
 			</form>
 		</div>
 	</div>
@@ -60,7 +76,24 @@
 		<div id="message">
 			<h1>アカウント情報変更</h1>
 			<form action="accountServlet" method="post">
+							<table>
+					<tr>
+						<td>ユーザー名</td>
+						<td><input type="password" name="currentPassword"></td>
+					</tr>
+					<tr>
+						<td>メールアドレス</td>
+						<td><input type="password" name="newPassword_1"></td>
+					</tr>
+					<tr>
+						<td>所属団体</td>
+						<td><input type="password" name="newPassword_2"></td>
+					</tr>
+				</table>
+				<p>※ユーザーIDの変更はできません。</p>
+				<p>※所属団体は1アカウントにつき1団体しか入れません。</p>
 				<button type="button" class="acc-close-btn">キャンセル</button>
+				<button type="submit" name="submit" class="change-btn" value="pass">保存</button>
 			</form>
 		</div>
 	</div>
