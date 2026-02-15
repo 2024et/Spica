@@ -11,5 +11,11 @@ public class accountLogic {
 		accountDao dao = new accountDao();
 		return dao.getNotice(id);
 	}
+	
+	//パスワードの再設定
+	public boolean changePassword(String id, String password) {
+		accountDao dao = new accountDao();
+		return dao.updatePassword(id,password);
+	}
 
 }

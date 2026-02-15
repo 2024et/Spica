@@ -93,7 +93,7 @@
 				<p>※ユーザーIDの変更はできません。</p>
 				<p>※所属団体は1アカウントにつき1団体しか入れません。</p>
 				<button type="button" class="acc-close-btn">キャンセル</button>
-				<button type="submit" name="submit" class="change-btn" value="pass">保存</button>
+				<button type="submit" name="submit" class="change-btn" value="acc">保存</button>
 			</form>
 		</div>
 	</div>
