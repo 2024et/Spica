@@ -1,1 +1,94 @@
 @charset "UTF-8";
+#pw-ch-wrapper,#ac-ch-wrapper {
+    background-color: rgba(0, 0, 0, .5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    overflow-y: auto;
+    padding: 20px 10px;
+}
+
+#pw-ch-inside,#ac-ch-inside {
+    text-align: center;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    background: #C5E0B4;
+    border-radius: 8px;
+}
+
+#message {
+    width: 100%;
+}
+
+.pass-close-btn,.acc-close-btn {
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: none;
+}
+
+.pass-close-btn,.acc-close-btn {
+	border:1px solid #ffffff;
+	background-color: #ffffff;
+	color:#4169e1;
+}
+.pass-close-btn:hover,.acc-close-btn:hover{
+	border:1px solid #4169e1;
+	background-color: #4169e1;
+	color:#ffffff;
+}
+
+
+.change-btn {
+	border:1px solid #4169e1;
+	background-color: #4169e1;
+	color:#ffffff;
+}
+
+.change-btn:hover{
+	border:1px solid #ffffff;
+	background-color: #ffffff;
+	color:#4169e1;
+}
+
+/* タブレット以下 */
+@media (max-width: 768px) {
+    #pw-ch-inside,#ac-ch-inside {
+        padding: 15px;
+        margin: 10px auto;
+    }
+    .reset-btn,
+    .edit-close-btn,
+    .display-btn {
+        width: 100%;
+        margin: 5px 0;
+    }
+}
+
+/* スマートフォン */
+@media (max-width: 480px) {
+    body {
+        padding: 5px;
+    }
+
+    #pw-ch-wrapper,#ac-ch-wrapper {
+        padding: 10px 5px;
+    }
+
+    #pw-ch-inside,#ac-ch-inside {
+        padding: 10px;
+    }
+
+    #message h1 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+}

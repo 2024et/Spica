@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Spica | アカウント</title>
-<link rel=stylesheet" href="style/account.css">
+<link rel="stylesheet" href="css/account.css">
 </head>
 <body>
 <jsp:include page="header.jsp" />
@@ -42,6 +42,94 @@
 <button class="acc-change-btn" id="acc-change-btn">アカウント情報を変更</button>
 
 <button class="delete-btn" id="delete-btn">アカウントを削除する</button>
+
+<div id="pw-ch-wrapper">
+	<div id="pw-ch-inside">
+		<div id="message">
+			<h1>パスワード変更</h1>
+			<form action="accountServlet" method="post">
+				<button type="button" class="pass-close-btn">キャンセル</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+<div id="ac-ch-wrapper">
+	<div id="ac-ch-inside">
+		<div id="message">
+			<h1>アカウント情報変更</h1>
+			<form action="accountServlet" method="post">
+				<button type="button" class="acc-close-btn">キャンセル</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script>
+
+//パスワード変更
+
+document.querySelectorAll('.pass-change-btn').forEach(btn => {
+	btn.addEventListener('click', (e) => {
+	e.stopPropagation(); 
+	const id = btn.dataset.id;
+	
+	const wrapper = document.getElementById("pw-ch-wrapper");
+	if(wrapper){
+		wrapper.style.display = "block";
+	}
+	});
+});
+
+document.querySelectorAll('.pass-close-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+
+    const wrapper = document.getElementById("pw-ch-wrapper");
+    if(wrapper){
+        wrapper.style.display = "none";
+    }
+    });
+});
+document.getElementById('pw-ch-wrapper')?.addEventListener('click', (e) => {
+    if(e.target.id === 'pw-ch-wrapper'){
+        e.target.style.display = 'none';
+    }
+});
+
+//アカウント情報変更
+document.querySelectorAll('.acc-change-btn').forEach(btn => {
+	btn.addEventListener('click', (e) => {
+	e.stopPropagation(); 
+	const id = btn.dataset.id;
+	
+	const wrapper = document.getElementById("ac-ch-wrapper");
+	if(wrapper){
+		wrapper.style.display = "block";
+	}
+	});
+});
+
+document.querySelectorAll('.acc-close-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+
+    const wrapper = document.getElementById("ac-ch-wrapper");
+    if(wrapper){
+        wrapper.style.display = "none";
+    }
+    });
+});
+document.getElementById('ac-ch-wrapper')?.addEventListener('click', (e) => {
+    if(e.target.id === 'ac-ch-wrapper'){
+        e.target.style.display = 'none';
+    }
+});
+
+
+
+</script>
 
 </body>
 </html>
