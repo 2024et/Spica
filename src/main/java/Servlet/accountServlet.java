@@ -26,7 +26,7 @@ public class accountServlet extends HttpServlet {
 		accountBeans accountData = (accountBeans) session.getAttribute("accountData");
 		accountLogic logic = new accountLogic();
 		List<noticeBeans> notice = logic.getNotice(accountData.getId());
-		
+		request.setAttribute("accountData", accountData);
 		request.setAttribute("notice", notice);
 		request.getRequestDispatcher("/account.jsp").forward(request, response);
 	}
@@ -36,6 +36,8 @@ public class accountServlet extends HttpServlet {
 		accountBeans accountData = (accountBeans) session.getAttribute("accountData");
 	
 		accountLogic acc_logic = new accountLogic();
+		signinLogic signin_logic = new signinLogic();
+		signupLogic signup_logic = new signupLogic();
 		
 		
 		String submit = request.getParameter("submit");
@@ -46,7 +48,7 @@ public class accountServlet extends HttpServlet {
 			String new_2 = request.getParameter("newPassword_2");
 			
 			//現在のパスワード認証
-			signinLogic signin_logic = new signinLogic();
+			
 			int loginFlag = signin_logic.login(accountData.getEmail(),current);
 			
 			if(loginFlag == 2) {
@@ -63,13 +65,13 @@ public class accountServlet extends HttpServlet {
 			}
 			
 			//更新
-			signupLogic signup_logic = new signupLogic();
+			
 			
 			String hashed_password = signup_logic.hashPassword(new_2);
 			
-			boolean updateFlag = acc_logic.changePassword(accountData.getId(),hashed_password);
+			boolean pass_updateFlag = acc_logic.changePassword(accountData.getId(),hashed_password);
 			
-			if(!updateFlag) {
+			if(!pass_updateFlag) {
 				request.setAttribute("errorMessage", "パスワードの更新に失敗しました。");
 			    request.getRequestDispatcher("/account.jsp").forward(request, response);
 			    return;
@@ -91,6 +93,49 @@ public class accountServlet extends HttpServlet {
 			
 		}else if("acc".equals(submit)) {
 			//アカウント情報の変更
+			String name = request.getParameter("name");
+			String email = request.getParameter("email");
+			String code = request.getParameter("code");
+			
+			if(!email.isEmpty() && email != null) {
+				//メールの重複チェック
+				int mailDupliFlag = signup_logic.mailDupli(email);
+				if(mailDupliFlag==1) {
+					request.setAttribute("errorMessage", "すでにこのメールアドレスは使用されています。別のメールアドレスを登録してください。");
+				    request.getRequestDispatcher("/account.jsp").forward(request, response);
+				    return;
+				}else if(mailDupliFlag==2) {
+					request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
+				    request.getRequestDispatcher("/account.jsp").forward(request, response);
+				    return;
+				}
+				
+			}
+			
+			boolean acc_updateFlag = acc_logic.changeInformation(accountData.getId(),name, email, code);
+			
+			if(!acc_updateFlag) {
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
+			    request.getRequestDispatcher("/account.jsp").forward(request, response);
+			}
+			
+			//再ログイン
+			if(email.isEmpty() && email == null) {
+				email = accountData.getEmail();
+			}
+			int reLoginFlag = signin_logic.login(email, accountData.getPass());
+			if(reLoginFlag == 2) {
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
+			    request.getRequestDispatcher("/account.jsp").forward(request, response);
+			    return;
+			}
+			
+			//再取得
+			accountBeans beans = signin_logic.getBeans();
+			session.setAttribute("accountData", beans);
+			
+			
+			response.sendRedirect(request.getContextPath() + "/accountServlet");
 			
 		}else {
 			

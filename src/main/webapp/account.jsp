@@ -79,15 +79,15 @@
 							<table>
 					<tr>
 						<td>ユーザー名</td>
-						<td><input type="password" name="currentPassword"></td>
+						<td><input type="text" name="name"></td>
 					</tr>
 					<tr>
 						<td>メールアドレス</td>
-						<td><input type="password" name="newPassword_1"></td>
+						<td><input type="mail" name="email"></td>
 					</tr>
 					<tr>
 						<td>所属団体</td>
-						<td><input type="password" name="newPassword_2"></td>
+						<td><input type="text" name="code"></td>
 					</tr>
 				</table>
 				<p>※ユーザーIDの変更はできません。</p>

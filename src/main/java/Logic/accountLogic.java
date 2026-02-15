@@ -17,5 +17,11 @@ public class accountLogic {
 		accountDao dao = new accountDao();
 		return dao.updatePassword(id,password);
 	}
+	
+	//アカウント情報の変更
+	public boolean changeInformation(String id,String name, String email, String code) {
+		accountDao dao = new accountDao();
+		return dao.updateInformation(id,name,email,code);
+	}
 
 }

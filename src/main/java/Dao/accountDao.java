@@ -237,5 +237,51 @@ public class accountDao {
 			return null;
 		}
 	}
+	
+	//アカウント情報の変更
+	public boolean updateInformation(String id, String name, String email, String code) {
+        PreparedStatement stmt = null;
+        
+		List<String> columns = new ArrayList<>();
+		List<Object> prams = new ArrayList<>();
+		String sql = "UPDATE account SET ";
+		if(name != null && !name.isEmpty()) {
+			columns.add("user_name = ?");
+			prams.add(name);
+		}
+		if(email != null && !email.isEmpty()) {
+			columns.add("user_email = ?");
+			prams.add(email);
+		}
+		if(code != null && !code.isEmpty()) {
+			columns.add("group_id = ?");
+			prams.add(code);
+		}
+		
+		sql += String.join(" , ", columns);
+		
+		sql += (" WHERE id = ?");
+		prams.add(id);
+		
+
+		
+		try {
+			Connection con = DBUtil.getConnection();
+			
+			stmt = con.prepareStatement(sql);
+			for(int i = 0; i < prams.size(); i++) {
+				stmt.setObject(i+1, prams.get(i));
+			}			
+			int result = stmt.executeUpdate();
+			if(result > 0) {return true;}
+			else {return false;}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+	}
 
 }
