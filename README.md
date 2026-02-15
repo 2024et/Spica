@@ -54,12 +54,13 @@
 <p>そのため、上記で述べた課題や問題を解決、解消または軽減するために、部活動・サークル・同好会などの学生団体を対象とした会計管理Webアプリを開発することにした。</p>
 
 ## 画面遷移図
-<p>2026年2月6日時点</p>
-<img width="1321" height="1451" alt="scene" src="https://github.com/user-attachments/assets/7d7d5a34-e3d6-46ce-946d-390b150bddb9" />
+2026年2月6日時点
+![画面遷移図](images/scene.png)
+
 
 ## ER図
-<p>2026年2月6日時点</p>
-<img width="1091" height="1611" alt="er" src="https://github.com/user-attachments/assets/d017fcf8-5ce8-48f0-bf75-471827923a26" />
+2026年2月6日時点
+![ER図](images/er.png)
 
 ## ディレクトリ構成
 <p>2026年2月6日時点</p>
