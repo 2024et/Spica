@@ -2,6 +2,7 @@ package Logic;
 
 import java.util.List;
 
+import Beans.accountBeans;
 import Beans.noticeBeans;
 import Dao.accountDao;
 
@@ -22,6 +23,13 @@ public class accountLogic {
 	public boolean changeInformation(String id,String name, String email, String code) {
 		accountDao dao = new accountDao();
 		return dao.updateInformation(id,name,email,code);
+	}
+	
+	//ログイン
+	public accountBeans login_system(String email) {
+		accountDao dao = new accountDao();
+		return dao.login(email);
+		
 	}
 
 }

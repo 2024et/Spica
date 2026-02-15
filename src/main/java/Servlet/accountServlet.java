@@ -89,6 +89,8 @@ public class accountServlet extends HttpServlet {
 			accountBeans beans = signin_logic.getBeans();
 			session.setAttribute("accountData", beans);
 			
+			
+			
 			response.sendRedirect(request.getContextPath() + "/accountServlet");
 			
 		}else if("acc".equals(submit)) {
@@ -97,7 +99,7 @@ public class accountServlet extends HttpServlet {
 			String email = request.getParameter("email");
 			String code = request.getParameter("code");
 			
-			if(!email.isEmpty() && email != null) {
+			if(email != null && !email.isEmpty()) {
 				//メールの重複チェック
 				int mailDupliFlag = signup_logic.mailDupli(email);
 				if(mailDupliFlag==1) {
@@ -117,28 +119,29 @@ public class accountServlet extends HttpServlet {
 			if(!acc_updateFlag) {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
 			    request.getRequestDispatcher("/account.jsp").forward(request, response);
+			    return;
 			}
 			
+			
 			//再ログイン
-			if(email.isEmpty() && email == null) {
+			if(email == null || email.isEmpty()) {
 				email = accountData.getEmail();
 			}
-			int reLoginFlag = signin_logic.login(email, accountData.getPass());
-			if(reLoginFlag == 2) {
+			accountBeans new_accountData = acc_logic.login_system(email);
+			if(new_accountData == null) {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
 			    request.getRequestDispatcher("/account.jsp").forward(request, response);
 			    return;
 			}
 			
 			//再取得
-			accountBeans beans = signin_logic.getBeans();
-			session.setAttribute("accountData", beans);
+			session.setAttribute("accountData", new_accountData);
 			
 			
 			response.sendRedirect(request.getContextPath() + "/accountServlet");
 			
 		}else {
-			
+			request.getRequestDispatcher("/account.jsp").forward(request, response);
 		}
 		
 	}

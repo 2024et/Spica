@@ -98,7 +98,10 @@
 		</div>
 	</div>
 </div>
-
+	<% String error = (String) request.getAttribute("errorMessage"); %>
+    <% if (error != null) { %>
+    	<p class="error-message"><%= error %></p>
+    <% } %>
 <script>
 
 //パスワード変更
