@@ -41,6 +41,7 @@ public class accountServlet extends HttpServlet {
 		
 		
 		String submit = request.getParameter("submit");
+		System.out.println(submit);
 		if("pass".equals(submit)) {
 			//パスワードの再設定
 			String current = request.getParameter("currentPassword");
@@ -139,6 +140,16 @@ public class accountServlet extends HttpServlet {
 			
 			
 			response.sendRedirect(request.getContextPath() + "/accountServlet");
+			
+		}else if("delete".equals(submit)) {
+			boolean deleteFlag = acc_logic.deleteAccount(accountData.getId());
+			
+			if(deleteFlag) {
+				response.sendRedirect(request.getContextPath() + "/logoutServlet");
+			}else {
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：AC-da1000");
+			    request.getRequestDispatcher("/account.jsp").forward(request, response);
+			}
 			
 		}else {
 			request.getRequestDispatcher("/account.jsp").forward(request, response);

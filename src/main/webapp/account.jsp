@@ -57,8 +57,9 @@
 <% } %>
 
 <br>
-<button type="submit" name="submit" class="delete-btn" value="delete" onclick="confirmDelete();">アカウントを削除する</button>
-
+<form action="accountServlet" method="post">
+	<button type="submit" name="submit" class="delete-btn" value="delete" onclick="confirmDelete();">アカウントを削除する</button>
+</form>
 <div id="pw-ch-wrapper">
 	<div id="pw-ch-inside">
 		<div id="message">

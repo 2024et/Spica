@@ -31,5 +31,11 @@ public class accountLogic {
 		return dao.login(email);
 		
 	}
+	
+	//アカウント削除
+	public boolean deleteAccount(String id) {
+		accountDao dao = new accountDao();
+		return dao.deleteAccount(id);
+	}
 
 }

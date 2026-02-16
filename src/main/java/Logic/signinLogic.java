@@ -17,7 +17,9 @@ public class signinLogic {
 		signupLogic logic = new signupLogic();
 		String hashed_pwd = logic.hashPassword(password);
 		
+		
 		if(!hashed_pwd.equals(beans.getPass())) {
+
 			return 2;
 		}
 		if(!beans.getGroup_id().equals("")) {

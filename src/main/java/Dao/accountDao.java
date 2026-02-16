@@ -119,7 +119,7 @@ public class accountDao {
         accountBeans beans;
 		try {
 			Connection con = DBUtil.getConnection();
-			String sql = "SELECT ac.id AS id, ac.group_id AS group_id, og.name AS group_name, ac.user_name AS user_name, ac.password AS password, ac.role_type AS role_type FROM account AS ac INNER JOIN organizations AS og ON ac.group_id = og.invited_code WHERE ac.user_email = ?;";
+			String sql = "SELECT ac.id AS id, ac.group_id AS group_id, og.name AS group_name, ac.user_name AS user_name, ac.password AS password, ac.role_type AS role_type FROM account AS ac LEFT JOIN organizations AS og ON ac.group_id = og.invited_code WHERE ac.user_email = ?;";
 			
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1, email);
@@ -282,6 +282,26 @@ public class accountDao {
 			return false;
 		}
 		
+	}
+	
+	//アカウント削除
+	public boolean deleteAccount(String id) {
+        PreparedStatement stmt = null;
+		try {
+			Connection con = DBUtil.getConnection();
+			String sql = "DELETE FROM account WHERE id = ?";
+			
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, id);
+			
+			
+			int result = stmt.executeUpdate();
+			if(result > 0) {return true;}
+			else {return false;}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 }
