@@ -116,7 +116,19 @@ th, td {
   border: dashed 1px #777;
 }
 
+/*footer*/
+footer{
+	width: 100%;
+	padding: 20px 0;
+	background: #f7f7f7;
+	text-align: center;
+}
 
+footer p{
+	margin: 0;
+	font-size: 14px;
+	color: #555;
+}
 /* タブレット以下 */
 @media (max-width: 768px) {
     #pw-ch-inside,#ac-ch-inside {

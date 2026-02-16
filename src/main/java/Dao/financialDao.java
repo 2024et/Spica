@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Beans.balanceBeans;
+import Beans.purchase_requestBeans;
 
 public class financialDao {
 	//収支データの取得
@@ -229,6 +230,53 @@ public class financialDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
+		}
+	}
+	
+	//購入希望申請一覧取得
+	public List<purchase_requestBeans> getRequestData(String group_id){
+		List<purchase_requestBeans> list = new ArrayList<>();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+       
+        
+		try {
+			Connection con = DBUtil.getConnection();
+			String sql = "SELECT fi.id AS id, fi.group_id AS group_id, fi.created_at AS created_at, fi.name AS name, fi.item AS item, fi.amount AS amount, pr.user_id AS user_id, pr.store_link AS store_link, pr.purpose AS purpose, pr.status AS status FROM finance_record AS fi INNER JOIN purchase_request AS pr ON fi.id = pr.id WHERE fi.group_id = ? ORDER BY fi.created_at DESC;";
+			
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, group_id);
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+            	String id = rs.getString("id");
+            	String created_at = rs.getString("created_at");
+            	String name = rs.getString("name");
+            	String item = rs.getString("item");
+            	int amount = rs.getInt("amount");
+            	String user_id = rs.getString("user_id");
+            	String store_link = rs.getString("store_link");
+            	String purpose = rs.getString("purpose");            	
+            	String status = rs.getString("status");
+            	
+            	purchase_requestBeans beans = new purchase_requestBeans(
+                        id,
+                        group_id,
+                        created_at,
+                        name,
+                        item,
+                        amount,
+                        user_id,
+                        store_link,
+                        purpose,
+                        status
+                    );
+            	list.add(beans);  
+            }
+			return list;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
 		}
 	}
 

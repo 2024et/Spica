@@ -183,5 +183,8 @@ function confirmDelete(){
 
 </script>
 
+<footer>
+    <p>©2026 EBATA TAKUMI</p>
+</footer>
 </body>
 </html>
