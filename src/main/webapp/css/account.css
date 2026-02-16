@@ -1,4 +1,10 @@
 @charset "UTF-8";
+/*見出し・文章*/
+.req,.error-message{
+	color:red;
+}
+
+/*ポップアップ*/
 #pw-ch-wrapper,#ac-ch-wrapper {
     background-color: rgba(0, 0, 0, .5);
     position: fixed;
@@ -26,8 +32,8 @@
 #message {
     width: 100%;
 }
-
-.pass-close-btn,.acc-close-btn,.change-btn {
+/*ボタン*/
+.pass-close-btn,.acc-close-btn,.change-btn,.pass-change-btn,.acc-change-btn {
     padding: 10px 20px;
     margin: 5px;
     font-size: 16px;
@@ -36,29 +42,80 @@
     border: none;
 }
 
-.pass-close-btn,.acc-close-btn {
+.pass-close-btn,.acc-close-btn,.pass-change-btn,
+.change-btn:hover,.acc-change-btn:hover {
 	border:1px solid #ffffff;
 	background-color: #ffffff;
 	color:#4169e1;
 }
-.pass-close-btn:hover,.acc-close-btn:hover{
+.change-btn,.acc-change-btn,
+.pass-close-btn:hover,.acc-close-btn:hover,.pass-change-btn:hover {
 	border:1px solid #4169e1;
 	background-color: #4169e1;
 	color:#ffffff;
 }
+.delete-btn{
+	background: transparent;
+	border: none;
+	appearance: none;   
+	-webkit-appearance: none;
+	box-shadow: none;    
+	outline: none;
+	cursor: pointer;   
+	
+	color:blue;
+	text-decoration:underline solid blue;
+}
 
 
-.change-btn {
-	border:1px solid #4169e1;
+/*画面*/
+section {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+}
+
+.notice,.info {
+  width: 100%;
+  max-width: 800px;
+  text-align: left; 
+}
+/*テーブル*/
+
+.notice-table{
+	height:200px;
+	overflow-y: auto;
+	border-collapse:separate;
+	border-spacing:0;
+	empty-cells:show;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 600px; 
+}
+
+thead{
+	position:sticky;
+	top:0;
+
 	background-color: #4169e1;
-	color:#ffffff;
 }
 
-.change-btn:hover{
-	border:1px solid #ffffff;
-	background-color: #ffffff;
-	color:#4169e1;
+
+th {
+  color: #ffffff;
+  padding: 10px;
 }
+
+td {
+  padding: 10px;
+}
+
+th, td {
+  border: dashed 1px #777;
+}
+
 
 /* タブレット以下 */
 @media (max-width: 768px) {
