@@ -242,7 +242,7 @@ public class financialDao {
         
 		try {
 			Connection con = DBUtil.getConnection();
-			String sql = "SELECT fi.id AS id, fi.group_id AS group_id, fi.created_at AS created_at, fi.name AS name, fi.item AS item, fi.amount AS amount, pr.user_id AS user_id, pr.store_link AS store_link, pr.purpose AS purpose, pr.status AS status FROM finance_record AS fi INNER JOIN purchase_request AS pr ON fi.id = pr.id WHERE fi.group_id = ? ORDER BY fi.created_at DESC;";
+			String sql = "SELECT fi.id AS id, fi.group_id AS group_id, fi.created_at AS created_at, fi.name AS name, fi.item AS item, fi.amount AS amount, pr.user_id AS user_id, ac.user_name AS user_name, pr.store_link AS store_link, pr.purpose AS purpose, pr.status AS status FROM finance_record AS fi INNER JOIN purchase_request AS pr ON fi.id = pr.id INNER JOIN account AS ac ON pr.user_id = ac.id WHERE fi.group_id = ? ORDER BY fi.created_at DESC;";
 			
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1, group_id);
@@ -254,6 +254,7 @@ public class financialDao {
             	String item = rs.getString("item");
             	int amount = rs.getInt("amount");
             	String user_id = rs.getString("user_id");
+            	String user_name = rs.getString("user_name");
             	String store_link = rs.getString("store_link");
             	String purpose = rs.getString("purpose");            	
             	String status = rs.getString("status");
@@ -266,6 +267,7 @@ public class financialDao {
                         item,
                         amount,
                         user_id,
+                        user_name,
                         store_link,
                         purpose,
                         status

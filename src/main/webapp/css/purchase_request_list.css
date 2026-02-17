@@ -1,5 +1,45 @@
 @charset "UTF-8";
 
+/*ボタン*/
+.new-request-btn,.detail-btn{
+	padding: 10px 20px;
+	margin: 5px;
+	font-size: 16px;
+	border-radius: 4px;
+	cursor: pointer;
+	border: none;
+	border:1px solid #4169e1;
+	background-color: #4169e1;
+	color:#ffffff;
+}
+.new-request-btn:hover,.detail-btn:hover{
+	border:1px solid #ffffff;
+	background-color: #ffffff;
+	color:#4169e1;
+}
+
+table {
+  width: 100%;
+  min-width: 600px; 
+}
+
+thead{
+	background-color: #4169e1;
+}
+
+
+th {
+  color: #ffffff;
+  padding: 10px;
+}
+
+td {
+  padding: 10px;
+}
+
+th, td {
+  border: dashed 1px #777;
+}
 /*footer*/
 footer{
 	width: 100%;

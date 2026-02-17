@@ -10,6 +10,7 @@ public class purchase_requestBeans implements Serializable {
 	private String item;	
 	private int amount;	
 	private String user_id;
+	private String user_name;
 	private String store_link;	
 	private String purpose;	
 	private String status;
@@ -18,7 +19,7 @@ public class purchase_requestBeans implements Serializable {
 		
 	}
 	
-	public purchase_requestBeans(String id, String group_id, String created_at, String name, String item, int amount, String user_id, String store_link, String purpose, String status) {
+	public purchase_requestBeans(String id, String group_id, String created_at, String name, String item, int amount, String user_id, String user_name, String store_link, String purpose, String status) {
 		this.id = id;
 		this.group_id = group_id;
 		this.created_at = created_at;
@@ -26,6 +27,7 @@ public class purchase_requestBeans implements Serializable {
 		this.item = item;
 		this.amount = amount;
 		this.user_id = user_id;
+		this.user_name = user_name;
 		this.store_link = store_link;
 		this.purpose = purpose;
 		this.status = status;
@@ -78,6 +80,13 @@ public class purchase_requestBeans implements Serializable {
 	}
 	public void setUser_id(String user_id) {
 		this.user_id = user_id;
+	}
+	
+	public String getUser_name() {
+		return user_name;
+	}
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
 	}
 	
 	public String getStore_link() {
