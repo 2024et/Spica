@@ -1,5 +1,73 @@
 @charset "UTF-8";
 
+.req,.error-message{
+	color:red;
+}
+
+/*フォーム*/
+.option-date{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+input{
+	width:100%;
+}
+textarea{
+	width:100%;
+}
+
+button{
+	width:100%;
+}
+
+/*ボタン*/
+.send-btn,.back-btn{
+	padding: 10px 20px;
+	margin: 5px;
+	font-size: 16px;
+	border-radius: 4px;
+	cursor: pointer;
+	border: none;
+}
+.send-btn,.back-btn:hover{
+	border:1px solid #4169e1;
+	background-color: #4169e1;
+	color:#ffffff;
+}
+.back-btn,.send-btn:hover{
+	border:1px solid #4169e1;
+	background-color: #ffffff;
+	color:#4169e1;
+}
+
+/*テーブル*/
+
+table {
+  width: 100%;
+  min-width: 600px; 
+}
+
+thead{
+	background-color: #4169e1;
+}
+
+
+th {
+  color: #ffffff;
+  padding: 10px;
+}
+
+td {
+  padding: 10px;
+}
+
+th, td {
+  border: dashed 1px #777;
+}
+
+
 /*footer*/
 footer{
 	width: 100%;
