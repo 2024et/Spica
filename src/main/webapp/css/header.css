@@ -38,6 +38,16 @@
 	margin:3px;
 	text-decoration: none;
 }
+.general:hover{
+	border:1px solid #ffffff;
+	background-color: #ffffff;
+	color:#4169e1;
+}
+.admin:hover{
+	border:1px solid #ffffff;
+	background-color: #ffffff;
+	color:#73992c;
+}
 .empty{
 	display:inline-block;
 	width:150px;

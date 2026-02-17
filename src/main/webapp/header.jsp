@@ -21,13 +21,13 @@
 			<a class="empty"></a>
 			<a class="empty"></a>
 			<a href="" class="admin">管理者</a>
-			<a href="" class="general">ログアウト</a>
+			<a href="logoutServlet" class="general">ログアウト</a>
 		</div>
 		<div class="nav_down">
-			<a href="" class="general">収支一覧</a>
+			<a href="financialServlet" class="general">収支一覧</a>
 			<a href="" class="general">会計報告</a>
 			<a href="" class="general">予算報告</a>
-			<a href="" class="general">購入申請</a>
+			<a href="purchase_request_listServlet" class="general">購入申請</a>
 			<a href="accountServlet" class="general">アカウント</a>
 		</div>
 	</div>
