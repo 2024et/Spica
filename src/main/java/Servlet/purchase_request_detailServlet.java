@@ -1,6 +1,7 @@
 package Servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -10,6 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import Beans.accountBeans;
+import Beans.chatBeans;
 import Beans.purchase_requestBeans;
 import Logic.purchase_request_detailLogic;
 
@@ -21,16 +23,18 @@ public class purchase_request_detailServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String requestID = request.getParameter("requestID");
-		System.out.println("requestID:"+requestID);
 		
 		purchase_request_detailLogic logic = new purchase_request_detailLogic();
 		purchase_requestBeans beans = logic.getRequestData(requestID);
 		
-		if(beans == null) {
+		List<chatBeans> chat = logic.getChat(requestID);
+		
+		if(beans == null || chat == null) {
 			request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：PRD-rd1000");
 			request.getRequestDispatcher("/purchase_request_list.jsp").forward(request, response);
 		}
 		
+		request.setAttribute("chat", chat);
 		request.setAttribute("request", beans);
 		request.getRequestDispatcher("/purchase_request_detail.jsp").forward(request, response);
 	}

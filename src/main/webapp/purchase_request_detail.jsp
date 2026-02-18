@@ -1,11 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Spica | 備品購入希望詳細</title>
 <link rel="stylesheet" href="css/purchase_request_detail.css">
+<link rel="stylesheet" href="css/chat.css">
 </head>
 <body>
 <jsp:include page="header.jsp" />
@@ -42,8 +45,33 @@
 
 <section>
 	<div class="chat">
-		<div class="contents">
-		</div>
+		<c:forEach var="c" items="${chat}">
+		    <div class="contents">
+		        <c:choose>
+		            <c:when test="${c.user_id == accountData.id}">
+		                <div class="message left">
+		                    <div class="message_box">
+		                        <div class="message_content">
+		                            <div class="message_text">${c.message}</div>
+		                        </div>
+		                    </div>
+		                </div>
+		            </c:when>
+		
+		            <c:otherwise>
+		            
+		                <div class="message right">
+		                    <div class="message_box">
+		                        <div class="message_content">
+		                            <div class="message_text">${c.message}</div>
+		                        </div>
+		                    </div>
+		                </div>
+		            </c:otherwise>		
+		        </c:choose>		
+		        <div class="clear"></div>		
+		    </div>
+		</c:forEach>	
 		<form action="purchase_request_detailServlet" method="post">
 			<input type="text" name="message">
 			<button type="submit" name="submit" class="send-btn" value="send">送信</button>
