@@ -12,7 +12,7 @@
 
 <section>	
 	<div class="info">
-	<h3>備品購入希望申請</h3>
+	<h3>備品購入希望申請詳細</h3>
 		<table>
 			<tbody>
 				<tr><td>希望購入日：</td><td>${request.created_at}</td></tr>
@@ -29,9 +29,11 @@
 </section>
 <section>
 	<div class="buttons">
+	<form action="purchase_request_detailServlet" method="post">
 		<button type="submit" name="submit" class="delete-btn" value="delete">削除</button>
-		<button class="form-edit-btn" id="form-edit-btn">編集(申請者)</button>
-		<button class="status-edit-btn" id="status-edit-btn">編集(役員)</button>
+		<button type="submit" name="submit" class="form-edit-btn" id="form-edit-btn" value="form">編集(申請者)</button>
+		<button type="submit" name="submit" class="status-edit-btn" id="status-edit-btn" value="status">編集(役員)</button>
+	</form>
 	</div>
 </section>
 

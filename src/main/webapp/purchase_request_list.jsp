@@ -23,7 +23,7 @@
 					<td>${c.name}</td>
 					<td>${c.status}</td>
 					<td>
-					<form method="post" action="purchase_request_detailServlet">
+					<form method="get" action="purchase_request_detailServlet">
 						<input type="hidden" name="requestID" value="${c.id}">
 						<input type="submit" name="submit" class="detail-btn" value="詳細">
 					</form>
@@ -35,6 +35,10 @@
 </section>
 
 <br><br>
+<% String error = (String) request.getAttribute("errorMessage"); %>
+<% if (error != null) { %>
+	<p class="error-message"><%= error %></p>
+<% } %>
 
 <footer>
     <p>©2026 EBATA TAKUMI</p>

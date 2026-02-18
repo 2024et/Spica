@@ -305,5 +305,72 @@ public class financialDao {
 			return false;
 		}
 	}
+	//購入希望申請詳細取得
+	public purchase_requestBeans getRequestData_detail(String request_id){
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+       
+        
+		try {
+			Connection con = DBUtil.getConnection();
+			String sql = "SELECT fi.id AS id, fi.group_id AS group_id, fi.created_at AS created_at, fi.name AS name, fi.item AS item, fi.amount AS amount, pr.user_id AS user_id, ac.user_name AS user_name, pr.store_link AS store_link, pr.purpose AS purpose, pr.status AS status FROM finance_record AS fi INNER JOIN purchase_request AS pr ON fi.id = pr.id INNER JOIN account AS ac ON pr.user_id = ac.id WHERE fi.id = ?;";
+			
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, request_id);
+			rs = stmt.executeQuery();
+			if (rs.next()) {
+            	String id = rs.getString("id");
+            	String group_id = rs.getString("group_id");
+            	String created_at = rs.getString("created_at");
+            	String name = rs.getString("name");
+            	String item = rs.getString("item");
+            	int amount = rs.getInt("amount");
+            	String user_id = rs.getString("user_id");
+            	String user_name = rs.getString("user_name");
+            	String store_link = rs.getString("store_link");
+            	String purpose = rs.getString("purpose");            	
+            	String status = rs.getString("status");
+            	
+            	return new purchase_requestBeans(
+                        id,
+                        group_id,
+                        created_at,
+                        name,
+                        item,
+                        amount,
+                        user_id,
+                        user_name,
+                        store_link,
+                        purpose,
+                        status
+                    );		
+			}else {
+				return null;
+			}
+			
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("エラー"+e);
+			return null;
+		}
+	}
+	//備品購入希望申請の削除
+	public boolean deleteRequestData_financial(Connection con,String id) {
+        PreparedStatement stmt = null;
+		try {
+			String sql = "DELETE FROM finance_record WHERE id = ?";
+			
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, id);
+			
+			int result = stmt.executeUpdate();
+			if(result > 0) {return true;}
+			else {return false;}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 }
