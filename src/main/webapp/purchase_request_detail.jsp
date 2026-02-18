@@ -30,10 +30,11 @@
 <section>
 	<div class="buttons">
 	<form action="purchase_request_detailServlet" method="post">
-		<button type="submit" name="submit" class="delete-btn" value="delete">削除</button>
-		<button type="submit" name="submit" class="form-edit-btn" id="form-edit-btn" value="form">編集(申請者)</button>
-		<button type="submit" name="submit" class="status-edit-btn" id="status-edit-btn" value="status">編集(役員)</button>
-	</form>
+		<button type="submit" name="submit" onclick="confirmDelete();" class="delete-btn" value="delete">削除</button>
+	</form>	
+	<button class="form-edit-btn" id="form-edit-btn">編集(申請者)</button>
+	<button class="status-edit-btn" id="status-edit-btn">編集(役員)</button>
+	
 	</div>
 </section>
 
@@ -54,6 +55,16 @@
 		<div id="message">
 		
 		<form action="purchase_request_detailServlet" method="post">
+			<table>
+				<tr><td>購入希望日</td>
+					<td><input type="date" id="date_input" name="selected_date" value="${request.created_at}"><span class="date-icon">📅</span></td>
+				</tr>
+				<tr><td>店名</td><td><input type="text" name="name" required value="${request.name}"></td></tr>
+				<tr><td>品目</td><td><input type="text" name="item" required value="${request.item}"></td></tr>
+				<tr><td>目的</td><td><textarea name="purpose" maxlength="200" required >${request.purpose}</textarea></td></tr>
+				<tr><td>金額</td><td><input type="number" name="amount" required value="${request.amount}"></td></tr>
+				<tr><td>販売元URL</td><td><input type="text" name="link" maxlength="200" value="${request.store_link}"></td></tr>
+			</table>
 			<button type="button" class="fo-ed-btn" id="fo-ed-btn">キャンセル</button>
 			<button type="submit" name="submit" class="form-save-btn" value="form">保存</button>
 		</form>

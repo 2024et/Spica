@@ -11,4 +11,5 @@ public class purchase_request_listLogic {
 		financialDao dao = new financialDao();
 		return dao.getRequestData(group_id);
 	}
+
 }

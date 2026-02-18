@@ -25,7 +25,6 @@ public class purchase_request_detailServlet extends HttpServlet {
 		
 		requestID = request.getParameter("requestID");
 		
-		System.out.println("id:"+requestID);
 		
 		purchase_request_detailLogic logic = new purchase_request_detailLogic();
 		purchase_requestBeans beans = logic.getRequestData(requestID);
@@ -44,16 +43,37 @@ public class purchase_request_detailServlet extends HttpServlet {
 		accountBeans accountData = (accountBeans) session.getAttribute("accountData");
 		
 		String submit = request.getParameter("submit");
+		String log = null;
 		purchase_request_detailLogic logic = new purchase_request_detailLogic();
 		
 		if("delete".equals(submit)) {
-			System.out.println("aaaeeee");
-			String log = accountData.getName()+"さんが、希望申請を取り消しました。";
+			log = accountData.getName()+"さんが、希望申請を取り消しました。";
 			
 			boolean deleteFlag = logic.deleteRequestData(requestID,accountData.getGroup_id(),log);
 			
 			if(deleteFlag) {
 				response.sendRedirect(request.getContextPath() + "/purchase_request_listServlet");
+			}else {
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：AC-da1000");
+				request.getRequestDispatcher("/purchase_request_detail.jsp").forward(request, response);
+			}
+		}else if("form".equals(submit)) {
+			log = accountData.getName()+"さんが、希望申請を編集しました。";
+			
+			String selected_date = request.getParameter("selected_date");
+			String name = request.getParameter("name");
+			String item = request.getParameter("item");
+			String purpose = request.getParameter("purpose");
+			int amount = Integer.parseInt(request.getParameter("amount"));
+			String link = request.getParameter("link");
+			String status = null;
+			
+			purchase_requestBeans updateBeans = new purchase_requestBeans(requestID,accountData.getGroup_id(),selected_date,name,item,amount,accountData.getId(),accountData.getName(),link,purpose,status);
+			
+			boolean updateFlag = logic.updateRequestData(updateBeans,log);
+			
+			if(updateFlag) {
+				response.sendRedirect(request.getContextPath() + "/purchase_request_detailServlet");
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：AC-da1000");
 				request.getRequestDispatcher("/purchase_request_detail.jsp").forward(request, response);

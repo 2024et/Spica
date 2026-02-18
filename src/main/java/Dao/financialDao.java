@@ -351,7 +351,6 @@ public class financialDao {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("エラー"+e);
 			return null;
 		}
 	}
@@ -363,6 +362,29 @@ public class financialDao {
 			
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1, id);
+			
+			int result = stmt.executeUpdate();
+			if(result > 0) {return true;}
+			else {return false;}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	//備品購入希望申請の変更
+	public boolean updateRequestData_financial(Connection con,purchase_requestBeans beans) {
+        PreparedStatement stmt = null;
+		try {
+			String sql = "UPDATE finance_record SET created_at  = ?,name  = ?,item  = ?,amount  = ? WHERE id = ?;";
+			
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, beans.getCreated_at());
+			stmt.setString(2, beans.getName());
+			stmt.setString(3, beans.getItem());
+			stmt.setInt(4, beans.getAmount());
+			stmt.setString(5, beans.getId());
+			
 			
 			int result = stmt.executeUpdate();
 			if(result > 0) {return true;}

@@ -30,21 +30,42 @@ public class purchase_requestDao {
 		}
 	}
 	//備品購入希望申請の削除
-		public boolean deleteRequestData_request(Connection con,String id) {
-	        PreparedStatement stmt = null;
-			try {
-				String sql = "DELETE FROM purchase_request WHERE id = ?;";
-				
-				stmt = con.prepareStatement(sql);
-				stmt.setString(1,id);
-				
-				
-				int result = stmt.executeUpdate();
-				if(result > 0) {return true;}
-				else {return false;}
-			} catch (SQLException e) {
-				e.printStackTrace();
-				return false;
-			}
+	public boolean deleteRequestData_request(Connection con,String id) {
+        PreparedStatement stmt = null;
+		try {
+			String sql = "DELETE FROM purchase_request WHERE id = ?;";
+			
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1,id);
+			
+			
+			int result = stmt.executeUpdate();
+			if(result > 0) {return true;}
+			else {return false;}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
 		}
+	}
+	//備品購入希望申請の変更
+	public boolean updateRequestData_request(Connection con,purchase_requestBeans beans) {
+        PreparedStatement stmt = null;
+		try {
+			String sql = "UPDATE purchase_request SET store_link = ?,purpose = ? WHERE id = ?;";
+			
+			stmt = con.prepareStatement(sql);
+			
+			stmt.setString(1, beans.getStore_link());
+			stmt.setString(2, beans.getPurpose());
+			stmt.setString(3, beans.getId());
+			
+			
+			int result = stmt.executeUpdate();
+			if(result > 0) {return true;}
+			else {return false;}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 }

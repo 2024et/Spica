@@ -15,9 +15,7 @@ import Dao.purchase_requestDao;
 public class purchase_request_detailLogic {
 	//詳細の取得
 	public purchase_requestBeans getRequestData(String id) {
-		System.out.println("oooo");
 		financialDao dao = new financialDao();
-		System.out.println("aaaa");
 		return dao.getRequestData_detail(id);
 	}
 	
@@ -51,6 +49,45 @@ public class purchase_request_detailLogic {
 			}
 			
 			boolean log_completeFlag = log_dao.insertLog(con,group_id,log);
+			
+			if(!log_completeFlag) {
+				con.rollback();
+				return false;
+			}
+			
+			con.commit();
+			return true;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	//申請の変更
+	public boolean updateRequestData(purchase_requestBeans beans,String log) {
+		financialDao fi_dao = new financialDao();
+		purchase_requestDao pr_dao = new purchase_requestDao();
+		logDao log_dao = new logDao();
+		try {
+			Connection con = DBUtil.getConnection();
+			con.setAutoCommit(false);
+			
+			boolean fi_completeFlag = fi_dao.updateRequestData_financial(con,beans);
+			
+			if(!fi_completeFlag) {
+				con.rollback();
+				return false;
+			}
+			
+			boolean tr_completeFlag = pr_dao.updateRequestData_request(con,beans);
+					
+			if(!tr_completeFlag) {
+				con.rollback();
+				return false;
+			}
+			
+			boolean log_completeFlag = log_dao.insertLog(con,beans.getGroup_id(),log);
 			
 			if(!log_completeFlag) {
 				con.rollback();
