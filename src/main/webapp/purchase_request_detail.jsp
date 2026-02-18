@@ -30,6 +30,8 @@
 <section>
 	<div class="buttons">
 	<form action="purchase_request_detailServlet" method="post">
+	<input type="hidden" name="id" value="${request.id}">
+	
 		<button type="submit" name="submit" onclick="confirmDelete();" class="delete-btn" value="delete">削除</button>
 	</form>	
 	<button class="form-edit-btn" id="form-edit-btn">編集(申請者)</button>
@@ -55,6 +57,8 @@
 		<div id="message">
 		
 		<form action="purchase_request_detailServlet" method="post">
+		<input type="hidden" name="id" value="${request.id}">
+		
 			<table>
 				<tr><td>購入希望日</td>
 					<td><input type="date" id="date_input" name="selected_date" value="${request.created_at}"><span class="date-icon">📅</span></td>
@@ -75,6 +79,14 @@
 	<div id="st-ed-inside">
 		<div id="message">
 		<form action="purchase_request_detailServlet" method="post">
+			<input type="hidden" name="id" value="${request.id}">
+		
+			<label><input type="radio" name="radio" class="radio" value="待機中">待機中</label>
+			<label><input type="radio" name="radio" class="radio" value="審議中">審議中</label>
+			<label><input type="radio" name="radio" class="radio" value="手続き中">手続き中</label>
+			<label><input type="radio" name="radio" class="radio" value="完了">完了</label>
+			<label><input type="radio" name="radio" class="radio" value="却下">却下</label>
+			<br>
 			<button type="button" class="st-ed-btn" id="st-ed-btn">キャンセル</button>
 			<button type="submit" name="submit" class="status-save-btn" value="status">保存</button>
 		</form>
@@ -116,7 +128,7 @@ document.getElementById('fo-ed-wrapper')?.addEventListener('click', (e) => {
 });
 
 //ステータス変更
-document.querySelectorAll('.st-ed-btn').forEach(btn => {
+document.querySelectorAll('.status-edit-btn').forEach(btn => {
 	btn.addEventListener('click', (e) => {
 	e.stopPropagation(); 
 	const id = btn.dataset.id;

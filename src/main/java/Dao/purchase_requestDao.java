@@ -68,4 +68,26 @@ public class purchase_requestDao {
 			return false;
 		}
 	}
+	
+	//備品購入希望申請のステータス変更
+	public boolean updateReqStatusData_request(Connection con,String id, String status) {
+        PreparedStatement stmt = null;
+		try {
+			String sql = "UPDATE purchase_request SET status = ? WHERE id = ?;";
+			
+			stmt = con.prepareStatement(sql);
+			
+			stmt.setString(1, status);
+			stmt.setString(2, id);
+			
+			
+			int result = stmt.executeUpdate();
+
+			if(result > 0) {return true;}
+			else {return false;}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 }

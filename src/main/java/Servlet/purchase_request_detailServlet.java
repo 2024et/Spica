@@ -17,20 +17,17 @@ import Logic.purchase_request_detailLogic;
 public class purchase_request_detailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private String requestID = null;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		accountBeans accountData = (accountBeans) session.getAttribute("accountData");
 		
-		requestID = request.getParameter("requestID");
-		
+		String requestID = request.getParameter("requestID");
+		System.out.println("requestID:"+requestID);
 		
 		purchase_request_detailLogic logic = new purchase_request_detailLogic();
 		purchase_requestBeans beans = logic.getRequestData(requestID);
 		
 		if(beans == null) {
-			request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：AC-da1000");
+			request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：PRD-rd1000");
 			request.getRequestDispatcher("/purchase_request_list.jsp").forward(request, response);
 		}
 		
@@ -43,6 +40,7 @@ public class purchase_request_detailServlet extends HttpServlet {
 		accountBeans accountData = (accountBeans) session.getAttribute("accountData");
 		
 		String submit = request.getParameter("submit");
+		String requestID = request.getParameter("id");
 		String log = null;
 		purchase_request_detailLogic logic = new purchase_request_detailLogic();
 		
@@ -54,7 +52,7 @@ public class purchase_request_detailServlet extends HttpServlet {
 			if(deleteFlag) {
 				response.sendRedirect(request.getContextPath() + "/purchase_request_listServlet");
 			}else {
-				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：AC-da1000");
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：PRD-dr1000");
 				request.getRequestDispatcher("/purchase_request_detail.jsp").forward(request, response);
 			}
 		}else if("form".equals(submit)) {
@@ -73,10 +71,27 @@ public class purchase_request_detailServlet extends HttpServlet {
 			boolean updateFlag = logic.updateRequestData(updateBeans,log);
 			
 			if(updateFlag) {
-				response.sendRedirect(request.getContextPath() + "/purchase_request_detailServlet");
+				response.sendRedirect(request.getContextPath() + "/purchase_request_detailServlet?requestID=" + requestID);
+				return;
 			}else {
-				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：AC-da1000");
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：PRD-ur1000");
 				request.getRequestDispatcher("/purchase_request_detail.jsp").forward(request, response);
+				return;
+			}
+		}else if("status".equals(submit)) {
+			log = accountData.getName()+"さんが、希望申請ステータスを変更しました。";
+			
+			String status = request.getParameter("radio");
+			
+			boolean statusFlag = logic.updateStatus(requestID,status,accountData.getGroup_id(),log);
+			
+			if(statusFlag) {
+				response.sendRedirect(request.getContextPath() + "/purchase_request_detailServlet?requestID=" + requestID);
+				return;
+			}else {
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：PRD-us1000");
+				request.getRequestDispatcher("/purchase_request_detail.jsp").forward(request, response);
+				return;
 			}
 		}
 	}

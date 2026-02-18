@@ -102,4 +102,40 @@ public class purchase_request_detailLogic {
 			return false;
 		}
 	}
+	
+	//ステータスの変更
+	public boolean updateStatus(String id,String status,String group_id, String log) {
+		purchase_requestDao pr_dao = new purchase_requestDao();
+		logDao log_dao = new logDao();
+		try {
+			Connection con = DBUtil.getConnection();
+			con.setAutoCommit(false);
+			
+			boolean tr_completeFlag = pr_dao.updateReqStatusData_request(con,id,status);
+			System.out.println(tr_completeFlag);
+					
+			if(!tr_completeFlag) {
+				System.out.println("Request失敗");
+				con.rollback();
+				return false;
+			}
+			
+			boolean log_completeFlag = log_dao.insertLog(con,group_id,log);
+			System.out.println(log_completeFlag);
+			
+			if(!log_completeFlag) {
+				System.out.println("Log失敗");
+				con.rollback();				
+				return false;
+			}
+			
+			con.commit();
+			return true;
+			
+		} catch (SQLException e) {
+			System.out.println("エラー"+e);
+			e.printStackTrace();			
+			return false;
+		}
+	}
 }
