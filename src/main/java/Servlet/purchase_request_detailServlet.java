@@ -30,7 +30,7 @@ public class purchase_request_detailServlet extends HttpServlet {
 		List<chatBeans> chat = logic.getChat(requestID);
 		
 		if(beans == null || chat == null) {
-			request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：PRD-rd1000");
+			request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：PRD-getData");
 			request.getRequestDispatcher("/purchase_request_list.jsp").forward(request, response);
 		}
 		
@@ -56,7 +56,7 @@ public class purchase_request_detailServlet extends HttpServlet {
 			if(deleteFlag) {
 				response.sendRedirect(request.getContextPath() + "/purchase_request_listServlet");
 			}else {
-				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：PRD-dr1000");
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：PRD-deleteFlag");
 				request.getRequestDispatcher("/purchase_request_detail.jsp").forward(request, response);
 			}
 		}else if("form".equals(submit)) {
@@ -78,7 +78,7 @@ public class purchase_request_detailServlet extends HttpServlet {
 				response.sendRedirect(request.getContextPath() + "/purchase_request_detailServlet?requestID=" + requestID);
 				return;
 			}else {
-				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：PRD-ur1000");
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：PRD-updateFlag");
 				request.getRequestDispatcher("/purchase_request_detail.jsp").forward(request, response);
 				return;
 			}
@@ -93,7 +93,19 @@ public class purchase_request_detailServlet extends HttpServlet {
 				response.sendRedirect(request.getContextPath() + "/purchase_request_detailServlet?requestID=" + requestID);
 				return;
 			}else {
-				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：PRD-us1000");
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：PRD-statusFlag");
+				request.getRequestDispatcher("/purchase_request_detail.jsp").forward(request, response);
+				return;
+			}
+		}else if("send".equals(submit)) {
+			String message = request.getParameter("message");
+			boolean sendFlag = logic.sendMessage(accountData.getGroup_id(),requestID,message);
+			
+			if(sendFlag) {
+				response.sendRedirect(request.getContextPath() + "/purchase_request_detailServlet?requestID=" + requestID);
+				return;
+			}else {
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：PRD-sendFlag");
 				request.getRequestDispatcher("/purchase_request_detail.jsp").forward(request, response);
 				return;
 			}

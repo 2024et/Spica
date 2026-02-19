@@ -2,6 +2,8 @@ package Logic;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import Beans.chatBeans;
@@ -137,5 +139,14 @@ public class purchase_request_detailLogic {
 			e.printStackTrace();			
 			return false;
 		}
+	}
+	//チャット送信
+	public boolean sendMessage(String user_id, String request_id, String Message) {
+		LocalDateTime now = LocalDateTime.now();
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+		signupLogic logic = new signupLogic();
+		String id = logic.RandomID();
+		chatDao dao = new chatDao();
+		return dao.sendMessage(id,user_id, request_id,now.format(dtf), Message);
 	}
 }

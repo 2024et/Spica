@@ -32,17 +32,19 @@
 </section>
 <section>
 	<div class="buttons">
-	<form action="purchase_request_detailServlet" method="post">
-	<input type="hidden" name="id" value="${request.id}">
-	
-		<button type="submit" name="submit" onclick="confirmDelete();" class="delete-btn" value="delete">削除</button>
-	</form>	
-	<button class="form-edit-btn" id="form-edit-btn">編集(申請者)</button>
-	<button class="status-edit-btn" id="status-edit-btn">編集(役員)</button>
-	
+		<div class="buttons-left">
+			<form action="purchase_request_detailServlet" method="post">
+				<input type="hidden" name="id" value="${request.id}">	
+				<button type="submit" name="submit" onclick="confirmDelete();" class="delete-btn" value="delete">削除</button>
+			</form>	
+		</div>
+		<div class="buttons-right">
+			<button class="form-edit-btn" id="form-edit-btn">編集(申請者)</button>
+			<button class="status-edit-btn" id="status-edit-btn">編集(役員)</button>
+		</div>
 	</div>
 </section>
-
+<br>
 <section>
 	<div class="chat">
 		<c:forEach var="c" items="${chat}">
@@ -72,13 +74,14 @@
 		        <div class="clear"></div>		
 		    </div>
 		</c:forEach>	
-		<form action="purchase_request_detailServlet" method="post">
-			<input type="text" name="message">
+		<form action="purchase_request_detailServlet" method="post" class="send">
+			<input type="hidden" name="id" value="${request.id}">
+			<input type="text" name="message" class="send-message">
 			<button type="submit" name="submit" class="send-btn" value="send">送信</button>
 		</form>
 	</div>
 </section>
-
+<br><br><br>
 
 <div id="fo-ed-wrapper">
 	<div id="fo-ed-inside">

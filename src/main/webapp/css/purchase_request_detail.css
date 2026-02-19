@@ -33,7 +33,7 @@
 }
 
 /*ボタン*/
-.send-btn,.form-save-btn,.status-save-btn,.fo-ed-btn,.st-ed-btn,.delete-btn {
+.send-btn,.form-save-btn,.status-save-btn,.fo-ed-btn,.st-ed-btn,.delete-btn,.form-edit-btn,.status-edit-btn {
     padding: 10px 20px;
     margin: 5px;
     font-size: 16px;
@@ -44,7 +44,7 @@
 
 .fo-ed-btn,.st-ed-btn,
 .send-btn:hover,.form-save-btn:hover,.status-save-btn:hover {
-	border:1px solid #ffffff;
+	border:1px solid #4169e1;
 	background-color: #ffffff;
 	color:#4169e1;
 }
@@ -55,6 +55,18 @@
 	color:#ffffff;
 }
 
+.form-edit-btn,.status-edit-btn{
+	border:1px solid #73992c;
+	background-color: #73992c;
+	color:#ffffff;
+}
+.form-edit-btn:hover,.status-edit-btn:hover{
+	border:1px solid #73992c;
+	background-color: #ffffff;
+	color:#73992c;
+}
+
+
 .delete-btn{
 	border:1px solid #dc143c;
 	background-color: #dc143c;
@@ -62,12 +74,46 @@
 }
 
 .delete-btn:hover{
-	border:1px solid #ffffff;
+	border:1px solid #dc143c;
 	background-color: #ffffff;
 	color:#dc143c;
 }
 
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;          
+}
+.buttons-right {
+    display: flex;      
+    gap: 10px;          
+}
 
+
+/*テーブル*/
+
+table {
+  width: 100%;
+  min-width: 600px; 
+}
+
+thead{
+	background-color: #4169e1;
+}
+
+
+th {
+  color: #ffffff;
+  padding: 10px;
+}
+
+td {
+  padding: 10px;
+}
+
+th, td {
+  border: dashed 1px #777;
+}
 
 /*footer*/
 footer{

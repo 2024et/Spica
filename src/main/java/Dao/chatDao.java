@@ -44,4 +44,27 @@ public class chatDao {
 			return null;
 		}
 	}
+	//チャット送信
+	public boolean sendMessage(String id, String user_id, String request_id, String created_at, String message) {
+        PreparedStatement stmt = null;
+		try {
+			Connection con = DBUtil.getConnection();
+			String sql = "INSERT INTO chat (id,user_id,request_id,created_at,message) VALUES (?,?,?,?,?)";
+			
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, id);
+			stmt.setString(2, user_id);
+			stmt.setString(3, request_id);
+			stmt.setString(4, created_at);
+			stmt.setString(5, message);
+			
+			
+			int result = stmt.executeUpdate();
+			if(result > 0) {return true;}
+			else {return false;}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 }
