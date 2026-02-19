@@ -44,7 +44,7 @@
 
 .pass-close-btn,.acc-close-btn,.pass-change-btn,
 .change-btn:hover,.acc-change-btn:hover {
-	border:1px solid #ffffff;
+	border:1px solid #4169e1;
 	background-color: #ffffff;
 	color:#4169e1;
 }
@@ -61,8 +61,7 @@
 	-webkit-appearance: none;
 	box-shadow: none;    
 	outline: none;
-	cursor: pointer;   
-	
+	cursor: pointer;   	
 	color:blue;
 	text-decoration:underline solid blue;
 }

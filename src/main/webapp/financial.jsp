@@ -251,7 +251,7 @@
 							<td><textarea class="textbox" name="memo">${c.memo}</textarea></td>
 						</tr>
 					</table>
-					<button type="submit" name="submit" class="reset-btn" onclick="confirmDelete();" value="delete">削除</button>
+					<button type="submit" name="submit" class="delete-btn" onclick="confirmDelete();" value="delete">削除</button>
 					<button type="button" class="edit-close-btn close-btn" data-id="${c.id}">キャンセル</button>
 					<button type="submit" name="submit" class="display-btn" value="edit">保存</button>
 				</form>

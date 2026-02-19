@@ -101,19 +101,37 @@ h3{
 	margin:16px;
 }
 
-.reset-btn,.close-btn{
+.reset-btn,.close-btn,.delete-btn{
 	display:inline-block;
 	width:100px;
-	border:1px solid #4169e1;
-	background-color: #ffffff;
-	color:#234;
 	font-size:14px;
 	text-align:center;
 	padding: 10px 3px;
 	margin:3px;
 	text-decoration: none;
 }
+.reset-btn,.close-btn{
+	border:1px solid #4169e1;
+	background-color: #ffffff;
+	color:#4169e1;
+}
 
+.reset-btn:hover,.close-btn:hover{
+	border:1px solid #4169e1;
+	background-color: #4169e1;
+	color:#ffffff;
+}
+.delete-btn{
+	border:1px solid #dc143c;
+	background-color: #dc143c;
+	color:#ffffff;
+}
+
+.delete-btn:hover{
+	border:1px solid #dc143c;
+	background-color: #ffffff;
+	color:#dc143c;
+}
 .display-btn{
 	display:inline-block;
 	width:100px;
@@ -126,7 +144,11 @@ h3{
 	margin:3px;
 	text-decoration: none;
 }
-
+.display-btn:hover{
+	border:1px solid #4169e1;
+	background-color: #ffffff;
+	color:#4169e1;
+}
 #ad_InsertBtn{
 	display: flex;
 	width: 110px;
