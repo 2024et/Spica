@@ -19,27 +19,18 @@ public class account_reportDao {
         
 		try {
 			Connection con = DBUtil.getConnection();
-			String sql = "SELECT * FROM account_report WHERE id = ?;";
+			String sql = "SELECT id,name FROM account_report WHERE group_id = ?;";
 			
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1, group_id);
 			rs = stmt.executeQuery();
 			while (rs.next()) {
             	String id = rs.getString("id");
-            	String budget_id = rs.getString("budget_id");
-            	String created_at = rs.getString("created_at");
             	String name = rs.getString("name");
-            	String start_period = rs.getString("start_period");
-            	String end_period = rs.getString("end_period");
             	
             	account_reportBeans beans = new account_reportBeans(
                         id,
-                        group_id,
-                        budget_id,
-                        created_at,
-                        name,
-                        start_period,
-                        end_period
+                        name
                     );
             	list.add(beans);  
             }
@@ -48,6 +39,31 @@ public class account_reportDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
+		}
+	}
+	
+	//新規登録
+	public boolean insertReportData(Connection con,account_reportBeans beans) {
+        PreparedStatement stmt = null;
+		try {
+			String sql = "INSERT INTO account_report (id,group_id,budget_id,created_at,name,start_period,end_period) VALUES (?,?,?,?,?,?,?);";
+			
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, beans.getId());
+			stmt.setString(2, beans.getGroup_id());
+			stmt.setString(3, beans.getBudget_id());
+			stmt.setString(4, beans.getCreated_at());
+			stmt.setString(5, beans.getName());
+			stmt.setString(6, beans.getStart_period());
+			stmt.setString(7, beans.getEnd_period());
+			
+			
+			int result = stmt.executeUpdate();
+			if(result > 0) {return true;}
+			else {return false;}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
 		}
 	}
 }
