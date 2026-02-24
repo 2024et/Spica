@@ -43,9 +43,10 @@ public class budget_report_listLogic {
 		
 		budget_reportDao dao = new budget_reportDao();
 		logDao log_dao = new logDao();
+		Connection con = null;
 		
 		try {
-			Connection con = DBUtil.getConnection();
+			con = DBUtil.getConnection();
 			con.setAutoCommit(false);
 			
 			boolean br_completeFlag = dao.insertBudgetData_report(con,budget_id,group_id,created_at,name);
@@ -79,6 +80,12 @@ public class budget_report_listLogic {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
-		}
+		}finally {
+	        try {
+	            if(con != null) con.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
 	}
 }

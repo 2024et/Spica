@@ -109,8 +109,9 @@ public class financialLogic {
 		transactionDao tr_dao = new transactionDao();
 		logDao log_dao = new logDao();
 		String type = "収支";
+		Connection con = null;
 		try {
-			Connection con = DBUtil.getConnection();
+			con = DBUtil.getConnection();
 			con.setAutoCommit(false);
 			
 			boolean fi_completeFlag = fi_dao.insertBalanceData_financial(con,beans,type);
@@ -140,7 +141,13 @@ public class financialLogic {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
-		}
+		}finally {
+	        try {
+	            if(con != null) con.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
 	}
 	
 	//収支編集
@@ -149,8 +156,9 @@ public class financialLogic {
 		transactionDao tr_dao = new transactionDao();
 		logDao log_dao = new logDao();
 		String type = "収支";
+		Connection con = null;
 		try {
-			Connection con = DBUtil.getConnection();
+			con = DBUtil.getConnection();
 			con.setAutoCommit(false);
 			
 			boolean fi_completeFlag = fi_dao.editBalanceData_financial(beans,type);
@@ -180,7 +188,13 @@ public class financialLogic {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
-		}
+		} finally {
+	        try {
+	            if(con != null) con.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
 	}
 	
 	//収支検索
@@ -195,9 +209,9 @@ public class financialLogic {
 		financialDao fi_dao = new financialDao();
 		transactionDao tr_dao = new transactionDao();
 		logDao log_dao = new logDao();
-		
+		Connection con = null;
 		try {
-			Connection con = DBUtil.getConnection();
+			con = DBUtil.getConnection();
 			con.setAutoCommit(false);
 			
 			boolean fi_completeFlag = fi_dao.deleteBalanceData_financial(con,id);
@@ -227,7 +241,13 @@ public class financialLogic {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
-		}
+		} finally {
+	        try {
+	            if(con != null) con.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
 	}
 	
 

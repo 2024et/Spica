@@ -14,43 +14,44 @@ public class financialDao {
 	//収支データの取得
 	public List<balanceBeans> getBalanceData(String group_id,String year){
 		List<balanceBeans> list = new ArrayList<>();
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-       
+		String sql = "SELECT fi.id AS id, fi.group_id AS group_id, fi.created_at AS created_at, fi.name AS name, fi.item AS item, fi.amount AS amount, tr.project AS project, tr.category AS category, tr.memo AS memo, tr.type AS type FROM finance_record AS fi INNER JOIN transaction AS tr ON fi.id = tr.id WHERE fi.group_id = ? AND fi.created_at >= ? ORDER BY fi.created_at DESC;";
+		
         
-		try {
-			Connection con = DBUtil.getConnection();
-			String sql = "SELECT fi.id AS id, fi.group_id AS group_id, fi.created_at AS created_at, fi.name AS name, fi.item AS item, fi.amount AS amount, tr.project AS project, tr.category AS category, tr.memo AS memo, tr.type AS type FROM finance_record AS fi INNER JOIN transaction AS tr ON fi.id = tr.id WHERE fi.group_id = ? AND fi.created_at >= ? ORDER BY fi.created_at DESC;";
+		try  (
+		        Connection con = DBUtil.getConnection();
+		        PreparedStatement stmt = con.prepareStatement(sql);
+		    ) {
 			
-			stmt = con.prepareStatement(sql);
 			stmt.setString(1, group_id);
 			stmt.setString(2, year);
-			rs = stmt.executeQuery();
-			while (rs.next()) {
-            	String id = rs.getString("id");
-            	String created_at = rs.getString("created_at");
-            	String name = rs.getString("name");
-            	String item = rs.getString("item");
-            	int amount = rs.getInt("amount");
-            	String project = rs.getString("project");
-            	String category = rs.getString("category");
-            	String memo = rs.getString("memo");            	
-            	String type = rs.getString("type");
-            	
-            	balanceBeans beans = new balanceBeans(
-                        id,
-                        group_id,
-                        created_at,
-                        name,
-                        item,
-                        amount,
-                        project,
-                        category,
-                        memo,
-                        type
-                    );
-            	list.add(beans);  
-            }
+			try (ResultSet rs = stmt.executeQuery()) {
+				while (rs.next()) {
+	            	String id = rs.getString("id");
+	            	String created_at = rs.getString("created_at");
+	            	String name = rs.getString("name");
+	            	String item = rs.getString("item");
+	            	int amount = rs.getInt("amount");
+	            	String project = rs.getString("project");
+	            	String category = rs.getString("category");
+	            	String memo = rs.getString("memo");            	
+	            	String type = rs.getString("type");
+	            	
+	            	balanceBeans beans = new balanceBeans(
+	                        id,
+	                        group_id,
+	                        created_at,
+	                        name,
+	                        item,
+	                        amount,
+	                        project,
+	                        category,
+	                        memo,
+	                        type
+	                    );
+	            	list.add(beans);  
+	            }
+			}
+
 			return list;
 			
 		} catch (SQLException e) {
@@ -61,11 +62,9 @@ public class financialDao {
 	
 	//新規収支の追加
 	public boolean insertBalanceData_financial(Connection con,balanceBeans beans, String type) {
-        PreparedStatement stmt = null;
-		try {
-			String sql = "INSERT INTO finance_record (id,group_id,created_at,name,item,amount,type) VALUES (?,?,?,?,?,?,?);";
+		String sql = "INSERT INTO finance_record (id,group_id,created_at,name,item,amount,type) VALUES (?,?,?,?,?,?,?);";
+		try (PreparedStatement stmt = con.prepareStatement(sql)) {
 			
-			stmt = con.prepareStatement(sql);
 			stmt.setString(1, beans.getId());
 			stmt.setString(2, beans.getGroup_id());
 			stmt.setString(3, beans.getCreated_at());
@@ -86,12 +85,13 @@ public class financialDao {
 	
 	//収支の編集
 	public boolean editBalanceData_financial(balanceBeans beans,String type) {
-        PreparedStatement stmt = null;
-		try {
-			Connection con = DBUtil.getConnection();
-			String sql = "UPDATE finance_record SET id = ?, group_id = ?, created_at = ?, name = ?, item = ?, amount = ?, type = ? WHERE id = ?;";
+		String sql = "UPDATE finance_record SET id = ?, group_id = ?, created_at = ?, name = ?, item = ?, amount = ?, type = ? WHERE id = ?;";
+		
+		try (
+		        Connection con = DBUtil.getConnection();
+		        PreparedStatement stmt = con.prepareStatement(sql);
+		    )  {
 			
-			stmt = con.prepareStatement(sql);
 			stmt.setString(1, beans.getId());
 			stmt.setString(2, beans.getGroup_id());
 			stmt.setString(3, beans.getCreated_at());
@@ -114,8 +114,6 @@ public class financialDao {
 	//収支の検索
 	public List<balanceBeans> searchBalanceData_financial(String group_id, String startDate, String endDate, String category, String project, String name, String item, String type, String keyword) {
 		List<balanceBeans> list = new ArrayList<>();
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
         
 		List<String> columns = new ArrayList<>();
 		List<Object> prams = new ArrayList<>();
@@ -171,40 +169,42 @@ public class financialDao {
 		sql += " WHERE " + String.join(" AND ", columns) + " ORDER BY fi.created_at DESC;";
 		
 		
-		try {
-			Connection con = DBUtil.getConnection();
-			
-			stmt = con.prepareStatement(sql);
+		try (
+		        Connection con = DBUtil.getConnection();
+		        PreparedStatement stmt = con.prepareStatement(sql);
+		    ){
 			for(int i = 0; i < prams.size(); i++) {
 				stmt.setObject(i+1, prams.get(i));
 			}
 			
-			rs = stmt.executeQuery();
-			while (rs.next()) {
-            	String id = rs.getString("id");
-            	String created_at = rs.getString("created_at");
-            	String s_name = rs.getString("name");
-            	String s_item = rs.getString("item");
-            	int amount = rs.getInt("amount");
-            	String s_project = rs.getString("project");
-            	String s_category = rs.getString("category");
-            	String memo = rs.getString("memo");            	
-            	String s_type = rs.getString("type");
-            	
-            	balanceBeans beans = new balanceBeans(
-                        id,
-                        group_id,
-                        created_at,
-                        s_name,
-                        s_item,
-                        amount,
-                        s_project,
-                        s_category,
-                        memo,
-                        s_type
-                    );
-            	list.add(beans);  
-            }
+			try (ResultSet rs = stmt.executeQuery()){
+				while (rs.next()) {
+	            	String id = rs.getString("id");
+	            	String created_at = rs.getString("created_at");
+	            	String s_name = rs.getString("name");
+	            	String s_item = rs.getString("item");
+	            	int amount = rs.getInt("amount");
+	            	String s_project = rs.getString("project");
+	            	String s_category = rs.getString("category");
+	            	String memo = rs.getString("memo");            	
+	            	String s_type = rs.getString("type");
+	            	
+	            	balanceBeans beans = new balanceBeans(
+	                        id,
+	                        group_id,
+	                        created_at,
+	                        s_name,
+	                        s_item,
+	                        amount,
+	                        s_project,
+	                        s_category,
+	                        memo,
+	                        s_type
+	                    );
+	            	list.add(beans);  
+	            }
+			}
+
 			return list;
 			
 		} catch (SQLException e) {
@@ -217,11 +217,9 @@ public class financialDao {
 	
 	//収支データの削除
 	public boolean deleteBalanceData_financial(Connection con,String id) {
-        PreparedStatement stmt = null;
-		try {
-			String sql = "DELETE FROM finance_record WHERE id = ?";
+		String sql = "DELETE FROM finance_record WHERE id = ?";
+		try(PreparedStatement stmt = con.prepareStatement(sql)) {
 			
-			stmt = con.prepareStatement(sql);
 			stmt.setString(1, id);
 			
 			int result = stmt.executeUpdate();
@@ -236,44 +234,45 @@ public class financialDao {
 	//購入希望申請一覧取得
 	public List<purchase_requestBeans> getRequestData(String group_id){
 		List<purchase_requestBeans> list = new ArrayList<>();
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
        
-        
-		try {
-			Connection con = DBUtil.getConnection();
-			String sql = "SELECT fi.id AS id, fi.group_id AS group_id, fi.created_at AS created_at, fi.name AS name, fi.item AS item, fi.amount AS amount, pr.user_id AS user_id, ac.user_name AS user_name, pr.store_link AS store_link, pr.purpose AS purpose, pr.status AS status FROM finance_record AS fi INNER JOIN purchase_request AS pr ON fi.id = pr.id INNER JOIN account AS ac ON pr.user_id = ac.id WHERE fi.group_id = ? ORDER BY fi.created_at DESC;";
+		String sql = "SELECT fi.id AS id, fi.group_id AS group_id, fi.created_at AS created_at, fi.name AS name, fi.item AS item, fi.amount AS amount, pr.user_id AS user_id, ac.user_name AS user_name, pr.store_link AS store_link, pr.purpose AS purpose, pr.status AS status FROM finance_record AS fi INNER JOIN purchase_request AS pr ON fi.id = pr.id INNER JOIN account AS ac ON pr.user_id = ac.id WHERE fi.group_id = ? ORDER BY fi.created_at DESC;";
+		
+		try (
+		        Connection con = DBUtil.getConnection();
+		        PreparedStatement stmt = con.prepareStatement(sql);
+		    )  {
 			
-			stmt = con.prepareStatement(sql);
 			stmt.setString(1, group_id);
-			rs = stmt.executeQuery();
-			while (rs.next()) {
-            	String id = rs.getString("id");
-            	String created_at = rs.getString("created_at");
-            	String name = rs.getString("name");
-            	String item = rs.getString("item");
-            	int amount = rs.getInt("amount");
-            	String user_id = rs.getString("user_id");
-            	String user_name = rs.getString("user_name");
-            	String store_link = rs.getString("store_link");
-            	String purpose = rs.getString("purpose");            	
-            	String status = rs.getString("status");
-            	
-            	purchase_requestBeans beans = new purchase_requestBeans(
-                        id,
-                        group_id,
-                        created_at,
-                        name,
-                        item,
-                        amount,
-                        user_id,
-                        user_name,
-                        store_link,
-                        purpose,
-                        status
-                    );
-            	list.add(beans);  
-            }
+			try (ResultSet rs = stmt.executeQuery()) {
+				while (rs.next()) {
+	            	String id = rs.getString("id");
+	            	String created_at = rs.getString("created_at");
+	            	String name = rs.getString("name");
+	            	String item = rs.getString("item");
+	            	int amount = rs.getInt("amount");
+	            	String user_id = rs.getString("user_id");
+	            	String user_name = rs.getString("user_name");
+	            	String store_link = rs.getString("store_link");
+	            	String purpose = rs.getString("purpose");            	
+	            	String status = rs.getString("status");
+	            	
+	            	purchase_requestBeans beans = new purchase_requestBeans(
+	                        id,
+	                        group_id,
+	                        created_at,
+	                        name,
+	                        item,
+	                        amount,
+	                        user_id,
+	                        user_name,
+	                        store_link,
+	                        purpose,
+	                        status
+	                    );
+	            	list.add(beans);  
+	            }
+			}
+
 			return list;
 			
 		} catch (SQLException e) {
@@ -283,11 +282,9 @@ public class financialDao {
 	}
 	//備品購入希望申請
 	public boolean insertRewuestData_financial(Connection con,purchase_requestBeans beans, String type) {
-        PreparedStatement stmt = null;
-		try {
-			String sql = "INSERT INTO finance_record (id,group_id,created_at,name,item,amount,type) VALUES (?,?,?,?,?,?,?);";
+		String sql = "INSERT INTO finance_record (id,group_id,created_at,name,item,amount,type) VALUES (?,?,?,?,?,?,?);";
+		try(PreparedStatement stmt = con.prepareStatement(sql)) {
 			
-			stmt = con.prepareStatement(sql);
 			stmt.setString(1, beans.getId());
 			stmt.setString(2, beans.getGroup_id());
 			stmt.setString(3, beans.getCreated_at());
@@ -307,46 +304,46 @@ public class financialDao {
 	}
 	//購入希望申請詳細取得
 	public purchase_requestBeans getRequestData_detail(String request_id){
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-       
-        
-		try {
-			Connection con = DBUtil.getConnection();
-			String sql = "SELECT fi.id AS id, fi.group_id AS group_id, fi.created_at AS created_at, fi.name AS name, fi.item AS item, fi.amount AS amount, pr.user_id AS user_id, ac.user_name AS user_name, pr.store_link AS store_link, pr.purpose AS purpose, pr.status AS status FROM finance_record AS fi INNER JOIN purchase_request AS pr ON fi.id = pr.id INNER JOIN account AS ac ON pr.user_id = ac.id WHERE fi.id = ?;";
+		String sql = "SELECT fi.id AS id, fi.group_id AS group_id, fi.created_at AS created_at, fi.name AS name, fi.item AS item, fi.amount AS amount, pr.user_id AS user_id, ac.user_name AS user_name, pr.store_link AS store_link, pr.purpose AS purpose, pr.status AS status FROM finance_record AS fi INNER JOIN purchase_request AS pr ON fi.id = pr.id INNER JOIN account AS ac ON pr.user_id = ac.id WHERE fi.id = ?;";
+		
+		try (
+		        Connection con = DBUtil.getConnection();
+		        PreparedStatement stmt = con.prepareStatement(sql);
+		    )  {
 			
-			stmt = con.prepareStatement(sql);
 			stmt.setString(1, request_id);
-			rs = stmt.executeQuery();
-			if (rs.next()) {
-            	String id = rs.getString("id");
-            	String group_id = rs.getString("group_id");
-            	String created_at = rs.getString("created_at");
-            	String name = rs.getString("name");
-            	String item = rs.getString("item");
-            	int amount = rs.getInt("amount");
-            	String user_id = rs.getString("user_id");
-            	String user_name = rs.getString("user_name");
-            	String store_link = rs.getString("store_link");
-            	String purpose = rs.getString("purpose");            	
-            	String status = rs.getString("status");
-            	
-            	return new purchase_requestBeans(
-                        id,
-                        group_id,
-                        created_at,
-                        name,
-                        item,
-                        amount,
-                        user_id,
-                        user_name,
-                        store_link,
-                        purpose,
-                        status
-                    );		
-			}else {
-				return null;
+			try (ResultSet rs = stmt.executeQuery()) {
+				if (rs.next()) {
+	            	String id = rs.getString("id");
+	            	String group_id = rs.getString("group_id");
+	            	String created_at = rs.getString("created_at");
+	            	String name = rs.getString("name");
+	            	String item = rs.getString("item");
+	            	int amount = rs.getInt("amount");
+	            	String user_id = rs.getString("user_id");
+	            	String user_name = rs.getString("user_name");
+	            	String store_link = rs.getString("store_link");
+	            	String purpose = rs.getString("purpose");            	
+	            	String status = rs.getString("status");
+	            	
+	            	return new purchase_requestBeans(
+	                        id,
+	                        group_id,
+	                        created_at,
+	                        name,
+	                        item,
+	                        amount,
+	                        user_id,
+	                        user_name,
+	                        store_link,
+	                        purpose,
+	                        status
+	                    );		
+				}else {
+					return null;
+				}
 			}
+
 			
 
 		} catch (SQLException e) {
@@ -356,11 +353,9 @@ public class financialDao {
 	}
 	//備品購入希望申請の削除
 	public boolean deleteRequestData_financial(Connection con,String id) {
-        PreparedStatement stmt = null;
-		try {
-			String sql = "DELETE FROM finance_record WHERE id = ?";
+		String sql = "DELETE FROM finance_record WHERE id = ?";
+		try(PreparedStatement stmt = con.prepareStatement(sql)) {
 			
-			stmt = con.prepareStatement(sql);
 			stmt.setString(1, id);
 			
 			int result = stmt.executeUpdate();
@@ -374,11 +369,9 @@ public class financialDao {
 	
 	//備品購入希望申請の変更
 	public boolean updateRequestData_financial(Connection con,purchase_requestBeans beans) {
-        PreparedStatement stmt = null;
-		try {
-			String sql = "UPDATE finance_record SET created_at  = ?,name  = ?,item  = ?,amount  = ? WHERE id = ?;";
+		String sql = "UPDATE finance_record SET created_at  = ?,name  = ?,item  = ?,amount  = ? WHERE id = ?;";
+		try(PreparedStatement stmt = con.prepareStatement(sql)) {
 			
-			stmt = con.prepareStatement(sql);
 			stmt.setString(1, beans.getCreated_at());
 			stmt.setString(2, beans.getName());
 			stmt.setString(3, beans.getItem());

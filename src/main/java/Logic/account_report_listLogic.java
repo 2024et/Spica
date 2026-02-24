@@ -30,9 +30,9 @@ public class account_report_listLogic {
 		logDao log_dao = new logDao();
 		
 		account_reportBeans beans = new account_reportBeans(id,group_id,budget_id,created_at,name,start,end);
-		
+		Connection con = null;
 		try {
-			Connection con = DBUtil.getConnection();
+			con = DBUtil.getConnection();
 			con.setAutoCommit(false);
 			
 			boolean acc_completeFlag = acc_dao.insertReportData(con,beans);
@@ -56,6 +56,12 @@ public class account_report_listLogic {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
-		}
+		}finally {
+	        try {
+	            if(con != null) con.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
 	}
 }

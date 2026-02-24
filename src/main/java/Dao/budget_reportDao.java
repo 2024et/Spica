@@ -13,26 +13,27 @@ public class budget_reportDao {
 	//レポート一覧取得
 	public List<budget_reportBeans> getBudgetReportData(String group_id){
 		List<budget_reportBeans> list = new ArrayList<>();
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-       
-		try {
-			Connection con = DBUtil.getConnection();
-			String sql = "SELECT id, name FROM budget_report WHERE group_id = ?";
+		String sql = "SELECT id, name FROM budget_report WHERE group_id = ?";
+
+		try (
+		        Connection con = DBUtil.getConnection();
+		        PreparedStatement stmt = con.prepareStatement(sql);
+		    ) {
 			
-			stmt = con.prepareStatement(sql);
 			stmt.setString(1, group_id);
-			rs = stmt.executeQuery();
-			while (rs.next()) {
-				String id = rs.getString("id");
-            	String name = rs.getString("name");
-            	
-            	budget_reportBeans beans = new budget_reportBeans(
-                        id,
-                        name
-                    );
-            	list.add(beans);  
-            }
+			 try (ResultSet rs = stmt.executeQuery()){
+				while (rs.next()) {
+					String id = rs.getString("id");
+	            	String name = rs.getString("name");
+	            	
+	            	budget_reportBeans beans = new budget_reportBeans(
+	                        id,
+	                        name
+	                    );
+	            	list.add(beans);  
+	            }
+			 }
+
 			return list;
 			
 		} catch (SQLException e) {
@@ -43,11 +44,10 @@ public class budget_reportDao {
 	
 	//reportに登録
 	public boolean insertBudgetData_report(Connection con,String id,String group_id,String created_at, String name) {
-        PreparedStatement stmt = null;
-		try {
-			String sql = "INSERT INTO budget_report (id,group_id,created_at,name) VALUES (?,?,?,?);";
+
+        String sql = "INSERT INTO budget_report (id,group_id,created_at,name) VALUES (?,?,?,?);";
+		try (PreparedStatement stmt = con.prepareStatement(sql)) {
 			
-			stmt = con.prepareStatement(sql);
 			stmt.setString(1, id);
 			stmt.setString(2, group_id);
 			stmt.setString(3, created_at);
@@ -65,11 +65,10 @@ public class budget_reportDao {
 	
 	//budgetに登録
 	public boolean insertBudgetData_category(Connection con,String id,String budget_id,String name, Integer amount) {
-        PreparedStatement stmt = null;
-		try {
-			String sql = "INSERT INTO category_budget (id,budget_report_id,name,amount) VALUES (?,?,?,?);";
+
+        String sql = "INSERT INTO category_budget (id,budget_report_id,name,amount) VALUES (?,?,?,?);";
+		try (PreparedStatement stmt = con.prepareStatement(sql)) {
 			
-			stmt = con.prepareStatement(sql);
 			stmt.setString(1, id);
 			stmt.setString(2, budget_id);
 			stmt.setString(3, name);

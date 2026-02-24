@@ -15,20 +15,21 @@ public class accountDao {
 
 	//メールの重複チェック
 	public int mailDupli(String mail) {
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-		try {
-			Connection con = DBUtil.getConnection();
-			String sql = "SELECT 1 FROM account WHERE user_email = ?;";
+        String sql = "SELECT 1 FROM account WHERE user_email = ?;";
+		try(
+		        Connection con = DBUtil.getConnection();
+		        PreparedStatement stmt = con.prepareStatement(sql);
+		    )  {
 			
-			stmt = con.prepareStatement(sql);
 			stmt.setString(1, mail);
-			rs = stmt.executeQuery();
-			if(!rs.next()) {
-				return 0;
-			}else {
-				return 1;
+			try (ResultSet rs = stmt.executeQuery()){
+				if(!rs.next()) {
+					return 0;
+				}else {
+					return 1;
+				}
 			}
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return 2;
@@ -36,12 +37,12 @@ public class accountDao {
 	}
 	//仮登録
 	public boolean tempAccount(String id,String name, String mail, String password) {
-        PreparedStatement stmt = null;
-		try {
-			Connection con = DBUtil.getConnection();
-			String sql = "INSERT INTO temp_account (id,user_name,password,user_email) VALUES (?,?,?,?)";
+        String sql = "INSERT INTO temp_account (id,user_name,password,user_email) VALUES (?,?,?,?)";
+		try(
+		        Connection con = DBUtil.getConnection();
+		        PreparedStatement stmt = con.prepareStatement(sql);
+		    )  {
 			
-			stmt = con.prepareStatement(sql);
 			stmt.setString(1, id);
 			stmt.setString(2, name);
 			stmt.setString(3, password);
@@ -58,31 +59,32 @@ public class accountDao {
 	}
 	//仮登録データの取得
 	public accountBeans getTempData(String id) {
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
         accountBeans beans;
-		try {
-			Connection con = DBUtil.getConnection();
-			String sql = "SELECT * FROM temp_account WHERE id = ?;";
+        String sql = "SELECT * FROM temp_account WHERE id = ?;";
+		try (
+		        Connection con = DBUtil.getConnection();
+		        PreparedStatement stmt = con.prepareStatement(sql);
+		    ) {
 			
-			stmt = con.prepareStatement(sql);
 			stmt.setString(1, id);
-			rs = stmt.executeQuery();
-			if(rs.next()) {
-				
-				String name =rs.getString("user_name");
-				String pass =rs.getString("password");
-				String email =rs.getString("user_email");
-				
-				String group_name = "";
-				String group_id = "";
-				String role = "";
-				
-				beans = new accountBeans(id,group_id,group_name,name,pass,email,role);
-				return beans;
-			}else {
-				return null;
+			try (ResultSet rs = stmt.executeQuery()){
+				if(rs.next()) {
+					
+					String name =rs.getString("user_name");
+					String pass =rs.getString("password");
+					String email =rs.getString("user_email");
+					
+					String group_name = "";
+					String group_id = "";
+					String role = "";
+					
+					beans = new accountBeans(id,group_id,group_name,name,pass,email,role);
+					return beans;
+				}else {
+					return null;
+				}
 			}
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
@@ -90,12 +92,13 @@ public class accountDao {
 	}
 	//本登録
 	public boolean pushRegister(accountBeans beans) {
-        PreparedStatement stmt = null;
-		try {
-			Connection con = DBUtil.getConnection();
-			String sql = "INSERT INTO account (id,group_id,user_name,password,user_email,role_type) VALUES (?,?,?,?,?,?)";
+        String sql = "INSERT INTO account (id,group_id,user_name,password,user_email,role_type) VALUES (?,?,?,?,?,?)";
+		try(
+		        Connection con = DBUtil.getConnection();
+		        PreparedStatement stmt = con.prepareStatement(sql);
+		    )  {
 			
-			stmt = con.prepareStatement(sql);
+			
 			stmt.setString(1, beans.getId());
 			stmt.setString(2, beans.getGroup_id());
 			stmt.setString(3, beans.getName());
@@ -114,30 +117,32 @@ public class accountDao {
 	}
 	//ログイン
 	public accountBeans login(String email) {
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
         accountBeans beans;
-		try {
-			Connection con = DBUtil.getConnection();
-			String sql = "SELECT ac.id AS id, ac.group_id AS group_id, og.name AS group_name, ac.user_name AS user_name, ac.password AS password, ac.role_type AS role_type FROM account AS ac LEFT JOIN organizations AS og ON ac.group_id = og.invited_code WHERE ac.user_email = ?;";
+        String sql = "SELECT ac.id AS id, ac.group_id AS group_id, og.name AS group_name, ac.user_name AS user_name, ac.password AS password, ac.role_type AS role_type FROM account AS ac LEFT JOIN organizations AS og ON ac.group_id = og.invited_code WHERE ac.user_email = ?;";
+		
+		try(
+		        Connection con = DBUtil.getConnection();
+		        PreparedStatement stmt = con.prepareStatement(sql);
+		    )  {
 			
-			stmt = con.prepareStatement(sql);
 			stmt.setString(1, email);
-			rs = stmt.executeQuery();
-			if(rs.next()) {
-				
-				String id =rs.getString("id");
-				String group_id = rs.getString("group_id");
-				String group_name = rs.getString("group_name");
-				String name =rs.getString("user_name");
-				String pass =rs.getString("password");
-				String role = rs.getString("role_type");
-				
-				beans = new accountBeans(id,group_id,group_name,name,pass,email,role);
-				return beans;
-			}else {
-				return null;
+			try (ResultSet rs = stmt.executeQuery()){
+				if(rs.next()) {
+					
+					String id =rs.getString("id");
+					String group_id = rs.getString("group_id");
+					String group_name = rs.getString("group_name");
+					String name =rs.getString("user_name");
+					String pass =rs.getString("password");
+					String role = rs.getString("role_type");
+					
+					beans = new accountBeans(id,group_id,group_name,name,pass,email,role);
+					return beans;
+				}else {
+					return null;
+				}
 			}
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
@@ -145,21 +150,22 @@ public class accountDao {
 	}
 	//IDの取得
 	public String getUserID(String email) {
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-		try {
-			Connection con = DBUtil.getConnection();
-			String sql = "SELECT id FROM account WHERE user_email = ?;";
+        String sql = "SELECT id FROM account WHERE user_email = ?;";
+		try (
+		        Connection con = DBUtil.getConnection();
+		        PreparedStatement stmt = con.prepareStatement(sql);
+		    ) {
 			
-			stmt = con.prepareStatement(sql);
 			stmt.setString(1, email);
-			rs = stmt.executeQuery();
-			if(rs.next()) {
-				
-				return rs.getString("id");
-			}else {
-				return null;
+			try (ResultSet rs = stmt.executeQuery()){
+				if(rs.next()) {
+					
+					return rs.getString("id");
+				}else {
+					return null;
+				}
 			}
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
@@ -167,12 +173,12 @@ public class accountDao {
 	}
 	//パスワードの更新
 	public boolean updatePassword(String id, String password) {
-        PreparedStatement stmt = null;
-		try {
-			Connection con = DBUtil.getConnection();
-			String sql = "UPDATE account SET password = ? WHERE id = ?";
+        String sql = "UPDATE account SET password = ? WHERE id = ?";
+		try (
+		        Connection con = DBUtil.getConnection();
+		        PreparedStatement stmt = con.prepareStatement(sql);
+		    ) {
 			
-			stmt = con.prepareStatement(sql);
 			stmt.setString(1, password);
 			stmt.setString(2, id);
 			
@@ -187,12 +193,12 @@ public class accountDao {
 	}
 	//団体に参加
 	public boolean joinGroup(String id, String code) {
-        PreparedStatement stmt = null;
-		try {
-			Connection con = DBUtil.getConnection();
-			String sql = "UPDATE account SET group_id = ? WHERE id = ?";
+        String sql = "UPDATE account SET group_id = ? WHERE id = ?";
+		try (
+		        Connection con = DBUtil.getConnection();
+		        PreparedStatement stmt = con.prepareStatement(sql);
+		    ) {
 			
-			stmt = con.prepareStatement(sql);
 			stmt.setString(1, code);
 			stmt.setString(2, id);
 			
@@ -208,29 +214,29 @@ public class accountDao {
 	//通知の取得
 	public List<noticeBeans> getNotice(String user_id){
 		List<noticeBeans> list = new ArrayList<>();
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-		try {
-			Connection con = DBUtil.getConnection();
-			String sql = "SELECT * FROM notice WHERE user_id = ? ORDER BY created_at DESC;";
+        String sql = "SELECT * FROM notice WHERE user_id = ? ORDER BY created_at DESC;";
+		try (
+		        Connection con = DBUtil.getConnection();
+		        PreparedStatement stmt = con.prepareStatement(sql);
+		    ) {
 			
-			stmt = con.prepareStatement(sql);
 			stmt.setString(1, user_id);
-			rs = stmt.executeQuery();
-			
-			while (rs.next()) {
-            	String id = rs.getString("id");
-            	String created_at = rs.getString("created_at");
-            	String message = rs.getString("message");
-            	
-            	noticeBeans beans = new noticeBeans(
-                        id,
-                        user_id,
-                        created_at,
-                        message
-                        );
-            	list.add(beans);  
-            }
+			try (ResultSet rs = stmt.executeQuery()){
+				while (rs.next()) {
+	            	String id = rs.getString("id");
+	            	String created_at = rs.getString("created_at");
+	            	String message = rs.getString("message");
+	            	
+	            	noticeBeans beans = new noticeBeans(
+	                        id,
+	                        user_id,
+	                        created_at,
+	                        message
+	                        );
+	            	list.add(beans);  
+	            }
+			}		
+
 			return list;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -286,12 +292,12 @@ public class accountDao {
 	
 	//アカウント削除
 	public boolean deleteAccount(String id) {
-        PreparedStatement stmt = null;
-		try {
-			Connection con = DBUtil.getConnection();
-			String sql = "DELETE FROM account WHERE id = ?";
+        String sql = "DELETE FROM account WHERE id = ?";
+		try (
+		        Connection con = DBUtil.getConnection();
+		        PreparedStatement stmt = con.prepareStatement(sql);
+		    ) {
 			
-			stmt = con.prepareStatement(sql);
 			stmt.setString(1, id);
 			
 			

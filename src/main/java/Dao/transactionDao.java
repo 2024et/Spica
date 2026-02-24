@@ -10,11 +10,10 @@ public class transactionDao {
 
 	//新規収支の追加
 	public boolean insertBalanceData_transaction(Connection con,balanceBeans beans) {
-        PreparedStatement stmt = null;
-		try {
-			String sql = "INSERT INTO transaction (id,project,category,memo,type) VALUES (?,?,?,?,?);";
+		String sql = "INSERT INTO transaction (id,project,category,memo,type) VALUES (?,?,?,?,?);";
+		
+		try (PreparedStatement stmt = con.prepareStatement(sql)){
 			
-			stmt = con.prepareStatement(sql);
 			stmt.setString(1, beans.getId());
 			stmt.setString(2, beans.getProject());
 			stmt.setString(3, beans.getCategory());
@@ -33,12 +32,13 @@ public class transactionDao {
 	
 	//収支の編集
 	public boolean editBalanceData_transaction(balanceBeans beans) {
-        PreparedStatement stmt = null;
-		try {
-			Connection con = DBUtil.getConnection();
-			String sql = "UPDATE transaction SET id = ?, project = ?, category = ?, memo = ?, type = ? WHERE id = ?;";
+		String sql = "UPDATE transaction SET id = ?, project = ?, category = ?, memo = ?, type = ? WHERE id = ?;";
+		
+		try (
+		        Connection con = DBUtil.getConnection();
+		        PreparedStatement stmt = con.prepareStatement(sql);
+		    ) {
 			
-			stmt = con.prepareStatement(sql);
 			stmt.setString(1, beans.getId());
 			stmt.setString(2, beans.getProject());
 			stmt.setString(3, beans.getCategory());
@@ -58,11 +58,10 @@ public class transactionDao {
 	
 	//収支データの削除
 	public boolean deleteBalanceData_transaction(Connection con,String id) {
-        PreparedStatement stmt = null;
-		try {
-			String sql = "DELETE FROM transaction WHERE id = ?";
+
+		String sql = "DELETE FROM transaction WHERE id = ?";
+		try (PreparedStatement stmt = con.prepareStatement(sql)){
 			
-			stmt = con.prepareStatement(sql);
 			stmt.setString(1, id);
 			
 			int result = stmt.executeUpdate();

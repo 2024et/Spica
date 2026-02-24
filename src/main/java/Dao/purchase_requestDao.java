@@ -9,11 +9,10 @@ import Beans.purchase_requestBeans;
 public class purchase_requestDao {
 	//備品購入希望申請
 	public boolean insertrequestData_request(Connection con,purchase_requestBeans beans) {
-        PreparedStatement stmt = null;
-		try {
-			String sql = "INSERT INTO purchase_request (id,user_id,store_link,purpose,status) VALUES (?,?,?,?,?);";
+		String sql = "INSERT INTO purchase_request (id,user_id,store_link,purpose,status) VALUES (?,?,?,?,?);";
+		
+		try (PreparedStatement stmt = con.prepareStatement(sql)){
 			
-			stmt = con.prepareStatement(sql);
 			stmt.setString(1, beans.getId());
 			stmt.setString(2, beans.getUser_id());
 			stmt.setString(3, beans.getStore_link());
@@ -31,11 +30,10 @@ public class purchase_requestDao {
 	}
 	//備品購入希望申請の削除
 	public boolean deleteRequestData_request(Connection con,String id) {
-        PreparedStatement stmt = null;
-		try {
-			String sql = "DELETE FROM purchase_request WHERE id = ?;";
+		String sql = "DELETE FROM purchase_request WHERE id = ?;";
+		try (PreparedStatement stmt = con.prepareStatement(sql)){
 			
-			stmt = con.prepareStatement(sql);
+			
 			stmt.setString(1,id);
 			
 			
@@ -49,11 +47,8 @@ public class purchase_requestDao {
 	}
 	//備品購入希望申請の変更
 	public boolean updateRequestData_request(Connection con,purchase_requestBeans beans) {
-        PreparedStatement stmt = null;
-		try {
-			String sql = "UPDATE purchase_request SET store_link = ?,purpose = ? WHERE id = ?;";
-			
-			stmt = con.prepareStatement(sql);
+		String sql = "UPDATE purchase_request SET store_link = ?,purpose = ? WHERE id = ?;";
+		try (PreparedStatement stmt = con.prepareStatement(sql)){
 			
 			stmt.setString(1, beans.getStore_link());
 			stmt.setString(2, beans.getPurpose());
@@ -71,11 +66,8 @@ public class purchase_requestDao {
 	
 	//備品購入希望申請のステータス変更
 	public boolean updateReqStatusData_request(Connection con,String id, String status) {
-        PreparedStatement stmt = null;
-		try {
-			String sql = "UPDATE purchase_request SET status = ? WHERE id = ?;";
-			
-			stmt = con.prepareStatement(sql);
+		String sql = "UPDATE purchase_request SET status = ? WHERE id = ?;";
+		try (PreparedStatement stmt = con.prepareStatement(sql)){
 			
 			stmt.setString(1, status);
 			stmt.setString(2, id);
