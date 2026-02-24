@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import Beans.account_reportBeans;
 import Beans.balanceBeans;
 import Beans.purchase_requestBeans;
 
@@ -387,5 +388,52 @@ public class financialDao {
 			return false;
 		}
 	}
+	//対象年度の収支取得
+	public List<balanceBeans> getAccountReportData(account_reportBeans range){
+		List<balanceBeans> list = new ArrayList<>();
 
+        String sql = "SELECT fi.id AS id, fi.group_id AS group_id, fi.created_at AS created_at, fi.name AS name, fi.item AS item, fi.amount AS amount, tr.project AS project, tr.category AS category, tr.memo AS memo, tr.type AS type FROM finance_record AS fi INNER JOIN transaction AS tr ON fi.id = tr.id WHERE fi.group_id = ? AND fi.created_at >= ? AND fi.created_at <= ? ORDER BY fi.created_at DESC;";
+        
+		try (
+		        Connection con = DBUtil.getConnection();
+		        PreparedStatement stmt = con.prepareStatement(sql);
+		    )  {
+			stmt.setString(1, range.getGroup_id());
+			stmt.setString(2, range.getStart_period());
+			stmt.setString(3, range.getEnd_period());
+			try (ResultSet rs = stmt.executeQuery()) {
+				while (rs.next()) {
+	            	String id = rs.getString("id");
+	            	String created_at = rs.getString("created_at");
+	            	String name = rs.getString("name");
+	            	String item = rs.getString("item");
+	            	int amount = rs.getInt("amount");
+	            	String project = rs.getString("project");
+	            	String category = rs.getString("category");
+	            	String memo = rs.getString("memo");            	
+	            	String type = rs.getString("type");
+	            	
+	            	balanceBeans beans = new balanceBeans(
+	                        id,
+	                        range.getGroup_id(),
+	                        created_at,
+	                        name,
+	                        item,
+	                        amount,
+	                        project,
+	                        category,
+	                        memo,
+	                        type
+	                    );
+	            	list.add(beans);  
+	            }
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return list;
+		
+	}
 }

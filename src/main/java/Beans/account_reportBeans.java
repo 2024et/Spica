@@ -1,6 +1,8 @@
 package Beans;
 
-public class account_reportBeans {
+import java.io.Serializable;
+
+public class account_reportBeans implements Serializable {
 	private String id;	
 	private String group_id;	
 	private String budget_id;
@@ -15,6 +17,12 @@ public class account_reportBeans {
 	public account_reportBeans(String id, String name) {
 		this.id = id;
 		this.name = name;
+	}
+	public account_reportBeans(String id,String group_id,String start_period, String end_period) {
+		this.id = id;
+		this.group_id = group_id;
+		this.start_period = start_period;
+		this.end_period = end_period;
 	}
 	public account_reportBeans(String id, String group_id, String budget_id, String created_at, String name, String start_period, String end_period) {
 		this.id = id;

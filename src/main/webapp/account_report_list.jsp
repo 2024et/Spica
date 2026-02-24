@@ -20,7 +20,7 @@
 			<c:forEach var="acc_repo" items="${account_list}">
 				<tr>
 					<td>
-					<form method="get" action="account_report_listServlet">
+					<form method="get" action="account_report_detailServlet">
 						<input type="hidden" name="reportID" value="${acc_repo.id}">
 						<input type="submit" name="submit" class="detail-btn" value="${acc_repo.name}">
 					</form>

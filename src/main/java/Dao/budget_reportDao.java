@@ -136,4 +136,27 @@ public class budget_reportDao {
 		}
 		
 	}
+	
+	//IDの取得
+	public String getBudgetID(String acc_id){
+		String sql = "SELECT budget_id FROM account_report WHERE id = ?";
+		try (
+		        Connection con = DBUtil.getConnection();
+		        PreparedStatement stmt = con.prepareStatement(sql);
+		    ) {
+			String budget_id = null;
+			stmt.setString(1, acc_id);
+			 try (ResultSet rs = stmt.executeQuery()){
+				if(rs.next()) {
+	            	budget_id = rs.getString("budget_id");
+	            }
+			 }
+
+			return budget_id;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 }

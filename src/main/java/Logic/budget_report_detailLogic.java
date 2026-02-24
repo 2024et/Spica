@@ -17,4 +17,10 @@ public class budget_report_detailLogic {
 		budget_reportDao dao = new budget_reportDao();
 		return dao.getBudgetData(id);
 	}
+	
+	//IDの取得
+	public String getBudgetID(String id) {
+		budget_reportDao dao = new budget_reportDao();
+		return dao.getBudgetID(id);
+	}
 }
