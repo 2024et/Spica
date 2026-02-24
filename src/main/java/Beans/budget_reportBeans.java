@@ -15,6 +15,10 @@ public class budget_reportBeans {
 		this.id = id;
 		this.name = name;
 	}
+	public budget_reportBeans(String category_name,int amount) {
+		this.category_name = category_name;
+		this.amount = amount;
+	}
 	public budget_reportBeans(String id,String group_id, String name, String created_at, String category_name, int amount) {
 		this.id = id;
 		this.group_id = group_id;

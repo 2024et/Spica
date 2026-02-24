@@ -83,4 +83,57 @@ public class budget_reportDao {
 			return false;
 		}
 	}
+	//書類名取得
+	public String getBudgetReportData_list(String id){
+		String sql = "SELECT name FROM budget_report WHERE id = ?";
+		try (
+		        Connection con = DBUtil.getConnection();
+		        PreparedStatement stmt = con.prepareStatement(sql);
+		    ) {
+			String name = null;
+			stmt.setString(1, id);
+			 try (ResultSet rs = stmt.executeQuery()){
+				if(rs.next()) {
+	            	name = rs.getString("name");
+	            }
+			 }
+
+			return name;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	//予算額の取得
+	public List<budget_reportBeans> getBudgetData(String budget_report_id) {
+		List<budget_reportBeans> list = new ArrayList<>();
+		String sql = "SELECT name, amount FROM category_budget WHERE budget_report_id = ?";
+
+		try (
+		        Connection con = DBUtil.getConnection();
+		        PreparedStatement stmt = con.prepareStatement(sql);
+		    ) {
+			
+			stmt.setString(1, budget_report_id);
+			 try (ResultSet rs = stmt.executeQuery()){
+				while (rs.next()) {
+	            	String name = rs.getString("name");
+	            	int amount = rs.getInt("amount");
+	            	
+	            	budget_reportBeans beans = new budget_reportBeans(
+	                        name,
+	                        amount
+	                    );
+	            	list.add(beans);  
+	            }
+			 }
+			 return list;			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+	}
 }

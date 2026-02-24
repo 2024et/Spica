@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Spica | 予算報告書一覧</title>
 <link rel="stylesheet" href="css/budget_report_list.css">
 </head>
 <body>
