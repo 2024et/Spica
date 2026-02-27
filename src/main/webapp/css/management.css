@@ -26,18 +26,94 @@
 	color: #73992c;
 }
 
+/*進行中書類*/
+.process .item{
+	width:100%;	
+	min-width: 800px; 
+	padding:15px 5px;
+	border:solid 1px #345;
+	background-color: #c8fac8;
+}
+.process .info{
+	display:flex;
+}
+.left{
+	display:flex;
+}
+.right{
+	border:solid 1px #345;
+}
+.item-btn{
+	text-align: center;
+	padding:10px;
+}
+.approval-btn{
+	width:50px;
+	height: 50px;
+	background-color: #90ee90;
+	border:solid 3px #556b2f;
+}
+.approval-btn:hover{
+	background-color: #98fb98;
+}
+
+/*提出済み*/
+.submited .item{
+	display:flex;
+	justify-content: space-between;
+	width:100%;	
+	min-width: 800px; 
+	padding:15px 5px;
+	border:solid 1px #345;
+	background-color: #c8fac8;
+	
+}
+
+/*ポップアップ*/
+#insert-wrapper,#edit-wrapper,#approval-wrapper   {
+    background-color: rgba(0, 0, 0, .5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    overflow-y: auto;
+    padding: 20px 10px;
+}
+
+#insert-inside,#edit-inside,#approval-inside {
+    text-align: center;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+	background: #C5E0B4;
+	border:1px solid #41e169;
+    border-radius: 8px;
+}
+
+#message {
+    width: 100%;
+}
+
+
 /*画面*/
 section {
   display: flex;
   flex-direction: column;
   align-items: center; 
+  
 }
 
-.notice,.info {
+.notice {
   width: 100%;
   max-width: 800px;
   text-align: left; 
 }
+
+
 /*テーブル*/
 
 .notice-table{
