@@ -1,0 +1,89 @@
+@charset "UTF-8";
+
+/*見出し・文章*/
+.req,.error-message{
+	color:red;
+}
+
+/*ボタン*/
+.btn {
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: none;
+}
+.btn{
+	background-color: #73992c;
+	border:solid 1px #73992c;
+	color:#ffffff;
+	text-decoration: none;
+}
+.btn:hover{
+	background-color: #ffffff;
+	border:solid 1px #73992c;
+	color: #73992c;
+}
+
+/*画面*/
+section {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+}
+
+.notice,.info {
+  width: 100%;
+  max-width: 800px;
+  text-align: left; 
+}
+/*テーブル*/
+
+.notice-table{
+	height:200px;
+	overflow-y: auto;
+	border-collapse:separate;
+	border-spacing:0;
+	empty-cells:show;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 600px; 
+}
+
+thead{
+	position:sticky;
+	top:0;
+
+	background-color: #4169e1;
+}
+
+
+th {
+  color: #ffffff;
+  padding: 10px;
+}
+
+td {
+  padding: 10px;
+}
+
+th, td {
+  border: dashed 1px #777;
+}
+
+/*footer*/
+footer{
+	width: 100%;
+	padding: 20px 0;
+	background: #f7f7f7;
+	text-align: center;
+}
+
+footer p{
+	margin: 0;
+	font-size: 14px;
+	color: #555;
+}

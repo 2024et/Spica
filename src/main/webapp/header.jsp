@@ -20,7 +20,7 @@
 			<a class="empty"></a>
 			<a class="empty"></a>
 			<a class="empty"></a>
-			<a href="" class="admin">管理者</a>
+			<a href="managementServlet" class="admin">管理者</a>
 			<a href="logoutServlet" class="general">ログアウト</a>
 		</div>
 		<div class="nav_down">
