@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +13,7 @@
 
 <section>
 	<div class="notice">
-	<h3>あなたへのお知らせ</h3>
+	<h3>お知らせ</h3>
 	<div class="notice-table">
 		<table>
 			<thead><th>日付</th><th>内容</th></thead>

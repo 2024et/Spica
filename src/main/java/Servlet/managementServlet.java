@@ -25,7 +25,7 @@ public class managementServlet extends HttpServlet {
 		List<noticeBeans> notice = logic.getNotice(accountData.getGroup_id());
 		request.setAttribute("accountData", accountData);
 		request.setAttribute("notice", notice);
-		request.getRequestDispatcher("/account.jsp").forward(request, response);
+		request.getRequestDispatcher("/management.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
