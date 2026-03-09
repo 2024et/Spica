@@ -4,10 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import Beans.proceed_documentBenas;
+import Beans.proceed_documentsBeans;
 
 public class proceed_documentDao {
-	public boolean insertDocumentData(proceed_documentBenas beans) {
+	public boolean insertDocumentData(proceed_documentsBeans beans) {
 		PreparedStatement stmt = null;
 		try {
 			Connection con = DBUtil.getConnection();

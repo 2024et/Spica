@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 
 import Beans.accountBeans;
+import Beans.documentApproverlDTOBeans;
 import Beans.noticeBeans;
 import Logic.accountLogic;
 import Logic.managementLogic;
@@ -26,8 +27,12 @@ public class managementServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		accountBeans accountData = (accountBeans) session.getAttribute("accountData");
-		accountLogic logic = new accountLogic();
-		List<noticeBeans> notice = logic.getNotice(accountData.getGroup_id());
+		accountLogic acc_logic = new accountLogic();
+		managementLogic man_logic = new managementLogic();
+		List<noticeBeans> notice = acc_logic.getNotice(accountData.getGroup_id());
+		
+		List<documentApproverlDTOBeans> process_documents = man_logic.getProcessDocumentData(accountData.getGroup_id());
+		
 		request.setAttribute("accountData", accountData);
 		request.setAttribute("notice", notice);
 		request.getRequestDispatcher("/management.jsp").forward(request, response);

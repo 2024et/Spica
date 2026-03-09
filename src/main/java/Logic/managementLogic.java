@@ -7,8 +7,10 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
-import Beans.proceed_documentBenas;
+import Beans.documentApproverlDTOBeans;
+import Beans.proceed_documentsBeans;
 import Dao.proceed_documentDao;
 
 public class managementLogic {
@@ -34,9 +36,17 @@ public class managementLogic {
 		
 		String status = "未提出";
 		
-		proceed_documentBenas beans = new proceed_documentBenas(id,group_id,created_at,name,filePath,status);
+		proceed_documentsBeans beans = new proceed_documentsBeans(id,group_id,created_at,name,filePath,status);
 	    
 	    proceed_documentDao dao = new proceed_documentDao();
 	    return dao.insertDocumentData(beans);
+	}
+	
+	public List<documentApproverlDTOBeans> getProcessDocumentData(String group_id) {
+		String status = "未提出";
+		
+		proceed_documentDao dao = new proceed_documentDao();
+		List<proceed_documentsBeans> proceed_documents = dao.getProceedDocumentsData(group_id); 
+		
 	}
 }

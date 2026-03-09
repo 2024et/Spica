@@ -44,34 +44,88 @@
 	<h3>進行中の書類</h3>
 	<button type="button" class="insert-btn">新規書類の作成</button>
 	<div class="process">
+	<c:forEach var="d" items="${process_documents}">
 		<div class="item">
-			<a href="">書類名</a>
+			<a href="">${d.name}</a>
 			<div class="info">
 				<div class="left">
 					<div class="item-btn">
-						<button class="approval-btn"></button>
+						<button class="approval-btn">
+							<c:choose>
+							    <c:when test="${d.role == '会計'}">
+									<c:choose>
+									    <c:when test="${d.approval == 'yes'}">
+											〇
+									    </c:when>
+									    <c:when test="${d.approval == 'no'}">
+											×
+									    </c:when>
+									</c:choose>
+							    </c:when>
+							</c:choose>
+						</button>
 						<p>会計</p>
 					</div>
 					<div class="item-btn">
-						<button class="approval-btn"></button>
+						<button class="approval-btn">
+							<c:choose>
+							    <c:when test="${d.role == '副代表'}">
+									<c:choose>
+									    <c:when test="${d.approval == 'yes'}">
+											〇
+									    </c:when>
+									    <c:when test="${d.approval == 'no'}">
+											×
+									    </c:when>
+									</c:choose>
+							    </c:when>
+							</c:choose>
+						</button>
 						<p>副代表</p>
 					</div>
 					<div class="item-btn">
-						<button class="approval-btn"></button>
+						<button class="approval-btn">
+							<c:choose>
+							    <c:when test="${d.role == '代表'}">
+									<c:choose>
+									    <c:when test="${d.approval == 'yes'}">
+											〇
+									    </c:when>
+									    <c:when test="${d.approval == 'no'}">
+											×
+									    </c:when>
+									</c:choose>
+							    </c:when>
+							</c:choose>
+						</button>
 						<p>代表</p>
 					</div>
 					<div class="item-btn">
-						<button class="approval-btn"></button>
+						<button class="approval-btn">
+							<c:choose>
+							    <c:when test="${d.role == '顧問'}">
+									<c:choose>
+									    <c:when test="${d.approval == 'yes'}">
+											〇
+									    </c:when>
+									    <c:when test="${d.approval == 'no'}">
+											×
+									    </c:when>
+									</c:choose>
+							    </c:when>
+							</c:choose>
+						</button>
 						<p>顧問</p>
 					</div>
 				</div>
 	
 				<div class="right">
-					<p>この備品はほかで代用できるため不要ああああああああ</p>
+					<p>${d.comment}</p>
 				</div>
 			</div>
 			<button type="button" class="edit-btn">設定</button>
 		</div>
+	</c:forEach>
 	</div>
 </section>
 

@@ -1,6 +1,6 @@
 package Beans;
 
-public class proceed_documentBenas {
+public class proceed_documentsBeans {
 	private String id;	
 	private String group_id;	
 	private String created_at;
@@ -8,10 +8,10 @@ public class proceed_documentBenas {
 	private String pdf_path;
 	private String status;
 	
-	public proceed_documentBenas() {
+	public proceed_documentsBeans() {
 	}
 	
-	public proceed_documentBenas(String id, String group_id, String created_at, String name, String pdf_path, String status) {
+	public proceed_documentsBeans(String id, String group_id, String created_at, String name, String pdf_path, String status) {
 		this.id = id;
 		this.group_id = group_id;
 		this.created_at = created_at;
