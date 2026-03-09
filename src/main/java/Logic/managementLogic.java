@@ -1,5 +1,42 @@
 package Logic;
 
-public class managementLogic {
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
+import Beans.proceed_documentBenas;
+import Dao.proceed_documentDao;
+
+public class managementLogic {
+	public boolean insertDocumentData(String name, String fileName, InputStream fileStream, String group_id) {
+		String uploadDir = "C:/SpicaUploads/"; //本番環境移行時に修正が必要!
+	    fileName = System.currentTimeMillis() + "_" + fileName;
+	    String filePath = uploadDir + fileName;
+
+	    File file = new File(filePath);
+	    try {
+			Files.copy(fileStream, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+	    
+	    signupLogic signup_logic = new signupLogic();
+	    String id = signup_logic.RandomID();
+	    
+		LocalDateTime now = LocalDateTime.now();
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+		String created_at = now.format(dtf);
+		
+		String status = "未提出";
+		
+		proceed_documentBenas beans = new proceed_documentBenas(id,group_id,created_at,name,filePath,status);
+	    
+	    proceed_documentDao dao = new proceed_documentDao();
+	    return dao.insertDocumentData(beans);
+	}
 }

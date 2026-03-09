@@ -107,12 +107,12 @@
 	<div id="insert-inside">
 		<div id="message">
 			<h1>書類作成</h1>
-			<form action="managementServlet" method="post">
+			<form action="managementServlet" method="post" enctype="multipart/form-data">
 				<label for="name">書類名<span class="req">*</span></label><br>
 				<input type="text" name="name" required><br><br>
 				
 				<label for="file">pdfのアップロード<span class="req">*</span></label><br>
-				<input type="file" name="file" required><br><br>
+				<input type="file" name="file" required accept=".pdf"><br><br>
 			
 				<button type="button" class="insert-close-btn">キャンセル</button>
 				<button type="submit" name="submit" class="btn" value="insert">保存</button>
@@ -126,7 +126,7 @@
 	<div id="edit-inside">
 		<div id="message">
 			<h1>書類の編集</h1>
-			<form action="managementServlet" method="post">
+			<form action="managementServlet" method="post" enctype="multipart/form-data">
 				<label for="name">書類名</label><br>
 				<input type="text" name="name"><br><br>
 				
