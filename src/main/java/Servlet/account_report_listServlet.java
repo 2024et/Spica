@@ -47,6 +47,13 @@ public class account_report_listServlet extends HttpServlet {
 		String budget = request.getParameter("budget");	
 		
 		boolean insertFlag = logic.insertReportData(accountData.getGroup_id(),name,start,end,budget,log);
+		
+		if(insertFlag) {
+			response.sendRedirect(request.getContextPath() + "/account_report_listServlet");
+		}else {
+			request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：AC-cp1000");
+		    request.getRequestDispatcher("/account_report_list.jsp").forward(request, response);
+		}
 	}
 
 }
