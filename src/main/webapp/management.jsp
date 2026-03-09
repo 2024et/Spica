@@ -205,25 +205,25 @@ document.querySelectorAll('.approval-btn').forEach(btn => {
 	e.stopPropagation(); 
 	const id = btn.dataset.id;
 	
-	const wrapper = document.getElementById("aproval-wrapper");
+	const wrapper = document.getElementById("approval-wrapper");
 	if(wrapper){
 		wrapper.style.display = "block";
 	}
 	});
 });
 
-document.querySelectorAll('.aproval-close-btn').forEach(btn => {
+document.querySelectorAll('.approval-close-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
     e.stopPropagation();
 
-    const wrapper = document.getElementById("aproval-wrapper");
+    const wrapper = document.getElementById("approval-wrapper");
     if(wrapper){
         wrapper.style.display = "none";
     }
     });
 });
-document.getElementById('aproval-wrapper')?.addEventListener('click', (e) => {
-    if(e.target.id === 'aproval-wrapper'){
+document.getElementById('approval-wrapper')?.addEventListener('click', (e) => {
+    if(e.target.id === 'approval-wrapper'){
         e.target.style.display = 'none';
     }
 });
