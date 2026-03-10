@@ -6,20 +6,23 @@ public class documentApproverlDTOBeans {
 	private String created_at;
 	private String name;	
 	private String pdf_path;
+	private String comment;
 	private String accountant;
 	private String vice_president;
 	private String president;
 	private String advisor;
+
 	
 	public documentApproverlDTOBeans() {
 	}
 	
-	public documentApproverlDTOBeans(String id, String group_id, String created_at, String name, String pdf_path, String status, String accountant,String vice_president, String president, String advisor) {
+	public documentApproverlDTOBeans(String id, String group_id, String created_at, String name, String pdf_path,String comment, String accountant,String vice_president, String president, String advisor) {
 		this.id = id;
 		this.group_id = group_id;
 		this.created_at = created_at;
 		this.name = name;
 		this.pdf_path = pdf_path;
+		this.comment = comment;
 		this.accountant = accountant;
 		this.vice_president = vice_president;
 		this.president = president;
@@ -66,6 +69,14 @@ public class documentApproverlDTOBeans {
 	    this.pdf_path = pdf_path;
 	}
 	
+	public String getComment() {
+	    return comment;
+	}
+
+	public void setComment(String comment) {
+	    this.comment = comment;
+	}
+	
 	public String getAccountant() {
 	    return accountant;
 	}
@@ -74,11 +85,11 @@ public class documentApproverlDTOBeans {
 	    this.accountant = accountant;
 	}
 	
-	public String getVice_President() {
+	public String getVice_president() {
 	    return vice_president;
 	}
 
-	public void setVice_President(String vice_president) {
+	public void setVice_president(String vice_president) {
 	    this.vice_president = vice_president;
 	}
 	

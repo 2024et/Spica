@@ -52,15 +52,14 @@
 					<div class="item-btn">
 						<button class="approval-btn">
 							<c:choose>
-							    <c:when test="${d.role == '会計'}">
-									<c:choose>
-									    <c:when test="${d.approval == 'yes'}">
-											〇
-									    </c:when>
-									    <c:when test="${d.approval == 'no'}">
-											×
-									    </c:when>
-									</c:choose>
+							    <c:when test="${d.accountant == 'OK'}">
+									〇
+							    </c:when>
+							    <c:when test="${d.accountant == 'NG'}">
+									×
+							    </c:when>
+							    <c:when test="${d.accountant == ''}">
+									
 							    </c:when>
 							</c:choose>
 						</button>
@@ -69,15 +68,14 @@
 					<div class="item-btn">
 						<button class="approval-btn">
 							<c:choose>
-							    <c:when test="${d.role == '副代表'}">
-									<c:choose>
-									    <c:when test="${d.approval == 'yes'}">
-											〇
-									    </c:when>
-									    <c:when test="${d.approval == 'no'}">
-											×
-									    </c:when>
-									</c:choose>
+							    <c:when test="${d.vice_president == 'OK'}">
+									〇
+							    </c:when>
+							    <c:when test="${d.vice_president == 'NG'}">
+									×
+							    </c:when>
+							    <c:when test="${d.vice_president == ''}">
+									
 							    </c:when>
 							</c:choose>
 						</button>
@@ -86,15 +84,14 @@
 					<div class="item-btn">
 						<button class="approval-btn">
 							<c:choose>
-							    <c:when test="${d.role == '代表'}">
-									<c:choose>
-									    <c:when test="${d.approval == 'yes'}">
-											〇
-									    </c:when>
-									    <c:when test="${d.approval == 'no'}">
-											×
-									    </c:when>
-									</c:choose>
+							    <c:when test="${d.president == 'OK'}">
+									〇
+							    </c:when>
+							    <c:when test="${d.president == 'NG'}">
+									×
+							    </c:when>
+							    <c:when test="${d.president == ''}">
+									
 							    </c:when>
 							</c:choose>
 						</button>
@@ -103,15 +100,14 @@
 					<div class="item-btn">
 						<button class="approval-btn">
 							<c:choose>
-							    <c:when test="${d.role == '顧問'}">
-									<c:choose>
-									    <c:when test="${d.approval == 'yes'}">
-											〇
-									    </c:when>
-									    <c:when test="${d.approval == 'no'}">
-											×
-									    </c:when>
-									</c:choose>
+							    <c:when test="${d.advisor == 'OK'}">
+									〇
+							    </c:when>
+							    <c:when test="${d.advisor == 'NG'}">
+									×
+							    </c:when>
+							    <c:when test="${d.advisor == ''}">
+									
 							    </c:when>
 							</c:choose>
 						</button>

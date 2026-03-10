@@ -7,17 +7,19 @@ public class proceed_documentsBeans {
 	private String name;	
 	private String pdf_path;
 	private String status;
+	private String comment;
 	
 	public proceed_documentsBeans() {
 	}
 	
-	public proceed_documentsBeans(String id, String group_id, String created_at, String name, String pdf_path, String status) {
+	public proceed_documentsBeans(String id, String group_id, String created_at, String name, String pdf_path, String status, String comment) {
 		this.id = id;
 		this.group_id = group_id;
 		this.created_at = created_at;
 		this.name = name;
 		this.pdf_path = pdf_path;
 		this.status = status;
+		this.comment = comment;
 	}
 	
 	public String getId() {
@@ -67,4 +69,13 @@ public class proceed_documentsBeans {
 	public void setStatus(String status) {
 	    this.status = status;
 	}
+	
+	public String getComment() {
+	    return comment;
+	}
+
+	public void setComment(String comment) {
+	    this.comment = comment;
+	}
+	
 }

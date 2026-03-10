@@ -5,17 +5,15 @@ public class approverBeans {
 	private String document_id;	
 	private String role;
 	private String status;	
-	private String message;	
 	
 	public approverBeans() {
 	}
 	
-	public approverBeans(String id, String document_id, String role, String status, String message) {
+	public approverBeans(String id, String document_id, String role, String status) {
 		this.id = id;
 		this.document_id = document_id;
 		this.role = role;
 		this.status = status;
-		this.message = message;
 	}
 	public String getId() {
 	    return id;
@@ -46,12 +44,5 @@ public class approverBeans {
 
 	public void setStatus(String status) {
 	    this.status = status;
-	}
-	public String getMessage() {
-	    return message;
-	}
-
-	public void setMessage(String message) {
-	    this.message = message;
 	}
 }

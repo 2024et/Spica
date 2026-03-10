@@ -14,6 +14,7 @@ import Beans.proceed_documentsBeans;
 import Dao.proceed_documentDao;
 
 public class managementLogic {
+	//書類の作成
 	public boolean insertDocumentData(String name, String fileName, InputStream fileStream, String group_id) {
 		String uploadDir = "C:/SpicaUploads/"; //本番環境移行時に修正が必要!
 	    fileName = System.currentTimeMillis() + "_" + fileName;
@@ -35,18 +36,15 @@ public class managementLogic {
 		String created_at = now.format(dtf);
 		
 		String status = "未提出";
-		
-		proceed_documentsBeans beans = new proceed_documentsBeans(id,group_id,created_at,name,filePath,status);
+		String comment = "";
+		proceed_documentsBeans beans = new proceed_documentsBeans(id,group_id,created_at,name,filePath,status,comment);
 	    
 	    proceed_documentDao dao = new proceed_documentDao();
 	    return dao.insertDocumentData(beans);
 	}
-	
-	public List<documentApproverlDTOBeans> getProcessDocumentData(String group_id) {
-		String status = "未提出";
-		
+	//未提出書類の取得
+	public List<documentApproverlDTOBeans> getProcessDocumentData(String group_id) {	
 		proceed_documentDao dao = new proceed_documentDao();
-		List<proceed_documentsBeans> proceed_documents = dao.getProceedDocumentsData(group_id); 
-		
+		return dao.getProceedDocumentsData(group_id); 		
 	}
 }
