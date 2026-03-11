@@ -4,7 +4,10 @@
 .req,.error-message{
 	color:red;
 }
-
+.reason {
+  display: none;
+  margin-top: 10px;
+}
 /*ボタン*/
 .btn {
     padding: 10px 20px;
@@ -47,13 +50,13 @@
 	text-align: center;
 	padding:10px;
 }
-.approval-btn{
+.approvel-btn{
 	width:50px;
 	height: 50px;
 	background-color: #90ee90;
 	border:solid 3px #556b2f;
 }
-.approval-btn:hover{
+.approvel-btn:hover{
 	background-color: #98fb98;
 }
 
@@ -70,7 +73,7 @@
 }
 
 /*ポップアップ*/
-#insert-wrapper,#edit-wrapper,#approval-wrapper   {
+#insert-wrapper,#edit-wrapper,.approvel-wrapper   {
     background-color: rgba(0, 0, 0, .5);
     position: fixed;
     top: 0;
@@ -82,7 +85,7 @@
     padding: 20px 10px;
 }
 
-#insert-inside,#edit-inside,#approval-inside {
+#insert-inside,#edit-inside,#approvel-inside {
     text-align: center;
     width: 100%;
     max-width: 900px;

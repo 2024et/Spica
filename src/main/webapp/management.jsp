@@ -50,7 +50,7 @@
 			<div class="info">
 				<div class="left">
 					<div class="item-btn">
-						<button class="approval-btn">
+						<button class="approvel-btn" data-id="${d.id}">
 							<c:choose>
 							    <c:when test="${d.accountant == 'OK'}">
 									〇
@@ -66,7 +66,7 @@
 						<p>会計</p>
 					</div>
 					<div class="item-btn">
-						<button class="approval-btn">
+						<button class="approvel-btn" data-id="${d.id}">
 							<c:choose>
 							    <c:when test="${d.vice_president == 'OK'}">
 									〇
@@ -82,7 +82,7 @@
 						<p>副代表</p>
 					</div>
 					<div class="item-btn">
-						<button class="approval-btn">
+						<button class="approvel-btn" data-id="${d.id}">
 							<c:choose>
 							    <c:when test="${d.president == 'OK'}">
 									〇
@@ -98,7 +98,7 @@
 						<p>代表</p>
 					</div>
 					<div class="item-btn">
-						<button class="approval-btn">
+						<button class="approvel-btn" data-id="${d.id}">
 							<c:choose>
 							    <c:when test="${d.advisor == 'OK'}">
 									〇
@@ -137,22 +137,33 @@
 
 
 
-
-<div id="approval-wrapper">
-	<div id="approval-inside">
-		<div id="message">
-			<h1>承認設定</h1>
-			<form action="managementServlet" method="post">
-				<p>に承認しますか？</p>
-			
-			
-				<button type="button" class="approval-close-btn">キャンセル</button>
-				<button type="submit" name="submit" class="btn" value="">保存</button>
-			</form>
+<c:forEach var="c" items="${process_documents}">
+	<div id="approvel-wrapper-${c.id}" class="approvel-wrapper">
+		<div id="approvel-inside">
+			<div id="message">
+				<h1>承認設定</h1>
+				<form action="managementServlet" method="post">
+					<p>「${c.name}」に承認しますか？</p>
+					<label>
+					  <input type="radio" name="answer" value="yes" onclick="toggleReason(this)"> はい
+					</label>
+					
+					<label>
+					  <input type="radio" name="answer" value="no" onclick="toggleReason(this)"> いいえ
+					</label><br><br>
+					
+					<div class="reasonBox" style="display:none;">
+					  <p>不承認理由を記載してください。</p>
+					  <textarea name="comment" rows="4" cols="40" maxlength="300"></textarea>
+					</div>
+				
+					<button type="button" class="approvel-close-btn" data-id="${c.id}">キャンセル</button>
+					<button type="submit" name="submit" class="btn" value="">保存</button>
+				</form>
+			</div>
 		</div>
 	</div>
-</div>
-
+</c:forEach>
 <div id="insert-wrapper">
 	<div id="insert-inside">
 		<div id="message">
@@ -250,33 +261,39 @@ document.getElementById('edit-wrapper')?.addEventListener('click', (e) => {
     }
 });
 
-document.querySelectorAll('.approval-btn').forEach(btn => {
+document.querySelectorAll('.approvel-btn').forEach(btn => {
 	btn.addEventListener('click', (e) => {
 	e.stopPropagation(); 
 	const id = btn.dataset.id;
 	
-	const wrapper = document.getElementById("approval-wrapper");
+	const wrapper = document.getElementById("approvel-wrapper-"+id);
 	if(wrapper){
 		wrapper.style.display = "block";
 	}
 	});
 });
 
-document.querySelectorAll('.approval-close-btn').forEach(btn => {
+document.querySelectorAll('.approvel-close-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
     e.stopPropagation();
-
-    const wrapper = document.getElementById("approval-wrapper");
+    const id = btn.dataset.id;
+    const wrapper = document.getElementById("approvel-wrapper-"+id);
     if(wrapper){
         wrapper.style.display = "none";
     }
     });
 });
-document.getElementById('approval-wrapper')?.addEventListener('click', (e) => {
-    if(e.target.id === 'approval-wrapper'){
-        e.target.style.display = 'none';
-    }
-});
+
+function toggleReason(radio){
+	  const form = radio.closest("form");
+	  const box = form.querySelector(".reasonBox");
+
+	  if(radio.value === "no"){
+	    box.style.display = "block";
+	  }else{
+	    box.style.display = "none";
+	  }
+	}
 </script>
 
 
