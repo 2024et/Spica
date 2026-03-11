@@ -119,7 +119,7 @@
 					<p>${d.comment}</p>
 				</div>
 			</div>
-			<button type="button" class="edit-btn">設定</button>
+			<button type="button" class="edit-btn" data-id="${d.id}">設定</button>
 		</div>
 	</c:forEach>
 	</div>
@@ -183,27 +183,29 @@
 	</div>
 </div>
 
-
-<div id="edit-wrapper">
+<c:forEach var="c" items="${process_documents}">
+<div id="edit-wrapper-${c.id}" class="edit-wrapper">
 	<div id="edit-inside">
 		<div id="message">
 			<h1>書類の編集</h1>
 			<form action="managementServlet" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="document_id" value="${c.id}" />
 				<label for="name">書類名</label><br>
-				<input type="text" name="name"><br><br>
+				<input type="text" name="name" value="${c.name}"><br><br>
 				
 				<label for="file">pdfのアップロード</label><br>
 				<input type="file" name="file"><br><br>
 			
-			
-				<button type="button" class="delete-btn">削除	</button>
-				<button type="button" class="edit-close-btn">キャンセル</button>
-				<button type="submit" name="submit" class="btn" value="">保存</button>
+				<label><input type="checkbox" name="approver_reset"/>承認状況をリセットする。</label><br>
+				
+				<button type="button" class="delete-btn" >削除</button>
+				<button type="button" class="edit-close-btn" data-id="${c.id}">キャンセル</button>
+				<button type="submit" name="submit" class="btn" value="edit">保存</button>
 			</form>
 		</div>
 	</div>
 </div>
-
+</c:forEach>
 
 <script>
 document.querySelectorAll('.insert-btn').forEach(btn => {
@@ -239,7 +241,7 @@ document.querySelectorAll('.edit-btn').forEach(btn => {
 	e.stopPropagation(); 
 	const id = btn.dataset.id;
 	
-	const wrapper = document.getElementById("edit-wrapper");
+	const wrapper = document.getElementById("edit-wrapper-"+id);
 	if(wrapper){
 		wrapper.style.display = "block";
 	}
@@ -249,17 +251,12 @@ document.querySelectorAll('.edit-btn').forEach(btn => {
 document.querySelectorAll('.edit-close-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
     e.stopPropagation();
-
-    const wrapper = document.getElementById("edit-wrapper");
+    const id = btn.dataset.id;
+    const wrapper = document.getElementById("edit-wrapper-"+id);
     if(wrapper){
         wrapper.style.display = "none";
     }
     });
-});
-document.getElementById('edit-wrapper')?.addEventListener('click', (e) => {
-    if(e.target.id === 'edit-wrapper'){
-        e.target.style.display = 'none';
-    }
 });
 
 document.querySelectorAll('.approvel-btn').forEach(btn => {

@@ -88,4 +88,35 @@ public class proceed_documentDao {
 			return false;
 		}
 	}
+	
+	//書類の編集
+	public boolean updateDocumentData(Connection con,proceed_documentsBeans beans, String filePath) {
+
+		String sql = "UPDATE proceed_document SET name = ?";
+		
+		boolean flag = false;
+		if(filePath != null) {
+			sql += ",pdf_path = ?";
+			flag = true;
+		}
+		
+		sql += " WHERE id = ?";
+		
+		try (PreparedStatement stmt = con.prepareStatement(sql)) {
+			stmt.setString(1, beans.getName());
+			if(flag) {
+				stmt.setString(2,filePath);
+				stmt.setString(3,beans.getId());
+			}else {
+				stmt.setString(2,beans.getId());
+			}
+
+			int result = stmt.executeUpdate();
+			if(result > 0) {return true;}
+			else {return false;}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 }

@@ -17,6 +17,7 @@ import Beans.accountBeans;
 import Beans.approverBeans;
 import Beans.documentApproverlDTOBeans;
 import Beans.noticeBeans;
+import Beans.proceed_documentsBeans;
 import Logic.accountLogic;
 import Logic.managementLogic;
 import Logic.signupLogic;
@@ -86,6 +87,26 @@ public class managementServlet extends HttpServlet {
 				response.sendRedirect(request.getContextPath() + "/managementServlet");
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：MA-approverDocument");
+			    request.getRequestDispatcher("/management.jsp").forward(request, response);
+			}
+		}else if("edit".equals(submit)) {
+			InputStream fileStream = null;
+			String fileName = null;
+			String document_id = request.getParameter("document_id");
+			String name = request.getParameter("name");
+			String reset = request.getParameter("approver_reset");
+			
+			Part filePart = request.getPart("file");
+			if(filePart != null && filePart.getSize() > 0) {
+		        fileName = filePart.getSubmittedFileName();
+		        fileStream = filePart.getInputStream();
+			}
+			proceed_documentsBeans beans = new proceed_documentsBeans(document_id,accountData.getGroup_id(),name);
+			boolean updateFlag = man_logic.updateDocumentData(beans,fileName,fileStream,reset);
+			if(updateFlag) {
+				response.sendRedirect(request.getContextPath() + "/managementServlet");
+			}else {
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：MA-updateDocumentData");
 			    request.getRequestDispatcher("/management.jsp").forward(request, response);
 			}
 		}

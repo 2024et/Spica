@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import Beans.approverBeans;
+import Beans.proceed_documentsBeans;
 
 public class approverDao {
 	//書類の承認
@@ -38,6 +39,20 @@ public class approverDao {
 			stmt.setString(3, beans.getRole());
 			stmt.setString(4, beans.getStatus());			
 			
+			int result = stmt.executeUpdate();
+			if(result > 0) {return true;}
+			else {return false;}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	//承認削除
+	public boolean deleteApprover(Connection con,proceed_documentsBeans beans) {
+		String sql = "DELETE FROM approver WHERE document_id = ?";
+		try (PreparedStatement stmt = con.prepareStatement(sql)) {
+			stmt.setString(1, beans.getId());
 			int result = stmt.executeUpdate();
 			if(result > 0) {return true;}
 			else {return false;}

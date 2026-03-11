@@ -96,4 +96,61 @@ public class managementLogic {
 		approverDao dao = new approverDao();
 		return dao.insertApproverData(beans);
 	}
+	
+	//書類の編集
+	public boolean updateDocumentData(proceed_documentsBeans beans,String fileName, InputStream fileStream, String reset) {
+		String filePath = null;
+		if(fileStream != null) {
+			String uploadDir = "C:/SpicaUploads/"; //本番環境移行時に修正が必要!
+		    fileName = System.currentTimeMillis() + "_" + fileName;
+		    filePath = uploadDir + fileName;
+
+		    File file = new File(filePath);
+		    try {
+				Files.copy(fileStream, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+			} catch (IOException e) {
+				e.printStackTrace();
+				return false;
+			}
+		}
+		
+		approverDao ar_dao = new approverDao();
+		proceed_documentDao pd_dao = new proceed_documentDao();
+		Connection con = null;
+		try {
+			con = DBUtil.getConnection();
+			con.setAutoCommit(false);
+			
+			if(reset != null) {
+				boolean ar_completeFlag = ar_dao.deleteApprover(con,beans);
+				
+				if(!ar_completeFlag) {
+					con.rollback();
+					return false;
+				}
+			}
+
+			
+			boolean pd_completeFlag = pd_dao.updateDocumentData(con,beans,filePath);
+					
+			if(!pd_completeFlag) {
+				con.rollback();
+				return false;
+			}
+			
+			
+			con.commit();
+			return true;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}finally {
+	        try {
+	            if(con != null) con.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	}
 }

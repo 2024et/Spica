@@ -12,6 +12,12 @@ public class proceed_documentsBeans {
 	public proceed_documentsBeans() {
 	}
 	
+	public proceed_documentsBeans(String id, String group_id, String name) {
+		this.id = id;
+		this.group_id = group_id;
+		this.name = name;
+	}
+	
 	public proceed_documentsBeans(String id, String group_id, String created_at, String name, String pdf_path, String status, String comment) {
 		this.id = id;
 		this.group_id = group_id;
