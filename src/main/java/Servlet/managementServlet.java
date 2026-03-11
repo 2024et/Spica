@@ -14,10 +14,12 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 
 import Beans.accountBeans;
+import Beans.approverBeans;
 import Beans.documentApproverlDTOBeans;
 import Beans.noticeBeans;
 import Logic.accountLogic;
 import Logic.managementLogic;
+import Logic.signupLogic;
 
 @WebServlet("/managementServlet")
 @MultipartConfig
@@ -64,6 +66,28 @@ public class managementServlet extends HttpServlet {
 			    request.getRequestDispatcher("/management.jsp").forward(request, response);
 			}
 	        
+		}else if("approver".equals(submit)) {
+			//書類の承認
+			String document_id = request.getParameter("document_id");
+			String answer = request.getParameter("answer");
+			
+			signupLogic signup_logic = new signupLogic();
+			String id = signup_logic.RandomID();
+			approverBeans beans = new approverBeans(id,document_id,accountData.getRole(),answer);
+			boolean approverlFlag = false;
+			if("NG".equals(answer)) {
+				String comment = request.getParameter("comment");
+				approverlFlag = man_logic.disApproverDocument(beans,comment);
+			}else {
+				approverlFlag = man_logic.approverDocument(beans);
+			}
+			
+			if(approverlFlag) {
+				response.sendRedirect(request.getContextPath() + "/managementServlet");
+			}else {
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：MA-approverDocument");
+			    request.getRequestDispatcher("/management.jsp").forward(request, response);
+			}
 		}
 	}
 

@@ -5,12 +5,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import Beans.approverBeans;
 import Beans.documentApproverlDTOBeans;
 import Beans.proceed_documentsBeans;
+import Dao.DBUtil;
+import Dao.approverDao;
 import Dao.proceed_documentDao;
 
 public class managementLogic {
@@ -46,5 +51,49 @@ public class managementLogic {
 	public List<documentApproverlDTOBeans> getProcessDocumentData(String group_id) {	
 		proceed_documentDao dao = new proceed_documentDao();
 		return dao.getProceedDocumentsData(group_id); 		
+	}
+	//書類の承認(コメント付)
+	public boolean disApproverDocument(approverBeans beans, String comment) {
+		approverDao ar_dao = new approverDao();
+		proceed_documentDao pd_dao = new proceed_documentDao();
+		Connection con = null;
+		try {
+			con = DBUtil.getConnection();
+			con.setAutoCommit(false);
+			
+			boolean ar_completeFlag = ar_dao.insertDisApproverData(con,beans);
+			
+			if(!ar_completeFlag) {
+				con.rollback();
+				return false;
+			}
+			
+			boolean pd_completeFlag = pd_dao.updateComment(con,beans,comment);
+					
+			if(!pd_completeFlag) {
+				con.rollback();
+				return false;
+			}
+			
+			
+			con.commit();
+			return true;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}finally {
+	        try {
+	            if(con != null) con.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	}
+	
+	//書類の承認
+	public boolean approverDocument(approverBeans beans) {
+		approverDao dao = new approverDao();
+		return dao.insertApproverData(beans);
 	}
 }

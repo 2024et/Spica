@@ -7,10 +7,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import Beans.approverBeans;
 import Beans.documentApproverlDTOBeans;
 import Beans.proceed_documentsBeans;
 
 public class proceed_documentDao {
+	//書類の作成
 	public boolean insertDocumentData(proceed_documentsBeans beans) {
 		PreparedStatement stmt = null;
 		try {
@@ -34,6 +36,7 @@ public class proceed_documentDao {
 			return false;
 		}
 	}
+	//書類の一覧取得
 	public List<documentApproverlDTOBeans> getProceedDocumentsData(String group_id){
 		List<documentApproverlDTOBeans> list = new ArrayList<>();
 		String sql = "SELECT p.id, p.created_at, p.name, p.pdf_path, p.comment, MAX(CASE WHEN a.role = '会計' THEN a.status END) AS accountant, MAX(CASE WHEN a.role = '副代表'  THEN a.status END) AS vice_president, MAX(CASE WHEN a.role = '代表' THEN a.status END) AS president, MAX(CASE WHEN a.role = '顧問' THEN a.status END) AS advisor FROM proceed_document AS p LEFT JOIN approver AS a ON p.id = a.document_id WHERE p.group_id = ? AND p.status = ? GROUP BY p.id, p.created_at, p.name, p.pdf_path ";
@@ -68,6 +71,21 @@ public class proceed_documentDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
+		}
+	}
+	//書類の承認(コメント挿入)
+	public boolean updateComment(Connection con,approverBeans beans, String comment) {
+		String sql = "UPDATE proceed_document SET comment = ? WHERE id = ?";
+		try (PreparedStatement stmt = con.prepareStatement(sql)) {
+			stmt.setString(1, comment);
+			stmt.setString(2, beans.getId());		
+			
+			int result = stmt.executeUpdate();
+			if(result > 0) {return true;}
+			else {return false;}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
 		}
 	}
 }

@@ -143,13 +143,14 @@
 			<div id="message">
 				<h1>承認設定</h1>
 				<form action="managementServlet" method="post">
+				<input type="hidden" name="document_id" value="${c.id}" />
 					<p>「${c.name}」に承認しますか？</p>
 					<label>
-					  <input type="radio" name="answer" value="yes" onclick="toggleReason(this)"> はい
+					  <input type="radio" name="answer" value="OK" onclick="toggleReason(this)"> はい
 					</label>
 					
 					<label>
-					  <input type="radio" name="answer" value="no" onclick="toggleReason(this)"> いいえ
+					  <input type="radio" name="answer" value="NG" onclick="toggleReason(this)"> いいえ
 					</label><br><br>
 					
 					<div class="reasonBox" style="display:none;">
@@ -158,7 +159,7 @@
 					</div>
 				
 					<button type="button" class="approvel-close-btn" data-id="${c.id}">キャンセル</button>
-					<button type="submit" name="submit" class="btn" value="">保存</button>
+					<button type="submit" name="submit" class="btn" value="approver">保存</button>
 				</form>
 			</div>
 		</div>
