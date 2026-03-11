@@ -46,7 +46,7 @@
 	<div class="process">
 	<c:forEach var="d" items="${process_documents}">
 		<div class="item">
-			<a href="">${d.name}</a>
+			<a href="${d.path}">${d.name}</a>
 			<div class="info">
 				<div class="left">
 					<div class="item-btn">
