@@ -17,7 +17,7 @@ public class proceed_documentDao {
 		PreparedStatement stmt = null;
 		try {
 			Connection con = DBUtil.getConnection();
-			String sql = "INSERT INTO proceed_document (id,group_id,created_at,name,pdf_path,status) VALUES (?,?,?,?,?,?)";
+			String sql = "INSERT INTO proceed_document (id,group_id,created_at,name,pdf_path,status,comment) VALUES (?,?,?,?,?,?,?)";
 			
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1, beans.getId());
@@ -26,6 +26,7 @@ public class proceed_documentDao {
 			stmt.setString(4, beans.getName());
 			stmt.setString(5, beans.getPath());
 			stmt.setString(6, beans.getStatus());
+			stmt.setString(7, beans.getComment());
 			
 			
 			int result = stmt.executeUpdate();
@@ -78,8 +79,50 @@ public class proceed_documentDao {
 		String sql = "UPDATE proceed_document SET comment = ? WHERE id = ?";
 		try (PreparedStatement stmt = con.prepareStatement(sql)) {
 			stmt.setString(1, comment);
-			stmt.setString(2, beans.getId());		
-			
+			stmt.setString(2, beans.getDocument_id());		
+			int result = stmt.executeUpdate();
+			if(result > 0) {return true;}
+			else {
+				return false;}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	//書類の編集
+	public boolean updateDocumentData(Connection con,proceed_documentsBeans beans, String filePath, String reset) {
+
+		String sql = "UPDATE proceed_document SET name = ?";
+		
+		boolean pdf_flag = false;
+		boolean com_flag = false;
+		if(filePath != null) {
+			sql += ",pdf_path = ?";
+			pdf_flag = true;
+		}
+		if(reset != null) {
+			sql += ",comment = ?";
+			com_flag = true;
+		}
+		sql += " WHERE id = ?";
+		
+		try (PreparedStatement stmt = con.prepareStatement(sql)) {
+			stmt.setString(1, beans.getName());
+			if(pdf_flag && !com_flag) {
+				stmt.setString(2,filePath);
+				stmt.setString(3,beans.getId());
+			}else if(!pdf_flag && com_flag) {
+				stmt.setString(2,"");
+				stmt.setString(3,beans.getId());
+			}else if(pdf_flag && com_flag) {
+				stmt.setString(2,filePath);
+				stmt.setString(3,"");
+				stmt.setString(4,beans.getId());
+			}else {
+				stmt.setString(2,beans.getId());
+			}
+
 			int result = stmt.executeUpdate();
 			if(result > 0) {return true;}
 			else {return false;}
@@ -89,31 +132,33 @@ public class proceed_documentDao {
 		}
 	}
 	
-	//書類の編集
-	public boolean updateDocumentData(Connection con,proceed_documentsBeans beans, String filePath) {
-
-		String sql = "UPDATE proceed_document SET name = ?";
-		
-		boolean flag = false;
-		if(filePath != null) {
-			sql += ",pdf_path = ?";
-			flag = true;
-		}
-		
-		sql += " WHERE id = ?";
-		
+	//書類の削除
+	public boolean deleteDocumentData(Connection con,proceed_documentsBeans beans) {
+		String sql = "DELETE FROM proceed_document WHERE id = ?";
 		try (PreparedStatement stmt = con.prepareStatement(sql)) {
-			stmt.setString(1, beans.getName());
-			if(flag) {
-				stmt.setString(2,filePath);
-				stmt.setString(3,beans.getId());
-			}else {
-				stmt.setString(2,beans.getId());
-			}
-
+			stmt.setString(1, beans.getId());
 			int result = stmt.executeUpdate();
 			if(result > 0) {return true;}
 			else {return false;}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	//書類の提出
+	public boolean submitedDocumentData(String id) {
+		String sql = "UPDATE proceed_document SET status = ? WHERE id = ?";
+		try (
+		        Connection con = DBUtil.getConnection();
+		        PreparedStatement stmt = con.prepareStatement(sql);
+		    ) {
+			stmt.setString(1, "提出");
+			stmt.setString(2, id);
+			int result = stmt.executeUpdate();
+			if(result > 0) {return true;}
+			else {return false;}
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;

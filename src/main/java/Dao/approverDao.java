@@ -53,9 +53,8 @@ public class approverDao {
 		String sql = "DELETE FROM approver WHERE document_id = ?";
 		try (PreparedStatement stmt = con.prepareStatement(sql)) {
 			stmt.setString(1, beans.getId());
-			int result = stmt.executeUpdate();
-			if(result > 0) {return true;}
-			else {return false;}
+			stmt.executeUpdate();
+			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;

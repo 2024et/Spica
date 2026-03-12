@@ -109,6 +109,33 @@ public class managementServlet extends HttpServlet {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：MA-updateDocumentData");
 			    request.getRequestDispatcher("/management.jsp").forward(request, response);
 			}
+		}else if("delete".equals(submit)) {
+			String id = request.getParameter("document_id");
+			
+			proceed_documentsBeans beans = new proceed_documentsBeans(id);
+			
+			boolean deleteFlag = man_logic.deleteDocumentData(beans);
+			
+			if(deleteFlag) {
+				response.sendRedirect(request.getContextPath() + "/managementServlet");
+			}else {
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：MA-deleteDocumentData");
+			    request.getRequestDispatcher("/management.jsp").forward(request, response);
+			}
+		}else if("submited".equals(submit)) {
+			String id = request.getParameter("document_id");
+			
+			boolean submitedFlag = man_logic.submitedDocumentData(id);
+			
+			if(submitedFlag) {
+				response.sendRedirect(request.getContextPath() + "/managementServlet");
+			}else {
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：MA-submitedDocumentData");
+			    request.getRequestDispatcher("/management.jsp").forward(request, response);
+			}
+			
+		}else if("no_submit".equals(submit)) {
+			String id = request.getParameter("document_id");
 		}
 	}
 

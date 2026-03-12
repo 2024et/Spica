@@ -131,7 +131,7 @@ public class managementLogic {
 			}
 
 			
-			boolean pd_completeFlag = pd_dao.updateDocumentData(con,beans,filePath);
+			boolean pd_completeFlag = pd_dao.updateDocumentData(con,beans,filePath,reset);
 					
 			if(!pd_completeFlag) {
 				con.rollback();
@@ -152,5 +152,48 @@ public class managementLogic {
 	            e.printStackTrace();
 	        }
 	    }
+	}
+	//書類・承認の削除
+	public boolean deleteDocumentData(proceed_documentsBeans beans) {
+		approverDao ar_dao = new approverDao();
+		proceed_documentDao pd_dao = new proceed_documentDao();
+		Connection con = null;
+		try {
+			con = DBUtil.getConnection();
+			con.setAutoCommit(false);
+			
+			boolean ar_completeFlag = ar_dao.deleteApprover(con,beans);
+			
+			if(!ar_completeFlag) {
+				con.rollback();
+				return false;
+			}
+			
+			boolean pd_completeFlag = pd_dao.deleteDocumentData(con,beans);
+					
+			if(!pd_completeFlag) {
+				con.rollback();
+				return false;
+			}
+			
+			
+			con.commit();
+			return true;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}finally {
+	        try {
+	            if(con != null) con.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	}
+	//書類の提出
+	public boolean submitedDocumentData(String id) {
+		proceed_documentDao dao = new proceed_documentDao();
+		return dao.submitedDocumentData(id);
 	}
 }

@@ -11,6 +11,10 @@ public class proceed_documentsBeans {
 	
 	public proceed_documentsBeans() {
 	}
+	public proceed_documentsBeans(String id) {
+		this.id = id;
+	}
+	
 	
 	public proceed_documentsBeans(String id, String group_id, String name) {
 		this.id = id;

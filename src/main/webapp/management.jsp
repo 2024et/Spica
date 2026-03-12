@@ -120,21 +120,34 @@
 				</div>
 			</div>
 			<button type="button" class="edit-btn" data-id="${d.id}">設定</button>
+			<c:choose>
+				<c:when test="${d.accountant == 'OK' and d.vice_president == 'OK' and d.president == 'OK' and d.advisor == 'OK'}">
+					<form action="managementServlet" method="post">
+						<input type="hidden" name="document_id" value="${d.id}" />
+						<button type="submit" name="submit" class="btn" value="submited">提出</button>
+					</form>
+				</c:when>
+			</c:choose>
+
 		</div>
 	</c:forEach>
 	</div>
 </section>
 
-<section>
-	<h3>提出済みの書類</h3>
-	<div class="submited">
-		<div class="item">
-		<a href="">書類名</a>
-		<a href="" class="btn">未提出</a>
+<c:forEach var="c" items="${submited_documents}">
+	<section>
+		<h3>提出済みの書類</h3>
+		<div class="submited">
+			<div class="item">
+			<a href="${c.path}">${c.name}</a>
+			<form action="managementServlet" method="post">
+				<input type="hidden" name="document_id" value="${c.id}" />
+				<button type="submit" name="submit" class="btn" value="no_submit">未提出</button>
+			</form>
+			</div>
 		</div>
-	</div>
-</section>
-
+	</section>
+</c:forEach>
 
 
 <c:forEach var="c" items="${process_documents}">
@@ -198,7 +211,7 @@
 			
 				<label><input type="checkbox" name="approver_reset"/>承認状況をリセットする。</label><br>
 				
-				<button type="button" class="delete-btn" >削除</button>
+				<button type="submit" name="submit" class="delete-btn" value="delete" onclick="confirmDelete()">削除</button>
 				<button type="button" class="edit-close-btn" data-id="${c.id}">キャンセル</button>
 				<button type="submit" name="submit" class="btn" value="edit">保存</button>
 			</form>
@@ -283,15 +296,18 @@ document.querySelectorAll('.approvel-close-btn').forEach(btn => {
 });
 
 function toggleReason(radio){
-	  const form = radio.closest("form");
-	  const box = form.querySelector(".reasonBox");
+  const form = radio.closest("form");
+  const box = form.querySelector(".reasonBox");
 
-	  if(radio.value === "no"){
-	    box.style.display = "block";
-	  }else{
-	    box.style.display = "none";
-	  }
-	}
+  if(radio.value === "NG"){
+    box.style.display = "block";
+  }else{
+    box.style.display = "none";
+  }
+}
+function confirmDelete(){
+  return alert("本当に削除しますか？");
+}
 </script>
 
 
