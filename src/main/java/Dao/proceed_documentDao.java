@@ -195,4 +195,22 @@ public class proceed_documentDao {
 			return false;
 		}
 	}
+	//書類の未提出化
+	public boolean noSubmitedDocumentData(String id) {
+		String sql = "UPDATE proceed_document SET status = ? WHERE id = ?";
+		try (
+		        Connection con = DBUtil.getConnection();
+		        PreparedStatement stmt = con.prepareStatement(sql);
+		    ) {
+			stmt.setString(1, "未提出");
+			stmt.setString(2, id);
+			int result = stmt.executeUpdate();
+			if(result > 0) {return true;}
+			else {return false;}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 }

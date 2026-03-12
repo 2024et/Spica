@@ -139,6 +139,15 @@ public class managementServlet extends HttpServlet {
 			
 		}else if("no_submit".equals(submit)) {
 			String id = request.getParameter("document_id");
+			
+			boolean no_submitedFlag = man_logic.noSubmitedDocumentData(id);
+			
+			if(no_submitedFlag) {
+				response.sendRedirect(request.getContextPath() + "/managementServlet");
+			}else {
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：MA-noSubmitedDocumentData");
+			    request.getRequestDispatcher("/management.jsp").forward(request, response);
+			}
 		}
 	}
 

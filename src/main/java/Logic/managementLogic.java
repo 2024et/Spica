@@ -201,4 +201,9 @@ public class managementLogic {
 		proceed_documentDao dao = new proceed_documentDao();
 		return dao.submitedDocumentData(id);
 	}
+	//書類の未提出化
+		public boolean noSubmitedDocumentData(String id) {
+			proceed_documentDao dao = new proceed_documentDao();
+			return dao.noSubmitedDocumentData(id);
+		}
 }
