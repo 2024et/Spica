@@ -36,8 +36,11 @@ public class managementServlet extends HttpServlet {
 		
 		List<documentApproverlDTOBeans> process_documents = man_logic.getProcessDocumentData(accountData.getGroup_id());
 		
+		List<documentApproverlDTOBeans> submited_documents = man_logic.getSubmitedDocuemntData(accountData.getGroup_id());
+		
 		request.setAttribute("accountData", accountData);
 		request.setAttribute("process_documents", process_documents);
+		request.setAttribute("submited_documents", submited_documents);
 		request.setAttribute("notice", notice);
 		request.getRequestDispatcher("/management.jsp").forward(request, response);
 	}

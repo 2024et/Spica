@@ -52,6 +52,11 @@ public class managementLogic {
 		proceed_documentDao dao = new proceed_documentDao();
 		return dao.getProceedDocumentsData(group_id); 		
 	}
+	//提出済み書類の取得
+	public List<documentApproverlDTOBeans> getSubmitedDocuemntData(String group_id){
+		proceed_documentDao dao = new proceed_documentDao();
+		return dao.getSubmitedDocumentsData(group_id);
+	}
 	//書類の承認(コメント付)
 	public boolean disApproverDocument(approverBeans beans, String comment) {
 		approverDao ar_dao = new approverDao();

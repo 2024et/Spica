@@ -74,6 +74,37 @@ public class proceed_documentDao {
 			return null;
 		}
 	}
+	
+	public List<documentApproverlDTOBeans> getSubmitedDocumentsData(String group_id){
+		List<documentApproverlDTOBeans> list = new ArrayList<>();
+		String sql = "SELECT id, name, pdf_path FROM proceed_document WHERE group_id = ? AND status = ?";
+		try (
+		        Connection con = DBUtil.getConnection();
+		        PreparedStatement stmt = con.prepareStatement(sql);
+		    ) {
+			
+			stmt.setString(1, group_id);
+			stmt.setString(2, "提出");
+			try (ResultSet rs = stmt.executeQuery()) {
+				while (rs.next()) {
+	            	
+	            	documentApproverlDTOBeans beans = new documentApproverlDTOBeans(
+	            			 rs.getString("id"),
+	            			 group_id,
+	            			 rs.getString("name"),
+	            			 rs.getString("pdf_path")
+	                    );
+	            	list.add(beans);  
+	            }
+			}
+
+			return list;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	//書類の承認(コメント挿入)
 	public boolean updateComment(Connection con,approverBeans beans, String comment) {
 		String sql = "UPDATE proceed_document SET comment = ? WHERE id = ?";

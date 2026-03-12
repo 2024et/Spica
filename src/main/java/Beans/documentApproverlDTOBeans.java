@@ -16,6 +16,13 @@ public class documentApproverlDTOBeans {
 	public documentApproverlDTOBeans() {
 	}
 	
+	public documentApproverlDTOBeans(String id, String group_id, String name, String pdf_path) {
+		this.id = id;
+		this.group_id = group_id;
+		this.name = name;
+		this.pdf_path = pdf_path;
+	}
+	
 	public documentApproverlDTOBeans(String id, String group_id, String created_at, String name, String pdf_path,String comment, String accountant,String vice_president, String president, String advisor) {
 		this.id = id;
 		this.group_id = group_id;
