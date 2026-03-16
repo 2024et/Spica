@@ -134,21 +134,93 @@
 	</div>
 </section>
 
-<c:forEach var="c" items="${submited_documents}">
-	<section>
-		<h3>提出済みの書類</h3>
-		<div class="submited">
-			<div class="item">
-			<a href="${c.path}">${c.name}</a>
-			<form action="managementServlet" method="post">
-				<input type="hidden" name="document_id" value="${c.id}" />
-				<button type="submit" name="submit" class="btn" value="no_submit">未提出</button>
-			</form>
-			</div>
-		</div>
-	</section>
-</c:forEach>
+<section>
+	<h3>提出済み書類</h3>
+	<select id="yearSelect" onchange="filterDocuments(this.value)">
+	</select>
+	<div id="submitedList"></div>
+</section>
 
+
+<script>
+function getFiscalYear(date) {
+    const year  = parseInt(date.substring(0, 4));
+    const month = parseInt(date.substring(5, 7));
+    if(month <= 3){
+        return year -1;
+    }else{
+        return year;
+    }
+}
+
+const submited_documents = [
+    <c:forEach var="c" items="${submited_documents}">
+    {
+        id: "${c.id}",
+        name: "${c.name}",
+        path: "${c.path}",
+        created_at: "${c.created_at}"  
+    },
+    </c:forEach>
+];
+
+submited_documents.forEach(doc => {
+    doc.year = getFiscalYear(doc.created_at).toString();
+});
+
+
+
+window.onload = function() {
+	const years = [...new Set(submited_documents.map(doc => doc.year))].sort().reverse();
+	const today = new Date();
+    const todayStr = today.getFullYear() + "-" + String(today.getMonth() + 1).padStart(2, "0") + "-01";
+    const nowYear = getFiscalYear(todayStr).toString();
+		
+	years.forEach(year => {
+	    const option = document.createElement("option");
+	    option.value = year;
+	    option.textContent = year + "年度";
+	    document.getElementById("yearSelect").appendChild(option);
+	});
+
+	if(!years.includes(nowYear)){
+		const option = document.createElement("option");
+		option.value = nowYear;
+		option.textContent = nowYear + "年度";
+		document.getElementById("yearSelect").prepend(option);
+	}
+    filterDocuments(nowYear);
+};
+
+
+function filterDocuments(selectedYear) {
+    const filtered = submited_documents.filter(doc => doc.year === selectedYear);
+    
+    const container = document.getElementById("submitedList");
+    
+    if (filtered.length === 0) {
+        container.innerHTML = "<p>該当する書類はありません。</p>";
+        return;
+    }
+    let html = "";
+    filtered.forEach(doc => {
+        html += 
+            '<div class="submited">' +
+                '<div class="item">' +
+                    '<a href="' + doc.path + '">' + doc.name + '</a>' +
+                    '<form action="managementServlet" method="post">' +
+                        '<input type="hidden" name="document_id" value="' + doc.id + '" />' +
+                        '<button type="submit" name="submit" class="btn" value="no_submit">未提出</button>' +
+                    '</form>' +
+                '</div>' +
+            '</div>';
+    });
+    
+    container.innerHTML = html;
+}
+
+
+</script>
 
 <c:forEach var="c" items="${process_documents}">
 	<div id="approvel-wrapper-${c.id}" class="approvel-wrapper">

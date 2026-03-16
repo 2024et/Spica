@@ -16,9 +16,10 @@ public class documentApproverlDTOBeans {
 	public documentApproverlDTOBeans() {
 	}
 	
-	public documentApproverlDTOBeans(String id, String group_id, String name, String pdf_path) {
+	public documentApproverlDTOBeans(String id, String group_id,String created_at, String name, String pdf_path) {
 		this.id = id;
 		this.group_id = group_id;
+		this.created_at = created_at;
 		this.name = name;
 		this.pdf_path = pdf_path;
 	}

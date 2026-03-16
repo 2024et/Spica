@@ -77,7 +77,7 @@ public class proceed_documentDao {
 	
 	public List<documentApproverlDTOBeans> getSubmitedDocumentsData(String group_id){
 		List<documentApproverlDTOBeans> list = new ArrayList<>();
-		String sql = "SELECT id, name, pdf_path FROM proceed_document WHERE group_id = ? AND status = ?";
+		String sql = "SELECT id, name, created_at, pdf_path FROM proceed_document WHERE group_id = ? AND status = ?";
 		try (
 		        Connection con = DBUtil.getConnection();
 		        PreparedStatement stmt = con.prepareStatement(sql);
@@ -91,6 +91,7 @@ public class proceed_documentDao {
 	            	documentApproverlDTOBeans beans = new documentApproverlDTOBeans(
 	            			 rs.getString("id"),
 	            			 group_id,
+	            			 rs.getString("created_at"),
 	            			 rs.getString("name"),
 	            			 rs.getString("pdf_path")
 	                    );
