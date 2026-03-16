@@ -88,7 +88,7 @@
 	</div>
 </div>
 
-<c:forEach var="c" items="${process_documents}">
+<c:forEach var="c" items="${category}">
 <div id="edit-wrapper-${c.id}" class="edit-wrapper">
 	<div id="edit-inside">
 		<div id="message">
@@ -146,7 +146,7 @@ document.getElementById('insert-wrapper')?.addEventListener('click', (e) => {
     }
 });
 
-document.querySelectorAll('.edit-btn').forEach(btn => {
+document.querySelectorAll('.setting-btn').forEach(btn => {
 	btn.addEventListener('click', (e) => {
 	e.stopPropagation(); 
 	const id = btn.dataset.id;
