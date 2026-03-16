@@ -31,18 +31,20 @@
 </section>
 
 <section>
-	<div class="menu">
-	<h3>メニュー</h3>
+	<h3 class="menu_subtitle">メニュー</h3>
+	<div class="menu">	
 		<a href="categoryServlet" class="btn">カテゴリ管理</a>
 		<a href="projectServlet" class="btn">プロジェクト管理</a>
 		<a href="memberServlet" class="btn">会費・名簿管理</a>
 		<a href="logServlet" class="btn">操作ログ</a>
 	</div>
 </section>
-
+<hr>
 <section>
-	<h3>進行中の書類</h3>
-	<button type="button" class="insert-btn">新規書類の作成</button>
+	<div class="section_menu">
+		<h3>進行中の書類</h3>
+		<button type="button" class="insert-btn">新規書類の作成</button>
+	</div>
 	<div class="process">
 	<c:forEach var="d" items="${process_documents}">
 		<div class="item">
@@ -124,7 +126,7 @@
 				<c:when test="${d.accountant == 'OK' and d.vice_president == 'OK' and d.president == 'OK' and d.advisor == 'OK'}">
 					<form action="managementServlet" method="post">
 						<input type="hidden" name="document_id" value="${d.id}" />
-						<button type="submit" name="submit" class="btn" value="submited">提出</button>
+						<button type="submit" name="submit" class="submited-btn" value="submited">提出</button>
 					</form>
 				</c:when>
 			</c:choose>
@@ -135,9 +137,11 @@
 </section>
 
 <section>
-	<h3>提出済み書類</h3>
-	<select id="yearSelect" onchange="filterDocuments(this.value)">
-	</select>
+	<div class="section_menu">
+		<h3>提出済み書類</h3>
+		<select id="yearSelect" class="yearSelect" onchange="filterDocuments(this.value)">
+		</select>
+	</div>
 	<div id="submitedList"></div>
 </section>
 
@@ -210,7 +214,7 @@ function filterDocuments(selectedYear) {
                     '<a href="' + doc.path + '">' + doc.name + '</a>' +
                     '<form action="managementServlet" method="post">' +
                         '<input type="hidden" name="document_id" value="' + doc.id + '" />' +
-                        '<button type="submit" name="submit" class="btn" value="no_submit">未提出</button>' +
+                        '<button type="submit" name="submit" class="submited-btn" value="no_submit">未提出</button>' +
                     '</form>' +
                 '</div>' +
             '</div>';

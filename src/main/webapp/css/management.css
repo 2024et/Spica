@@ -8,8 +8,30 @@
   display: none;
   margin-top: 10px;
 }
+
+
+/*画面*/
+section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;   
+  margin:20px;
+}
+.section_menu{
+	display: flex;
+	justify-content: space-between;
+	width:100%;
+	max-width:800px;
+}
+.notice, .menu_subtitle {
+  width: 100%;
+  max-width: 800px;
+  text-align: left; 
+}
+
+
 /*ボタン*/
-.btn {
+.btn,.edit-close-btn,.insert-close-btn,.approvel-close-btn,.delete-btn {
     padding: 10px 20px;
     margin: 5px;
     font-size: 16px;
@@ -17,25 +39,59 @@
     cursor: pointer;
     border: none;
 }
-.btn{
+.btn,.insert-btn,.edit-btn,.submited-btn{
 	background-color: #73992c;
 	border:solid 1px #73992c;
 	color:#ffffff;
 	text-decoration: none;
 }
-.btn:hover{
+.btn:hover,.insert-btn:hover,.edit-btn:hover,.submited-btn:hover{
 	background-color: #ffffff;
 	border:solid 1px #73992c;
 	color: #73992c;
 }
+.insert-btn,.edit-btn,.submited-btn{
+	padding: 3px 20px;
+    margin: 5px;
+	border-radius: 4px;
+    cursor: pointer;
+    border: none;
+}
+.edit-close-btn,.insert-close-btn,.approvel-close-btn{
+	background-color: #ffffff;
+	border:solid 1px #73992c;
+	color: #73992c;
+}
+.edit-close-btn:hover,.insert-close-btn:hover,.approvel-close-btn:hover{
+	background-color: #73992c;
+	border:solid 1px #73992c;
+	color:#ffffff;
+}
+.delete-btn{
+	border:1px solid #dc143c;
+	background-color: #dc143c;
+	color:#ffffff;
+}
 
+.delete-btn:hover{
+	border:1px solid #dc143c;
+	background-color: #ffffff;
+	color:#dc143c;
+}
 /*進行中書類*/
+.process{
+	height:500px;
+	min-width: 800px; 
+	overflow-y: auto;
+	overflow-x: hidden;
+}
 .process .item{
 	width:100%;	
-	min-width: 800px; 
 	padding:15px 5px;
 	border:solid 1px #345;
 	background-color: #c8fac8;
+	margin: 10px 0;
+	box-sizing: border-box;
 }
 .process .info{
 	display:flex;
@@ -45,6 +101,7 @@
 }
 .right{
 	border:solid 1px #345;
+	width:100%;
 }
 .item-btn{
 	text-align: center;
@@ -64,15 +121,26 @@
 }
 
 /*提出済み*/
+.submited{
+	height:400px;
+	min-width: 800px; 
+	overflow-y: auto;
+	overflow-x: hidden;
+}
 .submited .item{
 	display:flex;
 	justify-content: space-between;
 	width:100%;	
-	min-width: 800px; 
 	padding:15px 5px;
 	border:solid 1px #345;
 	background-color: #c8fac8;
-	
+	margin: 10px 0;
+	box-sizing: border-box;
+}
+.yearSelect{
+	padding: 3px 20px;
+	margin: 5px;
+	border-radius: 4px;
 }
 
 /*ポップアップ*/
@@ -105,21 +173,6 @@
 }
 
 
-/*画面*/
-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center; 
-  
-}
-
-.notice {
-  width: 100%;
-  max-width: 800px;
-  text-align: left; 
-}
-
-
 /*テーブル*/
 
 .notice-table{
@@ -129,6 +182,7 @@ section {
 	border-spacing:0;
 	empty-cells:show;
 }
+
 table {
   border-collapse: collapse;
   width: 100%;
@@ -138,7 +192,6 @@ table {
 thead{
 	position:sticky;
 	top:0;
-
 	background-color: #4169e1;
 }
 
