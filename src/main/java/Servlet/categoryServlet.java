@@ -14,6 +14,7 @@ import Beans.accountBeans;
 import Beans.categoryBeans;
 import Beans.noticeBeans;
 import Logic.accountLogic;
+import Logic.categoryLogic;
 import Logic.financialLogic;
 
 @WebServlet("/categoryServlet")
@@ -36,8 +37,26 @@ public class categoryServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		HttpSession session = request.getSession();
+		accountBeans accountData = (accountBeans) session.getAttribute("accountData");
+		
+		categoryLogic cat_logic = new categoryLogic();
+		
+		String submit = request.getParameter("submit");
+		
+		if("insert".equals(submit)) {
+			String name = request.getParameter("name");
+			String type = request.getParameter("type");
+			
+			boolean insertFlag = cat_logic.insertCategoryData(name,type,accountData.getGroup_id());
+			
+			if(insertFlag) {
+				response.sendRedirect(request.getContextPath() + "/categoryServlet");
+			}else {
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
+				response.sendRedirect(request.getContextPath() + "/categoryServlet");
+			}
+		}
 	}
 
 }

@@ -69,7 +69,7 @@
 	<div id="insert-inside">
 		<div id="message">
 			<h1>プロジェクトの作成</h1>
-			<form action="managementServlet" method="post" enctype="multipart/form-data">
+			<form action="projectServlet" method="post">
 				<label for="name">プロジェクト名<span class="req">*</span></label><br>
 				<input type="text" name="name" required><br><br>
 				
@@ -86,7 +86,7 @@
 	<div id="edit-inside">
 		<div id="message">
 			<h1>プロジェクトの編集</h1>
-			<form action="managementServlet" method="post" enctype="multipart/form-data">
+			<form action="projectServlet" method="post">
 			<input type="hidden" name="document_id" value="${c.id}" />
 				<label for="name">プとジェクト名</label><br>
 				<input type="text" name="name" value="${c.name}"><br><br>

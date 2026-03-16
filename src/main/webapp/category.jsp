@@ -69,16 +69,16 @@
 	<div id="insert-inside">
 		<div id="message">
 			<h1>カテゴリの作成</h1>
-			<form action="managementServlet" method="post" enctype="multipart/form-data">
+			<form action="categoryServlet" method="post">
 				<label for="name">カテゴリ名<span class="req">*</span></label><br>
 				<input type="text" name="name" required><br><br>
 				
 				<label>
-				  <input type="radio" name="type" value="IN"> 収入
+				  <input type="radio" name="type" value="収入"> 収入
 				</label>
 				
 				<label>
-				  <input type="radio" name="type" value="OUT"> 支出
+				  <input type="radio" name="type" value="支出"> 支出
 				</label><br><br>
 			
 				<button type="button" class="insert-close-btn">キャンセル</button>
@@ -93,17 +93,17 @@
 	<div id="edit-inside">
 		<div id="message">
 			<h1>カテゴリの編集</h1>
-			<form action="managementServlet" method="post" enctype="multipart/form-data">
+			<form action="categoryServlet" method="post">
 			<input type="hidden" name="document_id" value="${c.id}" />
 				<label for="name">カテゴリ名</label><br>
 				<input type="text" name="name" value="${c.name}"><br><br>
 
 				<label>
-				  <input type="radio" name="type" value="IN"> 収入
+				  <input type="radio" name="type" value="収入"> 収入
 				</label>
 				
 				<label>
-				  <input type="radio" name="type" value="OUT"> 支出
+				  <input type="radio" name="type" value="支出"> 支出
 				</label><br><br>
 			
 			

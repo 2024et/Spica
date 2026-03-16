@@ -1,19 +1,18 @@
 package Beans;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 public class projectBeans implements Serializable {
 	private String id;	
 	private String group_id;
-	private LocalDateTime created_at;
+	private String created_at;
 	private String name;		
 	private String status;
 	
 	public projectBeans() {
 	}
 	
-	public projectBeans(String id, String group_id, LocalDateTime created_at, String name, String status) {
+	public projectBeans(String id, String group_id, String created_at, String name, String status) {
 		this.id = id;
 		this.group_id = group_id;
 		this.created_at = created_at;
@@ -37,11 +36,11 @@ public class projectBeans implements Serializable {
 	    this.group_id = group_id;
 	}
 
-	public LocalDateTime getCreated_at() {
+	public String getCreated_at() {
 	    return created_at;
 	}
 
-	public void setCreated_at(LocalDateTime created_at) {
+	public void setCreated_at(String created_at) {
 	    this.created_at = created_at;
 	}
 	

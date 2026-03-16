@@ -44,4 +44,27 @@ public class categoryDao {
 			return null;
 		}
 	}
+	//カテゴリの新規登録
+	public boolean insertCategoryData(categoryBeans beans) {
+		PreparedStatement stmt = null;
+		try {
+			Connection con = DBUtil.getConnection();
+			String sql = "INSERT INTO category (id,group_id,name,type,status) VALUES (?,?,?,?,?)";
+			
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, beans.getId());
+			stmt.setString(2, beans.getGroup_id());
+			stmt.setString(3, beans.getName());
+			stmt.setString(4, beans.getType());
+			stmt.setString(5, beans.getStatus());
+			
+			
+			int result = stmt.executeUpdate();
+			if(result > 0) {return true;}
+			else {return false;}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 }
