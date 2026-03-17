@@ -2,11 +2,19 @@ package Logic;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import Beans.projectBeans;
 import Dao.projectDao;
 
 public class projectLogic {
+	//プロジェクトデータ取得
+	public List<projectBeans> getProjectData(String group_id) {
+        projectDao dao = new projectDao();
+        return dao.getProjectData(group_id);
+    }
+	
+	//プロジェクトの新規登録
 	public boolean insertProjectData(String name, String group_id) {
 		signupLogic logic = new signupLogic();
 		String id = logic.RandomID();

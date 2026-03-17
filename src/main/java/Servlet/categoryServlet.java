@@ -15,7 +15,6 @@ import Beans.categoryBeans;
 import Beans.noticeBeans;
 import Logic.accountLogic;
 import Logic.categoryLogic;
-import Logic.financialLogic;
 
 @WebServlet("/categoryServlet")
 public class categoryServlet extends HttpServlet {
@@ -28,7 +27,7 @@ public class categoryServlet extends HttpServlet {
 		accountLogic acc_logic = new accountLogic();
 		List<noticeBeans> notice = acc_logic.getNotice(accountData.getGroup_id());
 		
-		financialLogic logic = new financialLogic();
+		categoryLogic logic = new categoryLogic();
 		List<categoryBeans> category = logic.getCategoryData(accountData.getGroup_id());
 		
 		request.setAttribute("notice", notice);

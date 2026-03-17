@@ -14,7 +14,6 @@ import Beans.accountBeans;
 import Beans.noticeBeans;
 import Beans.projectBeans;
 import Logic.accountLogic;
-import Logic.financialLogic;
 import Logic.projectLogic;
 
 @WebServlet("/projectServlet")
@@ -28,7 +27,7 @@ public class projectServlet extends HttpServlet {
 		accountLogic acc_logic = new accountLogic();
 		List<noticeBeans> notice = acc_logic.getNotice(accountData.getGroup_id());
 		
-		financialLogic logic = new financialLogic();
+		projectLogic logic = new projectLogic();
 		List<projectBeans> project = logic.getProjectData(accountData.getGroup_id());
 		
 		request.setAttribute("notice", notice);

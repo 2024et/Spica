@@ -1,9 +1,18 @@
 package Logic;
 
+import java.util.List;
+
 import Beans.categoryBeans;
 import Dao.categoryDao;
 
 public class categoryLogic {
+	//カテゴリデータ取得
+	public List<categoryBeans> getCategoryData(String group_id) {
+        categoryDao dao = new categoryDao();
+        return dao.getCategoryData(group_id);
+    }
+	
+	//カテゴリの新規登録
 	public boolean insertCategoryData(String name, String type, String group_id) {
 		signupLogic logic = new signupLogic();
 		String id = logic.RandomID();
