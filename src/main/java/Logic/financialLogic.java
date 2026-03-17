@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -25,13 +26,30 @@ public class financialLogic {
 	//カテゴリの取得
 	public List<categoryBeans> getCategoryData(String group_id) {
 		categoryDao dao = new categoryDao();
-		return dao.getCategoryData(group_id);
+		List<categoryBeans> allList = dao.getCategoryData(group_id);
+	    List<categoryBeans> activeList = new ArrayList<>();
+	    
+	    for (categoryBeans category : allList) {
+	        if ("稼働中".equals(category.getStatus())) {
+	            activeList.add(category);
+	        }
+	    }
+	    
+	    return activeList;
 	}
 	
 	//プロジェクトの取得
 	public List<projectBeans> getProjectData(String group_id) {
 		projectDao dao = new projectDao();
-		return dao.getProjectData(group_id);
+		List<projectBeans> allList = dao.getProjectData(group_id);
+		List<projectBeans> activeList = new ArrayList<>();
+		
+		for(projectBeans project : allList) {
+			if("稼働中".equals(project.getStatus())) {
+				activeList.add(project);
+			}
+		}
+		return activeList;
 	}
 	
 	//収支データの収集

@@ -13,7 +13,7 @@ public class categoryDao {
 	//稼働中のカテゴリの全件取得
 	public List<categoryBeans> getCategoryData(String group_id) {
 		List<categoryBeans> list = new ArrayList<>();
-		String sql = "SELECT * FROM category WHERE group_id = ? AND status = '稼働中';";
+		String sql = "SELECT * FROM category WHERE group_id = ?;";
 		try (
 		        Connection con = DBUtil.getConnection();
 		        PreparedStatement stmt = con.prepareStatement(sql);

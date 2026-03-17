@@ -13,7 +13,7 @@ public class projectDao {
 	//稼働中のプロジェクトの全件取得
 	public List<projectBeans> getProjectData(String group_id) {
 		List<projectBeans> list = new ArrayList<>();
-		String sql = "SELECT * FROM balance_project WHERE group_id = ? AND status = '稼働中';";
+		String sql = "SELECT * FROM balance_project WHERE group_id = ?;";
 		try(
 		        Connection con = DBUtil.getConnection();
 		        PreparedStatement stmt = con.prepareStatement(sql);
