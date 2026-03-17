@@ -104,13 +104,13 @@ section {
 table {
   border-collapse: collapse;
   width: 100%;
-  min-width: 600px; 
+  min-width: 800px; 
 }
 
 thead{
 	position:sticky;
 	top:0;
-	background-color: #4169e1;
+	background-color: #73992c;
 }
 
 
