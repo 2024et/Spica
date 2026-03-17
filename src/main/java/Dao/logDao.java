@@ -2,10 +2,14 @@ package Dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import Beans.logBeans;
 import Logic.signupLogic;
 
 public class logDao {
@@ -35,5 +39,37 @@ public class logDao {
 		}
 	}
 	
+	//ログの取得
+	public List<logBeans> getLogData(String group_id){
+		List<logBeans> list = new ArrayList<>();
+		String sql = "SELECT * FROM log_report WHERE group_id = ? AND created_at >= DATE_SUB(NOW(), INTERVAL 3 MONTH);";
+		try (
+		        Connection con = DBUtil.getConnection();
+		        PreparedStatement stmt = con.prepareStatement(sql);
+		    ) {
+			stmt.setString(1, group_id);
+			try (ResultSet rs = stmt.executeQuery()){
+				while (rs.next()) {
+	            	String id = rs.getString("id");
+	            	String created_at = rs.getString("created_at");
+	            	String log = rs.getString("log");
+	            	
+	            	logBeans beans = new logBeans(
+	                        id,
+	                        group_id,
+	                        created_at,
+	                        log
+	                    );
+	            	list.add(beans);  
+	            }	
+			}
+
+			return list;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 }
