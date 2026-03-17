@@ -55,6 +55,28 @@ public class categoryServlet extends HttpServlet {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
 				response.sendRedirect(request.getContextPath() + "/categoryServlet");
 			}
+		}else if("edit".equals(submit)) {
+			String id = request.getParameter("id");
+			String name = request.getParameter("name");
+			String type = request.getParameter("type");
+			String status = request.getParameter("status");
+			
+			if(status != null) {
+				status = "休止中";
+			}else {
+				status = "稼働中";
+			}
+			
+			categoryBeans beans = new categoryBeans(id,accountData.getGroup_id(),name,type,status);
+			
+			boolean updateFlag = cat_logic.updateCategoryData(beans);
+			
+			if(updateFlag) {
+				response.sendRedirect(request.getContextPath() + "/categoryServlet");
+			}else {
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
+				response.sendRedirect(request.getContextPath() + "/categoryServlet");
+			}
 		}
 	}
 

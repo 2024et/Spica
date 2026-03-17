@@ -67,4 +67,26 @@ public class categoryDao {
 			return false;
 		}
 	}
+	
+	//カテゴリの更新
+	public boolean updateCategoryData(categoryBeans beans) {
+		PreparedStatement stmt = null;
+		try {
+			Connection con = DBUtil.getConnection();
+			String sql = "UPDATE category SET name = ?,type = ?,status = ? WHERE id = ?";
+			
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, beans.getName());
+			stmt.setString(2, beans.getType());
+			stmt.setString(3, beans.getStatus());
+			stmt.setString(4, beans.getId());			
+			
+			int result = stmt.executeUpdate();
+			if(result > 0) {return true;}
+			else {return false;}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 }

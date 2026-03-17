@@ -21,4 +21,10 @@ public class categoryLogic {
 		categoryDao dao = new categoryDao();
 		return dao.insertCategoryData(beans);
 	}
+	
+	//カテゴリの更新
+	public boolean updateCategoryData(categoryBeans beans) {
+		categoryDao dao = new categoryDao();
+		return dao.updateCategoryData(beans);
+	}
 }

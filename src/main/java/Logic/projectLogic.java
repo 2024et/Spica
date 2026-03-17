@@ -26,4 +26,10 @@ public class projectLogic {
 		projectDao dao = new projectDao();
 		return dao.insertProjectData(beans);
 	}
+	
+	//カテゴリの更新
+	public boolean updateProjectData(projectBeans beans) {
+		projectDao dao = new projectDao();
+		return dao.updateProjectData(beans);
+	}
 }

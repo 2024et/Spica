@@ -68,4 +68,24 @@ public class projectDao {
 			return false;
 		}
 	}
+	//カテゴリの更新
+	public boolean updateProjectData(projectBeans beans) {
+		PreparedStatement stmt = null;
+		try {
+			Connection con = DBUtil.getConnection();
+			String sql = "UPDATE balance_project SET name = ?,status = ? WHERE id = ?";
+			
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, beans.getName());
+			stmt.setString(2, beans.getStatus());
+			stmt.setString(3, beans.getId());			
+			
+			int result = stmt.executeUpdate();
+			if(result > 0) {return true;}
+			else {return false;}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 }

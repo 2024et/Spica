@@ -55,7 +55,7 @@
 						<td>${p.name}</td>
 						<td>${p.status}</td>
 						<td>
-							<button class="setting-btn" data-id="${d.id}">設定</button>
+							<button class="setting-btn" data-id="${p.id}">設定</button>
 						</td>
 					</tr>
 				</c:forEach>
@@ -87,11 +87,15 @@
 		<div id="message">
 			<h1>プロジェクトの編集</h1>
 			<form action="projectServlet" method="post">
-			<input type="hidden" name="document_id" value="${c.id}" />
+			<input type="hidden" name="id" value="${c.id}" />
 				<label for="name">プとジェクト名</label><br>
 				<input type="text" name="name" value="${c.name}"><br><br>
 			
-				<label><input type="checkbox" name="approver_reset"/>休止状態</label><br>
+				<label>
+				  <input type="checkbox" name="status" 
+				    <c:if test="${c.status == '休止中'}">checked</c:if>
+				  />休止状態
+				</label><br>
 				
 				<button type="button" class="edit-close-btn" data-id="${c.id}">キャンセル</button>
 				<button type="submit" name="submit" class="btn" value="edit">保存</button>

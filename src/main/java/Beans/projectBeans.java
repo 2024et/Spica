@@ -12,6 +12,12 @@ public class projectBeans implements Serializable {
 	public projectBeans() {
 	}
 	
+	public projectBeans(String id, String name, String status) {
+		this.id = id;
+		this.name = name;
+		this.status = status;
+	}
+	
 	public projectBeans(String id, String group_id, String created_at, String name, String status) {
 		this.id = id;
 		this.group_id = group_id;

@@ -56,7 +56,7 @@
 						<td>${c.type}</td>
 						<td>${c.status}</td>
 						<td>
-							<button class="setting-btn" data-id="${d.id}">設定</button>
+							<button class="setting-btn" data-id="${c.id}">設定</button>
 						</td>
 					</tr>
 				</c:forEach>
@@ -94,20 +94,28 @@
 		<div id="message">
 			<h1>カテゴリの編集</h1>
 			<form action="categoryServlet" method="post">
-			<input type="hidden" name="document_id" value="${c.id}" />
+			<input type="hidden" name="id" value="${c.id}" />
 				<label for="name">カテゴリ名</label><br>
 				<input type="text" name="name" value="${c.name}"><br><br>
 
 				<label>
-				  <input type="radio" name="type" value="収入"> 収入
+				  <input type="radio" name="type" value="収入"
+				  <c:if test="${c.type == '収入'}">checked</c:if>
+				  />収入
 				</label>
 				
 				<label>
-				  <input type="radio" name="type" value="支出"> 支出
+				  <input type="radio" name="type" value="支出"
+				  <c:if test="${c.type == '支出'}">checked</c:if>
+				  /> 支出
 				</label><br><br>
 			
 			
-				<label><input type="checkbox" name="approver_reset"/>休止状態</label><br>
+				<label>
+				  <input type="checkbox" name="status" 
+				    <c:if test="${c.status == '休止中'}">checked</c:if>
+				  />休止状態
+				</label><br>
 				
 				<button type="button" class="edit-close-btn" data-id="${c.id}">キャンセル</button>
 				<button type="submit" name="submit" class="btn" value="edit">保存</button>

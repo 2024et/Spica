@@ -54,6 +54,27 @@ public class projectServlet extends HttpServlet {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
 				response.sendRedirect(request.getContextPath() + "/projectServlet");
 			}
+		}else if("edit".equals(submit)) {
+			String id = request.getParameter("id");
+			String name = request.getParameter("name");
+			String status = request.getParameter("status");
+			
+			if(status != null) {
+				status = "休止中";
+			}else {
+				status = "稼働中";
+			}
+			
+			projectBeans beans = new projectBeans(id,name,status);
+			
+			boolean updateFlag = pro_logic.updateProjectData(beans);
+			
+			if(updateFlag) {
+				response.sendRedirect(request.getContextPath() + "/projectServlet");
+			}else {
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
+				response.sendRedirect(request.getContextPath() + "/projectServlet");
+			}
 		}
 	}
 
