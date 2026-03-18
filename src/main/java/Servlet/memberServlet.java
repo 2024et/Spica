@@ -1,33 +1,42 @@
 package Servlet;
 
+import java.io.IOException;
+import java.util.List;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import jakarta.servlet.http.HttpSession;
 
-/**
- * Servlet implementation class memberServlet
- */
+import Beans.accountBeans;
+import Beans.membership_feeBeans;
+import Beans.noticeBeans;
+import Logic.accountLogic;
+import Logic.memberLogic;
+
 @WebServlet("/memberServlet")
 public class memberServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		HttpSession session = request.getSession();
+		accountBeans accountData = (accountBeans) session.getAttribute("accountData");
+		accountLogic acc_logic = new accountLogic();
+		memberLogic men_logic = new memberLogic();
+		List<noticeBeans> notice = acc_logic.getNotice(accountData.getGroup_id());
+		
+		membership_feeBeans membership_fee = men_logic.getMembershipFee(accountData.getGroup_id());
+		
+		
+		request.setAttribute("notice", notice);
+		request.setAttribute("membership_fee", membership_fee);
+		request.getRequestDispatcher("/member.jsp").forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+
 	}
 
 }
