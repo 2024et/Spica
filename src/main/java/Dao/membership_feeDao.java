@@ -37,4 +37,24 @@ public class membership_feeDao {
 			return null;
 		}
 	}
+	
+	//会費の登録
+	public boolean insertMembershipFee(Connection con,membership_feeBeans beans) {
+		String sql = "INSERT INTO membership_fee (id,group_id,start_date,end_date,fee) VALUES (?,?,?,?,?);";
+		try (PreparedStatement stmt = con.prepareStatement(sql)) {
+			
+			stmt.setString(1, beans.getId());
+			stmt.setString(2, beans.getGroup_id());
+			stmt.setString(3, beans.getStart_date());
+			stmt.setString(4, beans.getEnd_date());
+			stmt.setInt(5, beans.getFee());			
+			
+			int result = stmt.executeUpdate();
+			if(result > 0) {return true;}
+			else {return false;}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 }

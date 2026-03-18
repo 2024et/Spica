@@ -105,8 +105,8 @@
 </div>
 
 <c:forEach var="c" items="${payment}">
-	<div id="approvel-wrapper-${c.id}" class="approvel-wrapper">
-		<div id="approvel-inside">
+	<div id="payment-wrapper-${c.id}" class="payment-wrapper">
+		<div id="payment-inside">
 			<div id="message">
 				<h1>支払い状況の管理</h1>
 				<form action="memberServlet" method="post">
@@ -120,7 +120,7 @@
 					  <input type="radio" name="answer" value="NG" onclick="toggleReason(this)"> 未払い
 					</label><br><br>
 				
-					<button type="button" class="approvel-close-btn" data-id="${c.id}">キャンセル</button>
+					<button type="button" class="payment-close-btn" data-id="${c.id}">キャンセル</button>
 					<button type="submit" name="submit" class="btn" value="approver">保存</button>
 				</form>
 			</div>
@@ -129,8 +129,8 @@
 </c:forEach>
 
 <c:forEach var="c" items="${member}">
-	<div id="approvel-wrapper-${c.id}" class="approvel-wrapper">
-		<div id="approvel-inside">
+	<div id="member-wrapper-${c.id}" class="member-wrapper">
+		<div id="member-inside">
 			<div id="message">
 				<h1>会員の設定</h1>
 				<form action="memberServlet" method="post">
@@ -157,7 +157,7 @@
 					</label><br><br>
 				
 					<button type="submit" name="submit" class="delete-btn" onclick="confirmDelete();" value="delete">削除</button>
-					<button type="button" class="approvel-close-btn" data-id="${c.id}">キャンセル</button>
+					<button type="button" class="member-close-btn" data-id="${c.id}">キャンセル</button>
 					<button type="submit" name="submit" class="btn" value="approver">保存</button>
 				</form>
 			</div>
@@ -169,7 +169,83 @@
 
 
 
+<script>
+document.querySelectorAll('.insert-btn').forEach(btn => {
+	btn.addEventListener('click', (e) => {
+	e.stopPropagation(); 
+	const id = btn.dataset.id;
+	
+	const wrapper = document.getElementById("insert-wrapper");
+	if(wrapper){
+		wrapper.style.display = "block";
+	}
+	});
+});
 
+document.querySelectorAll('.insert-close-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+
+    const wrapper = document.getElementById("insert-wrapper");
+    if(wrapper){
+        wrapper.style.display = "none";
+    }
+    });
+});
+document.getElementById('insert-wrapper')?.addEventListener('click', (e) => {
+    if(e.target.id === 'insert-wrapper'){
+        e.target.style.display = 'none';
+    }
+});
+
+document.querySelectorAll('.payment-btn').forEach(btn => {
+	btn.addEventListener('click', (e) => {
+	e.stopPropagation(); 
+	const id = btn.dataset.id;
+	
+	const wrapper = document.getElementById("payment-wrapper-"+id);
+	if(wrapper){
+		wrapper.style.display = "block";
+	}
+	});
+});
+
+document.querySelectorAll('.payment-close-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const id = btn.dataset.id;
+    const wrapper = document.getElementById("payment-wrapper-"+id);
+    if(wrapper){
+        wrapper.style.display = "none";
+    }
+    });
+});
+
+document.querySelectorAll('.member-btn').forEach(btn => {
+	btn.addEventListener('click', (e) => {
+	e.stopPropagation(); 
+	const id = btn.dataset.id;
+	
+	const wrapper = document.getElementById("member-wrapper-"+id);
+	if(wrapper){
+		wrapper.style.display = "block";
+	}
+	});
+});
+
+document.querySelectorAll('.member-close-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const id = btn.dataset.id;
+    const wrapper = document.getElementById("member-wrapper-"+id);
+    if(wrapper){
+        wrapper.style.display = "none";
+    }
+    });
+});
+
+
+</script>
 
 
 
