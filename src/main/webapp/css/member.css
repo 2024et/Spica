@@ -23,7 +23,7 @@ section {
 }
 
 /*ボタン*/
-.btn,.edit-close-btn,.insert-close-btn,.payment-close-btn,.delete-btn {
+.btn,.edit-close-btn,.insert-close-btn,.payment-close-btn,.delete-btn,.member-close-btn {
     padding: 10px 20px;
     margin: 5px;
     font-size: 16px;
@@ -31,13 +31,13 @@ section {
     cursor: pointer;
     border: none;
 }
-.btn,.insert-btn,.setting-btn,.payment-btn{
+.btn,.insert-btn,.setting-btn,.payment-btn,.member-setting-btn{
 	background-color: #73992c;
 	border:solid 1px #73992c;
 	color:#ffffff;
 	text-decoration: none;
 }
-.btn:hover,.insert-btn:hover,.setting-btn:hover,.payment-btn:hover{
+.btn:hover,.insert-btn:hover,.setting-btn:hover,.payment-btn:hover,.member-setting-btn:hover{
 	background-color: #ffffff;
 	border:solid 1px #73992c;
 	color: #73992c;
@@ -49,15 +49,27 @@ section {
     cursor: pointer;
     border: none;
 }
-.edit-close-btn,.insert-close-btn,.payment-close-btn{
+.edit-close-btn,.insert-close-btn,.payment-close-btn,.member-close-btn{
 	background-color: #ffffff;
 	border:solid 1px #73992c;
 	color: #73992c;
 }
-.edit-close-btn:hover,.insert-close-btn:hover,.payment-close-btn:hover{
+.edit-close-btn:hover,.insert-close-btn:hover,.payment-close-btn:hover,.member-close-btn:hover{
 	background-color: #73992c;
 	border:solid 1px #73992c;
 	color:#ffffff;
+}
+
+.delete-btn{
+	border:1px solid #dc143c;
+	background-color: #dc143c;
+	color:#ffffff;
+}
+
+.delete-btn:hover{
+	border:1px solid #dc143c;
+	background-color: #ffffff;
+	color:#dc143c;
 }
 
 /*ポップアップ*/
