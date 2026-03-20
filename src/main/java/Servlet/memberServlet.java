@@ -99,7 +99,16 @@ public class memberServlet extends HttpServlet {
 			}
 			
 		}else if("delete".equals(submit)) {
+			String id = request.getParameter("id");
 			
+			boolean deleteFlag = men_logic.deleteMemberList(id);
+			
+			if(deleteFlag) {
+				response.sendRedirect(request.getContextPath() + "/memberServlet");
+			}else {
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：ME-deleteMemberList");
+			    request.getRequestDispatcher("/member.jsp").forward(request, response);
+			}
 		}
 	}
 

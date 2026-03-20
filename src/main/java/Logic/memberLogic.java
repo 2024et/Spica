@@ -106,6 +106,11 @@ public class memberLogic {
 		return dao.updateRole(id,role);
 	}
 	
+	//強制退会
+	public boolean deleteMemberList(String id) {
+		accountDao dao = new accountDao();
+		return dao.deleteMemberList(id);
+	}
 
 
 }

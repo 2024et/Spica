@@ -323,7 +323,9 @@ document.querySelectorAll('.member-close-btn').forEach(btn => {
     }
     });
 });
-
+function confirmDelete(){
+	 return alert("本当に退会させますか？");
+	}
 
 </script>
 

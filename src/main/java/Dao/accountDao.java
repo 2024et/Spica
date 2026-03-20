@@ -358,5 +358,23 @@ public class accountDao {
 			return false;
 		}
 	}
+	
+	//強制退会
+	public boolean deleteMemberList(String id) {
+		PreparedStatement stmt = null;
+		try {
+			Connection con = DBUtil.getConnection();
+			String sql = "UPDATE account SET group_id = null WHERE id = ?";
+			
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, id);			
+			int result = stmt.executeUpdate();
+			if(result > 0) {return true;}
+			else {return false;}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 
 }
