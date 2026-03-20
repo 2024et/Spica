@@ -23,7 +23,7 @@ section {
 }
 
 /*ボタン*/
-.btn,.edit-close-btn,.insert-close-btn,.approvel-close-btn,.delete-btn {
+.btn,.edit-close-btn,.insert-close-btn,.payment-close-btn,.delete-btn {
     padding: 10px 20px;
     margin: 5px;
     font-size: 16px;
@@ -31,13 +31,13 @@ section {
     cursor: pointer;
     border: none;
 }
-.btn,.insert-btn,.setting-btn{
+.btn,.insert-btn,.setting-btn,.payment-btn{
 	background-color: #73992c;
 	border:solid 1px #73992c;
 	color:#ffffff;
 	text-decoration: none;
 }
-.btn:hover,.insert-btn:hover,.setting-btn:hover{
+.btn:hover,.insert-btn:hover,.setting-btn:hover,.payment-btn:hover{
 	background-color: #ffffff;
 	border:solid 1px #73992c;
 	color: #73992c;
@@ -49,12 +49,12 @@ section {
     cursor: pointer;
     border: none;
 }
-.edit-close-btn,.insert-close-btn,.approvel-close-btn{
+.edit-close-btn,.insert-close-btn,.payment-close-btn{
 	background-color: #ffffff;
 	border:solid 1px #73992c;
 	color: #73992c;
 }
-.edit-close-btn:hover,.insert-close-btn:hover,.approvel-close-btn:hover{
+.edit-close-btn:hover,.insert-close-btn:hover,.payment-close-btn:hover{
 	background-color: #73992c;
 	border:solid 1px #73992c;
 	color:#ffffff;
@@ -87,7 +87,7 @@ section {
 
 /*テーブル*/
 
-.notice-table{
+.notice-table,.payment_table{
 	height:200px;
 	overflow-y: auto;
 	border-collapse:separate;

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,11 +54,79 @@
 <section>
 	<div class="section_menu">
 		<h3>支払い状況の管理</h3>
-		<select id="yearSelect" class="yearSelect" onchange="filterDocuments(this.value)">
+		<select id="sectionSelect" class="sectionSelect" onchange="filterDocuments(this.value)">
 		</select>
 	</div>
-	<div id="submitedList"></div>
+	<div class="payment_table">
+		<table>
+			<thead><tr><th>会員名</th><th>支払い状況</th><th>ロール</th><th>操作</th></tr></thead>
+			<tbody id="paymentList"></tbody>
+		</table>
+	</div>
+
 </section>
+
+
+<script>
+
+const payment_documents = [
+    <c:forEach var="c" items="${accountPayment}">
+    {
+        id: "${c.id}",
+        name: "${c.name}",
+        date: "${c.date}",
+        status: "${c.status}",
+        role: "${c.role}"  
+    },
+    </c:forEach>
+];
+
+console.log(payment_documents);
+window.onload = function() {
+    const dates = [...new Set(payment_documents.map(doc => doc.date))].filter(d => d).sort((a, b) => b.localeCompare(a)); 
+
+    const today = new Date();
+    const todayStr = today.getFullYear() + "-" + String(today.getMonth() + 1).padStart(2, "0") + "-01";
+
+    dates.forEach(date => {
+        const option = document.createElement("option");
+        option.value = date;
+        option.textContent = "期日：" + date;
+        document.getElementById("sectionSelect").appendChild(option);
+    });
+
+    const defaultDate = dates.find(d => d >= todayStr) ?? dates[dates.length - 1];
+    document.getElementById("sectionSelect").value = defaultDate;
+    filterDocuments(defaultDate);
+};
+
+
+function filterDocuments(selectedDate) {
+    const filtered = payment_documents
+        .filter(doc => doc.date === selectedDate)
+        .sort((a, b) => a.date.localeCompare(b.date));
+
+    const container = document.getElementById("paymentList");
+
+    if (filtered.length === 0) {
+        container.innerHTML = "<tr><td colspan='4'>該当するユーザーはいません。</td></tr>";
+        return;
+    }
+
+    let html = "";
+    filtered.forEach(doc => {
+        html +=
+            '<tr>' +
+                '<td>' + doc.name + '</td>' +
+                '<td>' + doc.status + '</td>' +
+                '<td>' + doc.role + '</td>' +
+                '<td><button class="payment-btn" data-id="' + doc.id + '">設定</button></td>' +
+            '</tr>';
+    });
+
+    container.innerHTML = html;
+}
+</script>
 
 <section>
 	<div class="menu_subtitle">
@@ -104,24 +173,24 @@
 	</div>
 </div>
 
-<c:forEach var="c" items="${payment}">
+<c:forEach var="c" items="${accountPayment}">
 	<div id="payment-wrapper-${c.id}" class="payment-wrapper">
 		<div id="payment-inside">
 			<div id="message">
 				<h1>支払い状況の管理</h1>
 				<form action="memberServlet" method="post">
-				<input type="hidden" name="document_id" value="${c.id}" />
+					<input type="hidden" name="id" value="${c.id}" />
 					<p>ユーザー名：「${c.name}」さんの支払い状況...</p>
 					<label>
-					  <input type="radio" name="answer" value="OK" onclick="toggleReason(this)"> 支払い済み
+					  <input type="radio" name="answer" value="支払済み" > 支払い済み
 					</label>
 					
 					<label>
-					  <input type="radio" name="answer" value="NG" onclick="toggleReason(this)"> 未払い
+					  <input type="radio" name="answer" value="未払い" > 未払い
 					</label><br><br>
 				
 					<button type="button" class="payment-close-btn" data-id="${c.id}">キャンセル</button>
-					<button type="submit" name="submit" class="btn" value="approver">保存</button>
+					<button type="submit" name="submit" class="btn" value="payment">保存</button>
 				</form>
 			</div>
 		</div>
@@ -137,23 +206,23 @@
 				<input type="hidden" name="document_id" value="${c.id}" />
 				<p>ロール</p>
 					<label>
-					  <input type="radio" name="role" value="一般" onclick="toggleReason(this)"> 一般
+					  <input type="radio" name="role" value="一般" > 一般
 					</label>
 					
 					<label>
-					  <input type="radio" name="role" value="その他役員" onclick="toggleReason(this)"> その他役員
+					  <input type="radio" name="role" value="その他役員" > その他役員
 					</label>
 					
 					<label>
-					  <input type="radio" name="role" value="会計" onclick="toggleReason(this)"> 会計
+					  <input type="radio" name="role" value="会計" > 会計
 					</label>
 					
 					<label>
-					  <input type="radio" name="role" value="副代表" onclick="toggleReason(this)"> 副代表
+					  <input type="radio" name="role" value="副代表" > 副代表
 					</label>
 					
 					<label>
-					  <input type="radio" name="role" value="代表" onclick="toggleReason(this)"> 代表
+					  <input type="radio" name="role" value="代表" > 代表
 					</label><br><br>
 				
 					<button type="submit" name="submit" class="delete-btn" onclick="confirmDelete();" value="delete">削除</button>
@@ -198,16 +267,15 @@ document.getElementById('insert-wrapper')?.addEventListener('click', (e) => {
     }
 });
 
-document.querySelectorAll('.payment-btn').forEach(btn => {
-	btn.addEventListener('click', (e) => {
-	e.stopPropagation(); 
-	const id = btn.dataset.id;
-	
-	const wrapper = document.getElementById("payment-wrapper-"+id);
-	if(wrapper){
-		wrapper.style.display = "block";
-	}
-	});
+document.getElementById("paymentList").addEventListener("click", (e) => {
+    if (e.target.classList.contains("payment-btn")) {
+        const id = e.target.dataset.id;
+
+        const wrapper = document.getElementById("payment-wrapper-" + id);
+        if (wrapper) {
+            wrapper.style.display = "block";
+        }
+    }
 });
 
 document.querySelectorAll('.payment-close-btn').forEach(btn => {

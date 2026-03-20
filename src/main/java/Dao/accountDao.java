@@ -313,7 +313,7 @@ public class accountDao {
 	//名簿の取得
 	public List<accountBeans> getMembership(String group_id){
 		List<accountBeans> list = new ArrayList<>();
-        String sql = "SELECT id, name, role WHERE group_id = ?";
+        String sql = "SELECT id, user_name, role_type FROM account WHERE group_id = ?";
 		try (
 		        Connection con = DBUtil.getConnection();
 		        PreparedStatement stmt = con.prepareStatement(sql);
@@ -325,8 +325,8 @@ public class accountDao {
 	            	accountBeans beans = new accountBeans(
 	            			rs.getString("id"),
 	            			group_id,
-	            			rs.getString("name"),
-	            			rs.getString("role")
+	            			rs.getString("user_name"),
+	            			rs.getString("role_type")
 	                        );
 	            	list.add(beans);  
 	            }

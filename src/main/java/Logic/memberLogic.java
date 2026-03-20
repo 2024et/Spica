@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Beans.accountBeans;
+import Beans.accountPaymentBeans;
 import Beans.membership_feeBeans;
 import Dao.DBUtil;
 import Dao.accountDao;
@@ -22,6 +23,10 @@ public class memberLogic {
 	//会費の設定
 	public boolean insertMembershipFee(membership_feeBeans fee, String log) {
 		List<accountBeans> account = getMembership(fee.getGroup_id());
+		
+		if(account == null) {
+			System.out.println("account Null");
+		}
 		
 		List<String> ids = new ArrayList<>();
 		
@@ -81,6 +86,18 @@ public class memberLogic {
 	public List<accountBeans> getMembership(String group_id){
 		accountDao dao = new accountDao();
 		return dao.getMembership(group_id);
+	}
+	
+	//支払い状況の取得
+	public List<accountPaymentBeans> getPaymentUser(String group_id){
+		paymentDao dao = new paymentDao();
+		return dao.getPaymentUser(group_id);
+	}
+	
+	//支払い状況の更新
+	public boolean updatePaymentStatus(String id, String status) {
+		paymentDao dao = new paymentDao();
+		return dao.updatePaymentStatus(id,status);
 	}
 	
 

@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import Beans.accountBeans;
+import Beans.accountPaymentBeans;
 import Beans.membership_feeBeans;
 import Beans.noticeBeans;
 import Logic.accountLogic;
@@ -30,9 +31,11 @@ public class memberServlet extends HttpServlet {
 		
 		membership_feeBeans membership_fee = men_logic.getMembershipFee(accountData.getGroup_id());
 		
+		List<accountPaymentBeans> accountPayment = men_logic.getPaymentUser(accountData.getGroup_id());
 		
 		request.setAttribute("notice", notice);
 		request.setAttribute("membership_fee", membership_fee);
+		request.setAttribute("accountPayment", accountPayment);
 		request.getRequestDispatcher("/member.jsp").forward(request, response);
 	}
 
@@ -66,6 +69,19 @@ public class memberServlet extends HttpServlet {
 			    request.getRequestDispatcher("/member.jsp").forward(request, response);
 			}
 			
+		}else if("payment".equals(submit)) {
+			String id = request.getParameter("id");
+			String status = request.getParameter("answer");
+			
+			boolean updateFlag = men_logic.updatePaymentStatus(id,status);
+			
+			
+			if(updateFlag) {
+				response.sendRedirect(request.getContextPath() + "/memberServlet");
+			}else {
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：ME-updatePaymentStatus");
+			    request.getRequestDispatcher("/member.jsp").forward(request, response);
+			}
 		}
 	}
 
