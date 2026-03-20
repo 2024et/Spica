@@ -40,6 +40,15 @@
 	</div>
 </section>
 <hr>
+
+<section>
+	<div class="section_menu">
+		<h3>招待コード</h3>
+	</div>
+	<h4>${accountData.group_id}</h4>
+	<p>招待コードの再発行はできません。</p>
+</section>
+
 <section>
 	<div class="section_menu">
 		<h3>進行中の書類</h3>
