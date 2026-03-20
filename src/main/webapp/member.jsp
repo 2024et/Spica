@@ -136,7 +136,7 @@ function filterDocuments(selectedDate) {
 		<table>
 			<thead><tr><th>会員名</th><th>メールアドレス</th><th>ロール</th><th>操作</th></tr></thead>
 			<tbody>
-				<c:forEach var="c" items="${member}">
+				<c:forEach var="c" items="${memberList}">
 					<tr>
 						<td>${c.name}</td>
 						<td>${c.email}</td>

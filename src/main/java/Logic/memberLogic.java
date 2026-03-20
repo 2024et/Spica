@@ -100,6 +100,7 @@ public class memberLogic {
 		return dao.updatePaymentStatus(id,status);
 	}
 	
+	
 
 
 }

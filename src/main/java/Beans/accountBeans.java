@@ -14,10 +14,11 @@ public class accountBeans implements Serializable {
 	public accountBeans() {
 	}
 	
-	public accountBeans(String id,String group_id,String name,String role) {
+	public accountBeans(String id,String group_id,String name,String email,String role) {
 		this.id = id;
 		this.group_id = group_id;
 		this.name = name;
+		this.email = email;
 		this.role = role;
 	}
 	

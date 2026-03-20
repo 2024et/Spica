@@ -33,8 +33,11 @@ public class memberServlet extends HttpServlet {
 		
 		List<accountPaymentBeans> accountPayment = men_logic.getPaymentUser(accountData.getGroup_id());
 		
+		List<accountBeans> memberList = men_logic.getMembership(accountData.getGroup_id());
+		
 		request.setAttribute("notice", notice);
 		request.setAttribute("membership_fee", membership_fee);
+		request.setAttribute("memberList", memberList);
 		request.setAttribute("accountPayment", accountPayment);
 		request.getRequestDispatcher("/member.jsp").forward(request, response);
 	}
