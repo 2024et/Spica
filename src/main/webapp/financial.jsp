@@ -347,39 +347,42 @@ console.log(
 	<c:forEach var="b" items="${searchExpend}">
 		searchDataExpend.push(${b.value});
 	</c:forEach>
-	
-	const searchBalanceGraph = new Chart(ctx2, {
-	    type: 'bar',
-	    data: {
-		    labels:searchLabels,
-	        datasets: [
-	            {
-	                label: '収入',
-	                data: searchDataIncome,
-	                backgroundColor: 'rgba(75, 192, 192, 0.6)',
-	                borderColor: 'rgb(75, 192, 192)',
-	                borderWidth: 1
-	            },
-	            {
-	                label: '支出',
-	                data: searchDataExpend,
-	                backgroundColor: 'rgba(255, 99, 132, 0.6)',
-	                borderColor: 'rgb(255, 99, 132)',
-	                borderWidth: 1
-	            }
-	        ]
-	    },
-	    options: {
-	        responsive: true,
-	        scales: {
-	            y: {
-	                beginAtZero: true
-	            }
-	        }
-	    }
-	});
-	
-	
+
+	if (searchLabels.length === 0) {
+	    ctx2.style.display = 'none';
+	}else{
+		const searchBalanceGraph = new Chart(ctx2, {
+		    type: 'bar',
+		    data: {
+			    labels:searchLabels,
+		        datasets: [
+		            {
+		                label: '収入',
+		                data: searchDataIncome,
+		                backgroundColor: 'rgba(75, 192, 192, 0.6)',
+		                borderColor: 'rgb(75, 192, 192)',
+		                borderWidth: 1
+		            },
+		            {
+		                label: '支出',
+		                data: searchDataExpend,
+		                backgroundColor: 'rgba(255, 99, 132, 0.6)',
+		                borderColor: 'rgb(255, 99, 132)',
+		                borderWidth: 1
+		            }
+		        ]
+		    },
+		    options: {
+		        responsive: true,
+		        scales: {
+		            y: {
+		                beginAtZero: true
+		            }
+		        }
+		    }
+		});
+		
+	}
 
 	const adInsertBtn = document.getElementById('ad_InsertBtn');
 	const adiswrapper = document.getElementById('ad-is-wrapper');
