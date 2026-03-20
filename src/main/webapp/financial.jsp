@@ -33,7 +33,7 @@
 			<table class="searchTable">
 				<tr>
 					<td>日付</td>
-					<td><input type="date" name="startDate" value="${searchArchive.startDate}">から<input type="date" name="endDate" value="${searchArchive.endDate}"></td>
+					<td><input type="date" name="startDate" value="${searchArchive.startDate}"><br>から<input type="date" name="endDate" value="${searchArchive.endDate}"></td>
 					<td>収支区分</td>
 					<td>
 						<select  class="textbox" name="type">
