@@ -68,15 +68,15 @@
 				<table>
 					<tr>
 						<td>現在のパスワード<span>*</span></td>
-						<td><input type="password" name="currentPassword" required></td>
+						<td><input type="password" name="currentPassword" required maxlength="30"></td>
 					</tr>
 					<tr>
 						<td>新しいパスワード<span>*</span></td>
-						<td><input type="password" name="newPassword_1" required></td>
+						<td><input type="password" name="newPassword_1" required maxlength="30"></td>
 					</tr>
 					<tr>
 						<td>確認用パスワード<span>*</span></td>
-						<td><input type="password" name="newPassword_2" required></td>
+						<td><input type="password" name="newPassword_2" required maxlength="30"></td>
 					</tr>
 				</table>
 				<a href="requestServlet">現在のパスワードを忘れた方</a><br>
@@ -96,15 +96,15 @@
 							<table>
 					<tr>
 						<td>ユーザー名</td>
-						<td><input type="text" name="name"></td>
+						<td><input type="text" name="name" maxlength="30"></td>
 					</tr>
 					<tr>
 						<td>メールアドレス</td>
-						<td><input type="email" name="email"></td>
+						<td><input type="email" name="email" maxlength="30"></td>
 					</tr>
 					<tr>
 						<td>所属団体</td>
-						<td><input type="text" name="code"></td>
+						<td><input type="text" name="code" maxlength="10"></td>
 					</tr>
 				</table>
 				<p>※ユーザーIDの変更はできません。</p>

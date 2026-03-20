@@ -71,7 +71,7 @@
 			<h1>カテゴリの作成</h1>
 			<form action="categoryServlet" method="post">
 				<label for="name">カテゴリ名<span class="req">*</span></label><br>
-				<input type="text" name="name" required><br><br>
+				<input type="text" name="name" required maxlength="30"><br><br>
 				
 				<label>
 				  <input type="radio" name="type" value="収入"> 収入
@@ -96,7 +96,7 @@
 			<form action="categoryServlet" method="post">
 			<input type="hidden" name="id" value="${c.id}" />
 				<label for="name">カテゴリ名</label><br>
-				<input type="text" name="name" value="${c.name}"><br><br>
+				<input type="text" name="name" value="${c.name}" maxlength="30"><br><br>
 
 				<label>
 				  <input type="radio" name="type" value="収入"

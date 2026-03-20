@@ -15,16 +15,16 @@
 
 <form action="signupServlet" method="post" >
 	<label for="name">ユーザー名<span class="req">*</span></label><br>
-	<input type="text" name = "name" required><br><br>
+	<input type="text" name = "name" required maxlength="30"><br><br>
 	
 	<label for="mail">メールアドレス<span class="req">*</span></label><br>
-	<input type="email" name = "mail" required><br><br>
+	<input type="email" name = "mail" required maxlength="30"><br><br>
 	
 	<label for="passwprd_1">パスワード<span class="req">*</span></label><br>
-	<input type="password" name="password_1" required><br><br>
+	<input type="password" name="password_1" required maxlength="30"><br><br>
 	
 	<label for="passwprd_2">確認用パスワード<span class="req">*</span></label><br>
-	<input type="password" name="password_2" required><br><br>
+	<input type="password" name="password_2" required maxlength="30"><br><br>
 	
 	<% String error = (String) request.getAttribute("errorMessage"); %>
     <% if (error != null) { %>

@@ -16,10 +16,10 @@
 <form action="signinServlet" method="post" >
 	
 	<label for="mail">メールアドレス<span class="req">*</span></label><br>
-	<input type="email" name = "mail" required><br><br>
+	<input type="email" name = "mail" required maxlength="30"><br><br>
 	
 	<label for="passwprd_1">パスワード<span class="req">*</span></label><br>
-	<input type="password" name="password" required><br><br>
+	<input type="password" name="password" required maxlength="30"><br><br>
 	
 	<% String error = (String) request.getAttribute("errorMessage"); %>
     <% if (error != null) { %>

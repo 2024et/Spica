@@ -17,7 +17,7 @@
 <form action="select_groupServlet" method="post" >
 	
 	<label for="invite">招待コード<span class="req">*</span></label><br>
-	<input type="text" name = "invite" required><br><br>
+	<input type="text" name = "invite" required maxlength="10"><br><br>
 	
 	<% String join_error = (String) request.getAttribute("join_errorMessage"); %>
     <% if (join_error != null) { %>
@@ -31,7 +31,7 @@
 <form action="select_groupServlet" method="post" >
 	
 	<label for="name">団体名(記号は利用できません)<span class="req">*</span></label><br>
-	<input type="text" name = "name" required><br><br>
+	<input type="text" name = "name" required maxlength="30"><br><br>
 	
 	<% String make_error = (String) request.getAttribute("make_errorMessage"); %>
     <% if (make_error != null) { %>

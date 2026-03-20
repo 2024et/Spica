@@ -260,7 +260,7 @@ function filterDocuments(selectedYear) {
 			<h1>書類作成</h1>
 			<form action="managementServlet" method="post" enctype="multipart/form-data">
 				<label for="name">書類名<span class="req">*</span></label><br>
-				<input type="text" name="name" required><br><br>
+				<input type="text" name="name" required maxlength="100"><br><br>
 				
 				<label for="file">pdfのアップロード<span class="req">*</span></label><br>
 				<input type="file" name="file" required accept=".pdf"><br><br>
@@ -280,7 +280,7 @@ function filterDocuments(selectedYear) {
 			<form action="managementServlet" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="document_id" value="${c.id}" />
 				<label for="name">書類名</label><br>
-				<input type="text" name="name" value="${c.name}"><br><br>
+				<input type="text" name="name" value="${c.name}" maxlength="100"><br><br>
 				
 				<label for="file">pdfのアップロード</label><br>
 				<input type="file" name="file"><br><br>

@@ -19,10 +19,10 @@ String id = (String)request.getAttribute("id");
 <form action="change_passwordServlet" method="post" >
 	
 	<label for="passwprd_1">パスワード<span class="req">*</span></label><br>
-	<input type="password" name="password_1" required><br><br>
+	<input type="password" name="password_1" required maxlength="30"><br><br>
 	
 	<label for="passwprd_2">確認用パスワード<span class="req">*</span></label><br>
-	<input type="password" name="password_2" required><br><br>
+	<input type="password" name="password_2" required maxlength="30"><br><br>
 	
 	<input type="hidden" name="id" value="<%= id %>">
 	

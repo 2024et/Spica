@@ -38,7 +38,7 @@
 		<table>
 		<tr>
 			<td><label for="name">書類名<span class="req">*</span></label></td>
-			<td><input type="text" name="name" required></td>
+			<td><input type="text" name="name" required maxlength="100"></td>
 		</tr>
 		<tr>
 			<td><label for="start">対象期間：開始日<span class="req">*</span></label></td>

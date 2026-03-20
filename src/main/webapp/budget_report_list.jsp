@@ -38,12 +38,12 @@
 		<table>
 		<tr>
 			<td><label for="name">書類名<span class="req">*</span></label></td>
-			<td><input type="text" name="name" required></td>
+			<td><input type="text" name="name" required maxlength="100"></td>
 		</tr>
 		<tr>
 			<c:forEach var="c" items="${category_list}">
 		        <td><label for="${c.name}">${c.name}<span class="req">*</span></label></td>
-		        <td><input type="number" name="${c.name}" required><br></td>
+		        <td><input type="number" name="${c.name}" required min="0" max="9999999"><br></td>
 		</tr>
 		    </c:forEach>
 		  

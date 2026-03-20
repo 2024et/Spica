@@ -158,7 +158,7 @@ function filterDocuments(selectedDate) {
 			<h1>会費の設定</h1>
 			<form action="memberServlet" method="post">
 				<label for="fee">金額<span class="req">*</span></label><br>
-				<input type="number" name="fee" required><br><br>
+				<input type="number" name="fee" required min="0" max="9999999"><br><br>
 				
 				<label for="start">期間(開始日)<span class="req">*</span></label><br>
 				<input type="date" name="start" required><br><br>

@@ -71,7 +71,7 @@
 			<h1>プロジェクトの作成</h1>
 			<form action="projectServlet" method="post">
 				<label for="name">プロジェクト名<span class="req">*</span></label><br>
-				<input type="text" name="name" required><br><br>
+				<input type="text" name="name" required maxlength="30"><br><br>
 				
 			
 				<button type="button" class="insert-close-btn">キャンセル</button>
@@ -88,8 +88,8 @@
 			<h1>プロジェクトの編集</h1>
 			<form action="projectServlet" method="post">
 			<input type="hidden" name="id" value="${c.id}" />
-				<label for="name">プとジェクト名</label><br>
-				<input type="text" name="name" value="${c.name}"><br><br>
+				<label for="name">プロジェクト名</label><br>
+				<input type="text" name="name" value="${c.name}" maxlength="30"><br><br>
 			
 				<label>
 				  <input type="checkbox" name="status" 

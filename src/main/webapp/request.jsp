@@ -16,7 +16,7 @@
 <form action="requestServlet" method="post" >
 	
 	<label for="mail">メールアドレス<span class="req">*</span></label><br>
-	<input type="email" name = "mail" required><br><br>
+	<input type="email" name = "mail" required maxlength="30"><br><br>
 	
 	
 	<% String error = (String) request.getAttribute("errorMessage"); %>

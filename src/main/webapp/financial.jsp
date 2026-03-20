@@ -69,13 +69,13 @@
 				</tr>
 				<tr>
 					<td>店名</td>
-					<td><input type="text" name="store" class="textbox" value="${searchArchive.store}"></td>
+					<td><input type="text" name="store" class="textbox" value="${searchArchive.store}" maxlength="30"></td>
 					<td>品目</td>
-					<td><input type="text" name="item" class="textbox" value="${searchArchive.item}"></td>
+					<td><input type="text" name="item" class="textbox" value="${searchArchive.item}" maxlength="300"></td>
 				</tr>
 				<tr>
 					<td>キーワード</td>
-					<td><input type="text" name="keyword" class="textbox" value="${searchArchive.keyword}"></td>
+					<td><input type="text" name="keyword" class="textbox" value="${searchArchive.keyword}" maxlength="30"></td>
 					<td></td>
 					<td></td>
 				</tr>
@@ -170,7 +170,7 @@
 							</select>
 						</td>
 						<td>店名</td>
-						<td><input type="text" name="store" class="textbox" ></td>
+						<td><input type="text" name="store" class="textbox" maxlength="30"></td>
 					</tr>
 					<tr>
 						<td>品目</td>
@@ -186,9 +186,9 @@
 					</tr>
 					<tr>
 						<td>金額</td>
-						<td><input type="number" name="number" class="textbox" required></td>
+						<td><input type="number" name="number" class="textbox" required min="0" max="9999999"></td>
 						<td>メモ</td>
-						<td><textarea class="textbox" name="memo"></textarea></td>
+						<td><textarea class="textbox" name="memo" maxlength="300"></textarea></td>
 					</tr>
 				</table>
 				<button type="button" id="close" class="close-btn" value="cancel">キャンセル</button>
@@ -208,7 +208,7 @@
 					<table class="searchTable">
 						<tr>
 							<td>日付</td>
-							<td><input type="date" name="date" value="${c.created_at}"></td>
+							<td><input type="date" name="date" value="${c.created_at}" maxlength="30"></td>
 							<td>カテゴリ</td>
 							<td>
 								<select  class="textbox" name="category">
@@ -230,11 +230,11 @@
 								</select>
 							</td>
 							<td>店名</td>
-							<td><input type="text" name="store" class="textbox" value="${c.name}"></td>
+							<td><input type="text" name="store" class="textbox" value="${c.name}" maxlength="30"></td>
 						</tr>
 						<tr>
 							<td>品目</td>
-							<td><input type="text" name="item" class="textbox" value="${c.item}"></td>
+							<td><input type="text" name="item" class="textbox" value="${c.item}" maxlength="300"></td>
 							<td>入出金</td>
 							<td>
 								<select  class="textbox" name="type">
@@ -246,9 +246,9 @@
 						</tr>
 						<tr>
 							<td>金額</td>
-							<td><input type="number" name="number" class="textbox" value="${c.amount}"></td>
+							<td><input type="number" name="number" class="textbox" value="${c.amount}" min="0" max="9999999"></td>
 							<td>メモ</td>
-							<td><textarea class="textbox" name="memo">${c.memo}</textarea></td>
+							<td><textarea class="textbox" name="memo" maxlength="300">${c.memo}</textarea></td>
 						</tr>
 					</table>
 					<button type="submit" name="submit" class="delete-btn" onclick="confirmDelete();" value="delete">削除</button>

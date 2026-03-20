@@ -31,10 +31,10 @@
 				  </div>
 			    </td>
 			</tr>
-			<tr><td>店名<span class="req">*</span></td><td><input type="text" name="name" required></td></tr>
-			<tr><td>品目<span class="req">*</span></td><td><input type="text" name="item" required></td></tr>
+			<tr><td>店名<span class="req">*</span></td><td><input type="text" name="name" required maxlength="30"></td></tr>
+			<tr><td>品目<span class="req">*</span></td><td><input type="text" name="item" required maxlength="300"></td></tr>
 			<tr><td>目的<span class="req">*</span></td><td><textarea name="purpose" maxlength="200" required></textarea></td></tr>
-			<tr><td>金額<span class="req">*</span></td><td><input type="number" name="amount" required></td></tr>
+			<tr><td>金額<span class="req">*</span></td><td><input type="number" name="amount" required min="0" max="9999999"></td></tr>
 			<tr><td>販売元URL</td><td><input type="text" name="link" maxlength="200"></td></tr>
 		</table>
 		<input type="submit" name="submit" class="send-btn" value="送信">
