@@ -182,11 +182,13 @@ function filterDocuments(selectedDate) {
 					<input type="hidden" name="id" value="${c.id}" />
 					<p>ユーザー名：「${c.name}」さんの支払い状況...</p>
 					<label>
-					  <input type="radio" name="answer" value="支払済み" > 支払い済み
+					  <input type="radio" name="answer" value="支払済み" 
+					  <c:if test="${c.status == '支払済み'}">checked</c:if>/> 支払い済み
 					</label>
 					
 					<label>
-					  <input type="radio" name="answer" value="未払い" > 未払い
+					  <input type="radio" name="answer" value="未払い" 
+					  <c:if test="${c.status == '未払い'}">checked</c:if>/> 未払い
 					</label><br><br>
 				
 					<button type="button" class="payment-close-btn" data-id="${c.id}">キャンセル</button>
@@ -197,37 +199,47 @@ function filterDocuments(selectedDate) {
 	</div>
 </c:forEach>
 
-<c:forEach var="c" items="${member}">
+<c:forEach var="c" items="${memberList}">
 	<div id="member-wrapper-${c.id}" class="member-wrapper">
 		<div id="member-inside">
 			<div id="message">
 				<h1>会員の設定</h1>
 				<form action="memberServlet" method="post">
-				<input type="hidden" name="document_id" value="${c.id}" />
+				<input type="hidden" name="id" value="${c.id}" />
 				<p>ロール</p>
 					<label>
-					  <input type="radio" name="role" value="一般" > 一般
+					  <input type="radio" name="role" value="一般" 
+					  <c:if test="${c.role == '一般'}">checked</c:if>/> 一般
 					</label>
 					
 					<label>
-					  <input type="radio" name="role" value="その他役員" > その他役員
+					  <input type="radio" name="role" value="その他役員" 
+					  <c:if test="${c.role == 'その他役員'}">checked</c:if>/> その他役員
 					</label>
 					
 					<label>
-					  <input type="radio" name="role" value="会計" > 会計
+					  <input type="radio" name="role" value="会計" 
+					  <c:if test="${c.role == '会計'}">checked</c:if>/> 会計
 					</label>
 					
 					<label>
-					  <input type="radio" name="role" value="副代表" > 副代表
+					  <input type="radio" name="role" value="副代表" 
+					  <c:if test="${c.role == '副代表'}">checked</c:if>/> 副代表
 					</label>
 					
 					<label>
-					  <input type="radio" name="role" value="代表" > 代表
+					  <input type="radio" name="role" value="代表" 
+					  <c:if test="${c.role == '代表'}">checked</c:if>/> 代表
+					</label>
+					
+					<label>
+					  <input type="radio" name="role" value="顧問" 
+					  <c:if test="${c.role == '顧問'}">checked</c:if>/> 顧問
 					</label><br><br>
 				
-					<button type="submit" name="submit" class="delete-btn" onclick="confirmDelete();" value="delete">削除</button>
+					<button type="submit" name="submit" class="delete-btn" onclick="confirmDelete();" value="delete">強制退会</button>
 					<button type="button" class="member-close-btn" data-id="${c.id}">キャンセル</button>
-					<button type="submit" name="submit" class="btn" value="approver">保存</button>
+					<button type="submit" name="submit" class="btn" value="role">保存</button>
 				</form>
 			</div>
 		</div>
@@ -289,7 +301,7 @@ document.querySelectorAll('.payment-close-btn').forEach(btn => {
     });
 });
 
-document.querySelectorAll('.member-btn').forEach(btn => {
+document.querySelectorAll('.member-setting-btn').forEach(btn => {
 	btn.addEventListener('click', (e) => {
 	e.stopPropagation(); 
 	const id = btn.dataset.id;

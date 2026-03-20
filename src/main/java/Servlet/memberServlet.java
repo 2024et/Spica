@@ -85,6 +85,21 @@ public class memberServlet extends HttpServlet {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：ME-updatePaymentStatus");
 			    request.getRequestDispatcher("/member.jsp").forward(request, response);
 			}
+		}else if("role".equals(submit)) {
+			String id = request.getParameter("id");
+			String role = request.getParameter("role");
+			
+			boolean updateFlag = men_logic.updateRole(id,role);
+			
+			if(updateFlag) {
+				response.sendRedirect(request.getContextPath() + "/memberServlet");
+			}else {
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：ME-updateRole");
+			    request.getRequestDispatcher("/member.jsp").forward(request, response);
+			}
+			
+		}else if("delete".equals(submit)) {
+			
 		}
 	}
 

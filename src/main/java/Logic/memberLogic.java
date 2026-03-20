@@ -100,6 +100,11 @@ public class memberLogic {
 		return dao.updatePaymentStatus(id,status);
 	}
 	
+	//ロールの更新
+	public boolean updateRole(String id, String role) {
+		accountDao dao = new accountDao();
+		return dao.updateRole(id,role);
+	}
 	
 
 
