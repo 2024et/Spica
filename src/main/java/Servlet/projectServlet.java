@@ -24,6 +24,11 @@ public class projectServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		accountBeans accountData = (accountBeans) session.getAttribute("accountData");
 		
+		if(accountData == null) {
+			response.sendRedirect(request.getContextPath() + "/signinServlet");
+			return;
+		}
+		
 		accountLogic acc_logic = new accountLogic();
 		List<noticeBeans> notice = acc_logic.getNotice(accountData.getGroup_id());
 		
@@ -50,9 +55,11 @@ public class projectServlet extends HttpServlet {
 			
 			if(insertFlag) {
 				response.sendRedirect(request.getContextPath() + "/projectServlet");
+				return;
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
 				response.sendRedirect(request.getContextPath() + "/projectServlet");
+				return;
 			}
 		}else if("edit".equals(submit)) {
 			String id = request.getParameter("id");
@@ -71,9 +78,11 @@ public class projectServlet extends HttpServlet {
 			
 			if(updateFlag) {
 				response.sendRedirect(request.getContextPath() + "/projectServlet");
+				return;
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
 				response.sendRedirect(request.getContextPath() + "/projectServlet");
+				return;
 			}
 		}
 	}

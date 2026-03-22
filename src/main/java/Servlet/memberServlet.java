@@ -25,6 +25,12 @@ public class memberServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		accountBeans accountData = (accountBeans) session.getAttribute("accountData");
+		
+		if(accountData == null) {
+			response.sendRedirect(request.getContextPath() + "/signinServlet");
+			return;
+		}
+		
 		accountLogic acc_logic = new accountLogic();
 		memberLogic men_logic = new memberLogic();
 		List<noticeBeans> notice = acc_logic.getNotice(accountData.getGroup_id());
@@ -67,9 +73,11 @@ public class memberServlet extends HttpServlet {
 			
 			if(insertFlag) {
 				response.sendRedirect(request.getContextPath() + "/memberServlet");
+				return;
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：ME-insertMembershipFee");
 			    request.getRequestDispatcher("/member.jsp").forward(request, response);
+			    return;
 			}
 			
 		}else if("payment".equals(submit)) {
@@ -81,9 +89,11 @@ public class memberServlet extends HttpServlet {
 			
 			if(updateFlag) {
 				response.sendRedirect(request.getContextPath() + "/memberServlet");
+				return;
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：ME-updatePaymentStatus");
 			    request.getRequestDispatcher("/member.jsp").forward(request, response);
+			    return;
 			}
 		}else if("role".equals(submit)) {
 			String id = request.getParameter("id");
@@ -93,9 +103,11 @@ public class memberServlet extends HttpServlet {
 			
 			if(updateFlag) {
 				response.sendRedirect(request.getContextPath() + "/memberServlet");
+				return;
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：ME-updateRole");
 			    request.getRequestDispatcher("/member.jsp").forward(request, response);
+			    return;
 			}
 			
 		}else if("delete".equals(submit)) {
@@ -105,9 +117,11 @@ public class memberServlet extends HttpServlet {
 			
 			if(deleteFlag) {
 				response.sendRedirect(request.getContextPath() + "/memberServlet");
+				return;
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：ME-deleteMemberList");
 			    request.getRequestDispatcher("/member.jsp").forward(request, response);
+			    return;
 			}
 		}
 	}

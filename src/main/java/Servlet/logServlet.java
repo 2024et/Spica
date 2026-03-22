@@ -24,6 +24,11 @@ public class logServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		accountBeans accountData = (accountBeans) session.getAttribute("accountData");
 		
+		if(accountData == null) {
+			response.sendRedirect(request.getContextPath() + "/signinServlet");
+			return;
+		}
+		
 		accountLogic acc_logic = new accountLogic();
 		List<noticeBeans> notice = acc_logic.getNotice(accountData.getGroup_id());
 		

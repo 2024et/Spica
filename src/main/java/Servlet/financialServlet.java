@@ -28,6 +28,12 @@ public class financialServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		accountBeans accountData = (accountBeans) session.getAttribute("accountData");
+		
+		if(accountData == null) {
+			response.sendRedirect(request.getContextPath() + "/signinServlet");
+			return;
+		}
+		
 		financialLogic logic = new financialLogic();
 		List<categoryBeans> category = logic.getCategoryData(accountData.getGroup_id());
 		List<projectBeans> project = logic.getProjectData(accountData.getGroup_id());
@@ -102,9 +108,11 @@ public class financialServlet extends HttpServlet {
 			request.setAttribute("balance", thisYearBalanceList);
 			if(insertFlag) {
 				response.sendRedirect(request.getContextPath() + "/financialServlet");
+				return;
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
 				response.sendRedirect(request.getContextPath() + "/financialServlet");
+				return;
 			}
 		}else if("edit".equals(submit)) {
 			//収支編集
@@ -130,9 +138,11 @@ public class financialServlet extends HttpServlet {
 			request.setAttribute("balance", thisYearBalanceList);
 			if(editFlag) {
 				response.sendRedirect(request.getContextPath() + "/financialServlet");
+				return;
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
 				response.sendRedirect(request.getContextPath() + "/financialServlet");
+				return;
 			}
 			
 		}else if("search".equals(submit)) {
@@ -172,6 +182,7 @@ public class financialServlet extends HttpServlet {
 			request.setAttribute("balance", thisYearBalanceList);
 			request.setAttribute("balance", searchData);
 			request.getRequestDispatcher("/financial.jsp").forward(request, response);
+			return;
 		}else if("delete".equals(submit)) {
 			//収支削除
 			id = request.getParameter("id");
@@ -186,13 +197,16 @@ public class financialServlet extends HttpServlet {
 			request.setAttribute("thisYearBalanceGraph", thisYearBalanceList);
 			if(deleteFlag) {
 				response.sendRedirect(request.getContextPath() + "/financialServlet");
+				return;
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
 				response.sendRedirect(request.getContextPath() + "/financialServlet");
+				return;
 			}
 			
 		}else {
 			response.sendRedirect(request.getContextPath() + "/financialServlet");
+			return;
 		}
 	}
 

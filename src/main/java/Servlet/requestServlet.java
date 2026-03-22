@@ -28,6 +28,7 @@ public class requestServlet extends HttpServlet {
 		if(checkMail == 0 || checkMail == 2) {
 			request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
 		    request.getRequestDispatcher("/request.jsp").forward(request, response);
+		    return;
 		}
 		
 		boolean completeFlag = logic.sendMail(mail);
@@ -35,9 +36,11 @@ public class requestServlet extends HttpServlet {
 		if(completeFlag) {
 			request.setAttribute("Message", "パスワード再設定リクエストをメールにて送信しました。メールをご確認ください。");
 		    request.getRequestDispatcher("/request.jsp").forward(request, response);
+		    return;
 		}else {
 			request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
 		    request.getRequestDispatcher("/request.jsp").forward(request, response);
+		    return;
 		}
 	}
 

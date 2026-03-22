@@ -39,9 +39,11 @@ public class change_passwordServlet extends HttpServlet {
 		if(completeFlag) {
 			request.setAttribute("Message", "パスワードの更新が完了しました。");
 		    request.getRequestDispatcher("/signinServlet").forward(request, response);
+		    return;
 		}else {
 			request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
 		    request.getRequestDispatcher("/change_password.jsp").forward(request, response);
+		    return;
 		}
 	}
 

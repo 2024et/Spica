@@ -50,9 +50,11 @@ public class signupServlet extends HttpServlet {
 		if(signupFlag) {
 			request.setAttribute("Message", "入力されたメールアドレス宛に仮登録のご案内メールを送信しました。メール内記載のリンクにアクセスして本登録を完了させてください。");
 		    request.getRequestDispatcher("/signup.jsp").forward(request, response);
+		    return;
 		}else {
 			request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：SU-tA1000");
 		    request.getRequestDispatcher("/signup.jsp").forward(request, response);
+		    return;
 		}
 		
 	}

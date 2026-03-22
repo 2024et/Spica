@@ -23,6 +23,11 @@ public class account_report_listServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		accountBeans accountData = (accountBeans) session.getAttribute("accountData");
 		
+		if(accountData == null) {
+			response.sendRedirect(request.getContextPath() + "/signinServlet");
+			return;
+		}
+		
 		account_report_listLogic acc_logic = new account_report_listLogic();
 		List<account_reportBeans> account_list = acc_logic.getAccountReportData(accountData.getGroup_id());
 		
@@ -50,9 +55,11 @@ public class account_report_listServlet extends HttpServlet {
 		
 		if(insertFlag) {
 			response.sendRedirect(request.getContextPath() + "/account_report_listServlet");
+			return;
 		}else {
 			request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：AC-cp1000");
 		    request.getRequestDispatcher("/account_report_list.jsp").forward(request, response);
+		    return;
 		}
 	}
 

@@ -24,6 +24,12 @@ public class accountServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		accountBeans accountData = (accountBeans) session.getAttribute("accountData");
+		
+		if(accountData == null) {
+			response.sendRedirect(request.getContextPath() + "/signinServlet");
+			return;
+		}
+		
 		accountLogic logic = new accountLogic();
 		List<noticeBeans> notice = logic.getNotice(accountData.getId());
 		request.setAttribute("accountData", accountData);
@@ -146,13 +152,16 @@ public class accountServlet extends HttpServlet {
 			
 			if(deleteFlag) {
 				response.sendRedirect(request.getContextPath() + "/logoutServlet");
+				return;
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：AC-da1000");
 			    request.getRequestDispatcher("/account.jsp").forward(request, response);
+			    return;
 			}
 			
 		}else {
 			request.getRequestDispatcher("/account.jsp").forward(request, response);
+			return;
 		}
 		
 	}

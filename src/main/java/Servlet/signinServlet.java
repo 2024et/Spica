@@ -32,16 +32,16 @@ public class signinServlet extends HttpServlet {
 		if(completeFlag==2) {
 			request.setAttribute("errorMessage", "メールアドレスまたはパスワードが一致しませんでした。");
 		    request.getRequestDispatcher("/signin.jsp").forward(request, response);
-		    
+		    return;
 		}
 		accountBeans beans = logic.getBeans();
 		session.setAttribute("accountData", beans);
 		if(completeFlag == 0) {
 			response.sendRedirect(request.getContextPath() + "/financialServlet");
-
+			return;
 		}else {
-			//request.getRequestDispatcher("/select_groupServlet").forward(request, response);//動作確認後削除
 			response.sendRedirect(request.getContextPath() + "/select_groupServlet");
+			return;
 
 		}
 	}

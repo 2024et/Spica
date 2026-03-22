@@ -70,6 +70,7 @@ public class select_groupServlet extends HttpServlet {
 			
 		}else {
 			request.getRequestDispatcher("/select_group.jsp").forward(request, response);
+			return;
 		}
 	}
 

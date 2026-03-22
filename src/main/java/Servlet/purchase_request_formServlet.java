@@ -19,6 +19,14 @@ public class purchase_request_formServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		accountBeans accountData = (accountBeans) session.getAttribute("accountData");
+		
+		if(accountData == null) {
+			response.sendRedirect(request.getContextPath() + "/signinServlet");
+			return;
+		}
+		
 		request.getRequestDispatcher("/purchase_request_form.jsp").forward(request, response);
 	}
 
@@ -50,9 +58,11 @@ public class purchase_request_formServlet extends HttpServlet {
 		
 		if(insertFlag) {
 			response.sendRedirect(request.getContextPath() + "/purchase_request_listServlet");
+			return;
 		}else {
 			request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：AC-cp1000");
 		    request.getRequestDispatcher("/purchase_request_form.jsp").forward(request, response);
+		    return;
 		}
 		
 	}

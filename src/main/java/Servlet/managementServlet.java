@@ -30,6 +30,12 @@ public class managementServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		accountBeans accountData = (accountBeans) session.getAttribute("accountData");
+		
+		if(accountData == null) {
+			response.sendRedirect(request.getContextPath() + "/signinServlet");
+			return;
+		}
+		
 		accountLogic acc_logic = new accountLogic();
 		managementLogic man_logic = new managementLogic();
 		List<noticeBeans> notice = acc_logic.getNotice(accountData.getGroup_id());
@@ -65,9 +71,11 @@ public class managementServlet extends HttpServlet {
 	        
 			if(insertFlag) {
 				response.sendRedirect(request.getContextPath() + "/managementServlet");
+				return;
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：MA-insertDocumentData");
 			    request.getRequestDispatcher("/management.jsp").forward(request, response);
+			    return;
 			}
 	        
 		}else if("approver".equals(submit)) {
@@ -88,9 +96,11 @@ public class managementServlet extends HttpServlet {
 			
 			if(approverlFlag) {
 				response.sendRedirect(request.getContextPath() + "/managementServlet");
+				return;
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：MA-approverDocument");
 			    request.getRequestDispatcher("/management.jsp").forward(request, response);
+			    return;
 			}
 		}else if("edit".equals(submit)) {
 			InputStream fileStream = null;
@@ -108,9 +118,11 @@ public class managementServlet extends HttpServlet {
 			boolean updateFlag = man_logic.updateDocumentData(beans,fileName,fileStream,reset);
 			if(updateFlag) {
 				response.sendRedirect(request.getContextPath() + "/managementServlet");
+				return;
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：MA-updateDocumentData");
 			    request.getRequestDispatcher("/management.jsp").forward(request, response);
+			    return;
 			}
 		}else if("delete".equals(submit)) {
 			String id = request.getParameter("document_id");
@@ -121,9 +133,11 @@ public class managementServlet extends HttpServlet {
 			
 			if(deleteFlag) {
 				response.sendRedirect(request.getContextPath() + "/managementServlet");
+				return;
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：MA-deleteDocumentData");
 			    request.getRequestDispatcher("/management.jsp").forward(request, response);
+			    return;
 			}
 		}else if("submited".equals(submit)) {
 			String id = request.getParameter("document_id");
@@ -132,9 +146,11 @@ public class managementServlet extends HttpServlet {
 			
 			if(submitedFlag) {
 				response.sendRedirect(request.getContextPath() + "/managementServlet");
+				return;
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：MA-submitedDocumentData");
 			    request.getRequestDispatcher("/management.jsp").forward(request, response);
+			    return;
 			}
 			
 		}else if("no_submit".equals(submit)) {
@@ -144,9 +160,11 @@ public class managementServlet extends HttpServlet {
 			
 			if(no_submitedFlag) {
 				response.sendRedirect(request.getContextPath() + "/managementServlet");
+				return;
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：MA-noSubmitedDocumentData");
 			    request.getRequestDispatcher("/management.jsp").forward(request, response);
+			    return;
 			}
 		}
 	}

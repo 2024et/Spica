@@ -25,9 +25,14 @@ public class account_report_detailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String reportID = request.getParameter("reportID");
 		HttpSession session = request.getSession();
 		accountBeans accountData = (accountBeans) session.getAttribute("accountData");
+		
+		if(accountData == null) {
+			response.sendRedirect(request.getContextPath() + "/signinServlet");
+			return;
+		}
+		String reportID = request.getParameter("reportID");
 		account_report_detailLogic acr_logic = new account_report_detailLogic();
 		budget_report_detailLogic bud_logic = new budget_report_detailLogic();
 		financialLogic fi_logic = new financialLogic();

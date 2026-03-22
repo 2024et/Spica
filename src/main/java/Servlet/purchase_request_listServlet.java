@@ -23,6 +23,11 @@ public class purchase_request_listServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		accountBeans accountData = (accountBeans) session.getAttribute("accountData");
 		
+		if(accountData == null) {
+			response.sendRedirect(request.getContextPath() + "/signinServlet");
+			return;
+		}
+		
 		purchase_request_listLogic logic = new purchase_request_listLogic();
 		List<purchase_requestBeans> list = logic.getRequestData(accountData.getGroup_id());
 		

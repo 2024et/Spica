@@ -21,6 +21,13 @@ public class purchase_request_detailServlet extends HttpServlet {
 	
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		accountBeans accountData = (accountBeans) session.getAttribute("accountData");
+		
+		if(accountData == null) {
+			response.sendRedirect(request.getContextPath() + "/signinServlet");
+			return;
+		}
 		
 		String requestID = request.getParameter("requestID");
 		
@@ -55,9 +62,11 @@ public class purchase_request_detailServlet extends HttpServlet {
 			
 			if(deleteFlag) {
 				response.sendRedirect(request.getContextPath() + "/purchase_request_listServlet");
+				return;
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：PRD-deleteFlag");
 				request.getRequestDispatcher("/purchase_request_detail.jsp").forward(request, response);
+				return;
 			}
 		}else if("form".equals(submit)) {
 			log = accountData.getName()+"さんが、希望申請を編集しました。";

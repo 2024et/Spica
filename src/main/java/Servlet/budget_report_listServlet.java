@@ -25,6 +25,11 @@ public class budget_report_listServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		accountBeans accountData = (accountBeans) session.getAttribute("accountData");
 		
+		if(accountData == null) {
+			response.sendRedirect(request.getContextPath() + "/signinServlet");
+			return;
+		}
+		
 		budget_report_listLogic logic = new budget_report_listLogic();
 		List<budget_reportBeans> budget_list = logic.getBudgetReportData(accountData.getGroup_id());
 		List<categoryBeans> category_list = logic.getCategoryData(accountData.getGroup_id()); 
@@ -54,9 +59,11 @@ public class budget_report_listServlet extends HttpServlet {
 		
 		if(insertFlag) {
 			response.sendRedirect(request.getContextPath() + "/budget_report_listServlet");
+			return;
 		}else {
 			request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：AC-cp1000");
 		    request.getRequestDispatcher("/budget_report_list.jsp").forward(request, response);
+		    return;
 		}
 	}
 
