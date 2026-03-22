@@ -29,6 +29,11 @@ public class projectServlet extends HttpServlet {
 			return;
 		}
 		
+		if("一般".equals(accountData.getRole())) {
+			response.sendRedirect(request.getContextPath() + "/financialServlet");
+			return;
+		}
+		
 		accountLogic acc_logic = new accountLogic();
 		List<noticeBeans> notice = acc_logic.getNotice(accountData.getGroup_id());
 		
