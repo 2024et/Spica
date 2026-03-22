@@ -40,7 +40,12 @@
 		</div>
 		<div class="buttons-right">
 			<button class="form-edit-btn" id="form-edit-btn">編集(申請者)</button>
-			<button class="status-edit-btn" id="status-edit-btn">編集(役員)</button>
+			<c:choose>
+			    <c:when test="${accountData.role != '一般'}">
+					<button class="status-edit-btn" id="status-edit-btn">編集(役員)</button>
+			    </c:when>
+			</c:choose>
+			
 		</div>
 	</div>
 </section>

@@ -13,7 +13,12 @@
 
 <section>
 	<h1>会計報告書</h1>
-	<button class="new-account-btn">会計報告書の作成</button>
+	<c:choose>
+	    <c:when test="${accountData.role != '一般'}">
+			<button class="new-account-btn">会計報告書の作成</button>
+	    </c:when>
+	</c:choose>
+	
 	<table>
 		<thead><tr><th>会計報告書</th></tr></thead>
 		<tbody>

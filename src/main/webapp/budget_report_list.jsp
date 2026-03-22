@@ -13,7 +13,12 @@
 
 <section>
 	<h1>予算報告書</h1>
-	<button class="new-budget-btn">予算報告書の作成</button>
+	<c:choose>
+	    <c:when test="${accountData.role != '一般'}">
+			<button class="new-budget-btn">予算報告書の作成</button>
+	    </c:when>
+	</c:choose>
+	
 	<table>
 		<thead><th>予算報告書</th></thead>
 		<tbody>

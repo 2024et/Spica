@@ -260,7 +260,12 @@
 	</div>
 </c:forEach>
 
-<div id="ad_InsertBtn"><p>収支新規登録</p></div>
+<c:choose>
+    <c:when test="${accountData.role != '一般'}">
+		<div id="ad_InsertBtn"><p>収支新規登録</p></div>
+    </c:when>
+</c:choose>
+
 
 <footer>
     <p>©2026 EBATA TAKUMI</p>

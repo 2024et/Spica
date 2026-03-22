@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,7 +21,15 @@
 			<a class="empty"></a>
 			<a class="empty"></a>
 			<a class="empty"></a>
-			<a href="managementServlet" class="admin">管理者</a>
+			<c:choose>
+			    <c:when test="${accountData.role == '一般'}">
+					<a class="empty"></a>
+			    </c:when>
+			    <c:when test="${accountData.role != '一般'}">
+					<a href="managementServlet" class="admin">管理者</a>
+			    </c:when>
+			</c:choose>
+			
 			<a href="logoutServlet" class="general">ログアウト</a>
 		</div>
 		<div class="nav_down">
