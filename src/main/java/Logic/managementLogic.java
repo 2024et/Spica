@@ -11,10 +11,12 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import Beans.accountBeans;
 import Beans.approverBeans;
 import Beans.documentApproverlDTOBeans;
 import Beans.proceed_documentsBeans;
 import Dao.DBUtil;
+import Dao.accountDao;
 import Dao.approverDao;
 import Dao.proceed_documentDao;
 
@@ -45,7 +47,37 @@ public class managementLogic {
 		proceed_documentsBeans beans = new proceed_documentsBeans(id,group_id,created_at,name,filePath,status,comment);
 	    
 	    proceed_documentDao dao = new proceed_documentDao();
-	    return dao.insertDocumentData(beans);
+	    
+	    boolean insertFlag = dao.insertDocumentData(beans);
+	    
+	    memberLogic mem_logic = new memberLogic();
+		List<accountBeans> account = mem_logic.getMembership(group_id);
+		
+		MailUtil mail = new MailUtil();
+		
+		String subject = "【Spica】書類が追加されました。";
+		
+		String text = "<html>" +
+				"<body style='font-family: Arial, sans-serif; background-color:#f5f5f5; padding:20px;'>" +
+
+				"<div style='max-width:600px; margin:0 auto; background:#ffffff; padding:24px; border-radius:8px;'>" +
+
+				"<h2 style='color:#333333;'>書類が追加されました。</h2>" +
+
+				"<p style='font-size:14px; color:#555555;'>書類名「"+name+"」が追加されました。承認をお願いいたします。</p>" +
+
+				"</div>" +
+				"</body>" +
+				"</html>";
+		
+	    if(insertFlag) {
+	    	for(accountBeans to : account) {
+				mail.sendEmail(to.getEmail(),subject,text);
+			}
+	    	return true;
+	    }else {
+	    	return false;
+	    }
 	}
 	//未提出書類の取得
 	public List<documentApproverlDTOBeans> getProcessDocumentData(String group_id) {	
@@ -205,5 +237,11 @@ public class managementLogic {
 	public boolean noSubmitedDocumentData(String id) {
 		proceed_documentDao dao = new proceed_documentDao();
 		return dao.noSubmitedDocumentData(id);
+	}
+	
+	//役員名簿の取得
+	public List<accountBeans> getBoardMember(String group_id){
+		accountDao dao = new accountDao();
+		return dao.getBoardMember(group_id);
 	}
 }

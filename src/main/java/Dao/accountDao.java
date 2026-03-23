@@ -340,6 +340,36 @@ public class accountDao {
 		}
 	}
 	
+	//役員名簿の取得
+	public List<accountBeans> getBoardMember(String group_id){
+		List<accountBeans> list = new ArrayList<>();
+        String sql = "SELECT id, user_name,user_email, role_type FROM account WHERE group_id = ? AND role_type != '一般'";
+		try (
+		        Connection con = DBUtil.getConnection();
+		        PreparedStatement stmt = con.prepareStatement(sql);
+		    ) {
+			
+			stmt.setString(1, group_id);
+			try (ResultSet rs = stmt.executeQuery()){
+				while (rs.next()) {
+	            	accountBeans beans = new accountBeans(
+	            			rs.getString("id"),
+	            			group_id,
+	            			rs.getString("user_name"),
+	            			rs.getString("user_email"),
+	            			rs.getString("role_type")
+	                        );
+	            	list.add(beans);  
+	            }
+			}		
+
+			return list;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	//ロールの更新
 	public boolean updateRole(String id, String role) {
 		PreparedStatement stmt = null;
@@ -376,5 +406,4 @@ public class accountDao {
 			return false;
 		}
 	}
-
 }

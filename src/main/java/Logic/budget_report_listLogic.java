@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import Beans.accountBeans;
 import Beans.budget_reportBeans;
 import Beans.categoryBeans;
 import Dao.DBUtil;
@@ -40,6 +41,26 @@ public class budget_report_listLogic {
 		LocalDateTime now = LocalDateTime.now();
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 		String created_at = now.format(dtf);
+		
+		memberLogic mem_logic = new memberLogic();
+		List<accountBeans> account = mem_logic.getMembership(group_id);
+		
+		MailUtil mail = new MailUtil();
+		
+		String subject = "【Spica】予算計画書が公開されました。";
+		
+		String text = "<html>" +
+				"<body style='font-family: Arial, sans-serif; background-color:#f5f5f5; padding:20px;'>" +
+
+				"<div style='max-width:600px; margin:0 auto; background:#ffffff; padding:24px; border-radius:8px;'>" +
+
+				"<h2 style='color:#333333;'>予算計画書が公開されました。</h2>" +
+
+				"<p style='font-size:14px; color:#555555;'>所属団体の予算計画書が公開されました。</p>" +
+
+				"</div>" +
+				"</body>" +
+				"</html>";
 		
 		budget_reportDao dao = new budget_reportDao();
 		logDao log_dao = new logDao();
@@ -75,6 +96,11 @@ public class budget_report_listLogic {
 			}
 			
 			con.commit();
+			
+			for(accountBeans to : account) {
+				mail.sendEmail(to.getEmail(),subject,text);
+			}
+			
 			return true;
 			
 		} catch (SQLException e) {
