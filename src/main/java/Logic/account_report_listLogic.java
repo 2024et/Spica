@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import Beans.accountBeans;
@@ -11,6 +12,7 @@ import Beans.account_reportBeans;
 import Dao.DBUtil;
 import Dao.account_reportDao;
 import Dao.logDao;
+import Dao.noticeDao;
 
 public class account_report_listLogic {
 	//一覧取得
@@ -21,6 +23,25 @@ public class account_report_listLogic {
 	
 	//新規登録
 	public boolean insertReportData(String group_id,String name, String start, String end, String budget_id, String log) {
+		memberLogic mem_logic = new memberLogic();
+		List<accountBeans> account = mem_logic.getMembership(group_id);
+		
+		if(account == null) {
+			System.out.println("account Null");
+			return false;
+		}
+		
+		List<String> ids = new ArrayList<>();
+		
+		signupLogic signup_logic = new signupLogic();
+		
+		for(int i = 0; i < account.size(); i++) {
+			String id = signup_logic.RandomID();
+			ids.add(id);
+		}
+		
+		String text = "会計報告書が公開されました。";
+		
 		signupLogic logic = new signupLogic();
 		String id = logic.RandomID();
 		LocalDateTime now = LocalDateTime.now();
@@ -29,15 +50,13 @@ public class account_report_listLogic {
 		
 		account_reportDao acc_dao = new account_reportDao();
 		logDao log_dao = new logDao();
-		
-		memberLogic mem_logic = new memberLogic();
-		List<accountBeans> account = mem_logic.getMembership(group_id);
+		noticeDao notice_dao = new noticeDao();
 		
 		MailUtil mail = new MailUtil();
 		
 		String subject = "【Spica】会計報告書が公開されました。";
 		
-		String text = "<html>" +
+		String html = "<html>" +
 				"<body style='font-family: Arial, sans-serif; background-color:#f5f5f5; padding:20px;'>" +
 
 				"<div style='max-width:600px; margin:0 auto; background:#ffffff; padding:24px; border-radius:8px;'>" +
@@ -71,10 +90,17 @@ public class account_report_listLogic {
 				return false;
 			}
 			
+			boolean notice_completeFlag = notice_dao.insertNotices(con, ids, account, created_at,text);
+			
+			if(!notice_completeFlag) {
+				con.rollback();
+				return false;
+			}
+			
 			con.commit();
 			
 			for(accountBeans to : account) {
-				mail.sendEmail(to.getEmail(),subject,text);
+				mail.sendEmail(to.getEmail(),subject,html);
 			}
 			
 			return true;

@@ -14,6 +14,7 @@ import Beans.categoryBeans;
 import Dao.DBUtil;
 import Dao.budget_reportDao;
 import Dao.logDao;
+import Dao.noticeDao;
 
 public class budget_report_listLogic {
 	//一覧取得
@@ -36,20 +37,36 @@ public class budget_report_listLogic {
 	}
 	//予算作成
 	public boolean insertBudgetData(String name, String group_id, String log, Map<String, Integer> list) {
+		memberLogic mem_logic = new memberLogic();
+		List<accountBeans> account = mem_logic.getMembership(group_id);
+		
+		if(account == null) {
+			System.out.println("account Null");
+			return false;
+		}
+		
+		List<String> ids = new ArrayList<>();
+		
+		signupLogic signup_logic = new signupLogic();
+		
+		for(int i = 0; i < account.size(); i++) {
+			String id = signup_logic.RandomID();
+			ids.add(id);
+		}
+		
+		String text = "予算計画書が公開されました。";
+		
 		signupLogic logic = new signupLogic();
 		String budget_id = logic.RandomID();
 		LocalDateTime now = LocalDateTime.now();
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 		String created_at = now.format(dtf);
 		
-		memberLogic mem_logic = new memberLogic();
-		List<accountBeans> account = mem_logic.getMembership(group_id);
-		
 		MailUtil mail = new MailUtil();
 		
 		String subject = "【Spica】予算計画書が公開されました。";
 		
-		String text = "<html>" +
+		String html = "<html>" +
 				"<body style='font-family: Arial, sans-serif; background-color:#f5f5f5; padding:20px;'>" +
 
 				"<div style='max-width:600px; margin:0 auto; background:#ffffff; padding:24px; border-radius:8px;'>" +
@@ -64,6 +81,7 @@ public class budget_report_listLogic {
 		
 		budget_reportDao dao = new budget_reportDao();
 		logDao log_dao = new logDao();
+		noticeDao notice_dao = new noticeDao();
 		Connection con = null;
 		
 		try {
@@ -95,10 +113,17 @@ public class budget_report_listLogic {
 				return false;
 			}
 			
+			boolean notice_completeFlag = notice_dao.insertNotices(con, ids, account, created_at,text);
+			
+			if(!notice_completeFlag) {
+				con.rollback();
+				return false;
+			}
+			
 			con.commit();
 			
 			for(accountBeans to : account) {
-				mail.sendEmail(to.getEmail(),subject,text);
+				mail.sendEmail(to.getEmail(),subject,html);
 			}
 			
 			return true;
