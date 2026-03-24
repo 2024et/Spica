@@ -15,7 +15,8 @@ public class select_groupLogic {
 		}
 		
 		accountDao act_dao = new accountDao();
-		return act_dao.joinGroup(id,code);
+		String role = "一般";
+		return act_dao.joinGroup(id,code,role);
 	}
 	
 	//入力内容の確認
@@ -47,7 +48,8 @@ public class select_groupLogic {
 		}
 		
 		accountDao act_dao = new accountDao();
-		boolean joinFlag = act_dao.joinGroup(user_id,code);
+		String role = "代表";
+		boolean joinFlag = act_dao.joinGroup(user_id,code,role);
 		
 		
 		return joinFlag;

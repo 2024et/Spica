@@ -215,15 +215,16 @@ public class accountDao {
 		}
 	}
 	//団体に参加
-	public boolean joinGroup(String id, String code) {
-        String sql = "UPDATE account SET group_id = ? WHERE id = ?";
+	public boolean joinGroup(String id, String code, String role) {
+        String sql = "UPDATE account SET group_id = ?, role_type = ? WHERE id = ?";
 		try (
 		        Connection con = DBUtil.getConnection();
 		        PreparedStatement stmt = con.prepareStatement(sql);
 		    ) {
 			
 			stmt.setString(1, code);
-			stmt.setString(2, id);
+			stmt.setString(2, role);
+			stmt.setString(3, id);
 			
 			
 			int result = stmt.executeUpdate();
