@@ -6,9 +6,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import Beans.accountBeans;
 import Beans.chatBeans;
 import Beans.purchase_requestBeans;
 import Dao.DBUtil;
+import Dao.accountDao;
 import Dao.chatDao;
 import Dao.financialDao;
 import Dao.logDao;
@@ -141,12 +143,49 @@ public class purchase_request_detailLogic {
 		}
 	}
 	//チャット送信
-	public boolean sendMessage(String user_id, String request_id, String Message) {
+	public boolean sendMessage(String user_id, String request_id, String Message, String group_id) {
 		LocalDateTime now = LocalDateTime.now();
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 		signupLogic logic = new signupLogic();
 		String id = logic.RandomID();
 		chatDao dao = new chatDao();
-		return dao.sendMessage(id,user_id, request_id,now.format(dtf), Message);
+		boolean sendFlag = dao.sendMessage(id,user_id, request_id,now.format(dtf), Message);
+		
+		if(sendFlag) {
+			purchase_requestBeans detail = getRequestData(request_id);
+			String applicant_id = detail.getUser_id();
+			accountDao acc_dao = new accountDao();
+			String applicant = acc_dao.getUserEmail(applicant_id);
+			
+			managementLogic man_logic = new managementLogic();
+			List<accountBeans> board = man_logic.getBoardMember(group_id);
+			
+			MailUtil mail = new MailUtil();
+			
+			String subject = "【Spica】メッセージ通知";
+			
+			String text = "<html>" +
+					"<body style='font-family: Arial, sans-serif; background-color:#f5f5f5; padding:20px;'>" +
+
+					"<div style='max-width:600px; margin:0 auto; background:#ffffff; padding:24px; border-radius:8px;'>" +
+
+					"<h2 style='color:#333333;'>新しいやり取りが追加されました。</h2>" +
+
+					"<p style='font-size:14px; color:#555555;'>「"+ Message +"」</p>" +
+
+					"</div>" +
+					"</body>" +
+					"</html>";
+			
+			for(accountBeans to : board) {
+				mail.sendEmail(to.getEmail(), subject, text);
+			}
+			
+			mail.sendEmail(applicant,subject,text);
+			
+			return true;
+		}else {
+			return false;
+		}
 	}
 }

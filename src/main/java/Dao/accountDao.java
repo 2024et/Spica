@@ -171,6 +171,29 @@ public class accountDao {
 			return null;
 		}
 	}
+	//Emailの取得
+	public String getUserEmail(String user_id) {
+		String sql = "SELECT user_email FROM account WHERE id = ?;";
+		try (
+		        Connection con = DBUtil.getConnection();
+		        PreparedStatement stmt = con.prepareStatement(sql);
+		    ) {
+			
+			stmt.setString(1, user_id);
+			try (ResultSet rs = stmt.executeQuery()){
+				if(rs.next()) {
+					
+					return rs.getString("user_email");
+				}else {
+					return null;
+				}
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	//パスワードの更新
 	public boolean updatePassword(String id, String password) {
         String sql = "UPDATE account SET password = ? WHERE id = ?";

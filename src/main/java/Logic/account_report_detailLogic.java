@@ -69,32 +69,32 @@ public class account_report_detailLogic {
 	}
 	
 	//支出集計
-		public List<account_report_summaryBeans> totallingExpend(Map<String,Integer> balance, List<budget_reportBeans> budget, List<categoryBeans> category){
-			List<account_report_summaryBeans> summaryData = new ArrayList<>();
-			for(categoryBeans cData : category) {
-				String targetCategory = cData.getName();
-				System.out.println("taregt"+cData.getName());
-				if(!"支出".equals(cData.getType())) {
+	public List<account_report_summaryBeans> totallingExpend(Map<String,Integer> balance, List<budget_reportBeans> budget, List<categoryBeans> category){
+		List<account_report_summaryBeans> summaryData = new ArrayList<>();
+		for(categoryBeans cData : category) {
+			String targetCategory = cData.getName();
+			System.out.println("taregt"+cData.getName());
+			if(!"支出".equals(cData.getType())) {
+				continue;
+			} 
+			int amount = balance.getOrDefault(targetCategory, 0);
+			for(budget_reportBeans bData : budget) {
+				System.out.println("bData："+bData.getCategory_name());
+				if(!targetCategory.equals(bData.getCategory_name())) {
 					continue;
-				} 
-				int amount = balance.getOrDefault(targetCategory, 0);
-				for(budget_reportBeans bData : budget) {
-					System.out.println("bData："+bData.getCategory_name());
-					if(!targetCategory.equals(bData.getCategory_name())) {
-						continue;
-					}
-					account_report_summaryBeans beans = new account_report_summaryBeans(
-						targetCategory,						
-						bData.getAmount(),
-						amount,
-						bData.getAmount() - amount
-						);
-					summaryData.add(beans);  
-					System.out.println(targetCategory+"||"+amount+"||"+bData.getAmount());
-					break;
 				}
+				account_report_summaryBeans beans = new account_report_summaryBeans(
+					targetCategory,						
+					bData.getAmount(),
+					amount,
+					bData.getAmount() - amount
+					);
+				summaryData.add(beans);  
+				System.out.println(targetCategory+"||"+amount+"||"+bData.getAmount());
+				break;
 			}
-			
-			return summaryData;
 		}
+		
+		return summaryData;
+	}
 }
