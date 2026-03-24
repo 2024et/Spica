@@ -7,7 +7,6 @@ import java.util.List;
 import Beans.accountBeans;
 import Beans.purchase_requestBeans;
 import Dao.DBUtil;
-import Dao.accountDao;
 import Dao.financialDao;
 import Dao.logDao;
 import Dao.noticeDao;
@@ -16,8 +15,6 @@ import Dao.purchase_requestDao;
 public class purchase_request_formLogic {
 	//備品購入申請
 	public boolean insertRequestData(purchase_requestBeans beans, String log) {
-		accountDao acc_dao = new accountDao();
-		String applicant = acc_dao.getUserEmail(beans.getUser_id());
 		financialDao fi_dao = new financialDao();
 		purchase_requestDao pr_dao = new purchase_requestDao();
 		logDao log_dao = new logDao();
@@ -49,7 +46,7 @@ public class purchase_request_formLogic {
 				return false;
 			}
 			
-			boolean notice_completeFlag = notice_dao.insertNotice(con, beans.getId(), applicant, beans.getCreated_at(), text);
+			boolean notice_completeFlag = notice_dao.insertNotice(con, beans.getId(), beans.getUser_id(), beans.getCreated_at(), text);
 			
 			if(!notice_completeFlag) {
 				con.rollback();

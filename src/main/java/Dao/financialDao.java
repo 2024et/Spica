@@ -236,7 +236,7 @@ public class financialDao {
 	public List<purchase_requestBeans> getRequestData(String group_id){
 		List<purchase_requestBeans> list = new ArrayList<>();
        
-		String sql = "SELECT fi.id AS id, fi.group_id AS group_id, fi.created_at AS created_at, fi.name AS name, fi.item AS item, fi.amount AS amount, pr.user_id AS user_id, ac.user_name AS user_name, pr.store_link AS store_link, pr.purpose AS purpose, pr.status AS status FROM finance_record AS fi INNER JOIN purchase_request AS pr ON fi.id = pr.id INNER JOIN account AS ac ON pr.user_id = ac.id WHERE fi.group_id = ? ORDER BY fi.created_at DESC;";
+		String sql = "SELECT fi.id AS id, fi.group_id AS group_id, fi.created_at AS created_at, fi.name AS name, fi.item AS item, fi.amount AS amount, pr.user_id AS user_id, ac.user_name AS user_name, pr.store_link AS store_link, pr.purpose AS purpose, pr.status AS status FROM finance_record AS fi INNER JOIN purchase_request AS pr ON fi.id = pr.id LEFT JOIN account AS ac ON pr.user_id = ac.id WHERE fi.group_id = ? ORDER BY fi.created_at DESC;";
 		
 		try (
 		        Connection con = DBUtil.getConnection();
@@ -305,7 +305,7 @@ public class financialDao {
 	}
 	//購入希望申請詳細取得
 	public purchase_requestBeans getRequestData_detail(String request_id){
-		String sql = "SELECT fi.id AS id, fi.group_id AS group_id, fi.created_at AS created_at, fi.name AS name, fi.item AS item, fi.amount AS amount, pr.user_id AS user_id, ac.user_name AS user_name, pr.store_link AS store_link, pr.purpose AS purpose, pr.status AS status FROM finance_record AS fi INNER JOIN purchase_request AS pr ON fi.id = pr.id INNER JOIN account AS ac ON pr.user_id = ac.id WHERE fi.id = ?;";
+		String sql = "SELECT fi.id AS id, fi.group_id AS group_id, fi.created_at AS created_at, fi.name AS name, fi.item AS item, fi.amount AS amount, pr.user_id AS user_id, ac.user_name AS user_name, pr.store_link AS store_link, pr.purpose AS purpose, pr.status AS status FROM finance_record AS fi INNER JOIN purchase_request AS pr ON fi.id = pr.id LEFT JOIN account AS ac ON pr.user_id = ac.id WHERE fi.id = ?;";
 		
 		try (
 		        Connection con = DBUtil.getConnection();

@@ -251,7 +251,7 @@
 							<td><textarea class="textbox" name="memo" maxlength="300">${c.memo}</textarea></td>
 						</tr>
 					</table>
-					<button type="submit" name="submit" class="delete-btn" onclick="confirmDelete();" value="delete">削除</button>
+					<button type="submit" name="submit" class="delete-btn" onclick="return confirmDelete();" value="delete">削除</button>
 					<button type="button" class="edit-close-btn close-btn" data-id="${c.id}">キャンセル</button>
 					<button type="submit" name="submit" class="display-btn" value="edit">保存</button>
 				</form>
@@ -307,7 +307,7 @@ console.log(
 	}
 
 	function confirmDelete(){
-	 return alert("本当に削除しますか？");
+	 return confirm("本当に削除しますか？");
 	}
 
 	function resetSearchArea(){

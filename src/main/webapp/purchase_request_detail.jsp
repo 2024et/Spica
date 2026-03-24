@@ -35,7 +35,7 @@
 		<div class="buttons-left">
 			<form action="purchase_request_detailServlet" method="post">
 				<input type="hidden" name="id" value="${request.id}">	
-				<button type="submit" name="submit" onclick="confirmDelete();" class="delete-btn" value="delete">削除</button>
+				<button type="submit" name="submit" onclick="return confirmDelete();" class="delete-btn" value="delete">削除</button>
 			</form>	
 		</div>
 		<div class="buttons-right">
@@ -193,7 +193,7 @@ document.getElementById('st-ed-wrapper')?.addEventListener('click', (e) => {
 });
 
 function confirmDelete(){
- return alert("本当に削除しますか？");
+ return confirm("本当に削除しますか？");
 }
 
 </script>
