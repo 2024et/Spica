@@ -134,7 +134,13 @@
 		<p>入出金：${c.type}</p>
 		<p>金額：${c.amount}</p>
 		<p>メモ：${c.memo}</p>
-		<button type="button" class="ad_EditBtn reset-btn" data-id="${c.id}">編集</button>
+		
+		<c:choose>
+		    <c:when test="${accountData.role != '一般'}">
+				<button type="button" class="ad_EditBtn reset-btn" data-id="${c.id}">編集</button>
+		    </c:when>
+		</c:choose>
+		
 		<button type="button" class="close-btn" onclick="closePopup('${c.id}')" >閉じる</button>
 	</div>
 </c:forEach>
