@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import Beans.accountBeans;
+import Dao.accountDao;
 import Logic.select_groupLogic;
 
 @WebServlet("/select_groupServlet")
@@ -28,6 +29,9 @@ public class select_groupServlet extends HttpServlet {
 		
 		String submit = request.getParameter("submit");
 		select_groupLogic logic = new select_groupLogic();
+		
+		accountDao dao = new accountDao();
+		
 		boolean completeFlag;
 		
 		if("join".equals(submit)) {
@@ -37,6 +41,9 @@ public class select_groupServlet extends HttpServlet {
 			completeFlag = logic.joinGroup(userId,code);
 			
 			if(completeFlag) {
+				accountBeans beans = dao.login(accountData.getEmail());
+				session.setAttribute("accountData", beans);
+				
 				request.getRequestDispatcher("/financialServlet").forward(request, response);
 				return;
 			}else {
@@ -60,6 +67,9 @@ public class select_groupServlet extends HttpServlet {
 			completeFlag = logic.makeGroup(userId,name);
 			
 			if(completeFlag) {
+				accountBeans beans = dao.login(accountData.getEmail());
+				session.setAttribute("accountData", beans);
+				
 				request.getRequestDispatcher("/financialServlet").forward(request, response);
 				return;
 			}else {
