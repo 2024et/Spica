@@ -32,12 +32,17 @@
 </section>
 <section>
 	<div class="buttons">
-		<div class="buttons-left">
-			<form action="purchase_request_detailServlet" method="post">
-				<input type="hidden" name="id" value="${request.id}">	
-				<button type="submit" name="submit" onclick="return confirmDelete();" class="delete-btn" value="delete">削除</button>
-			</form>	
-		</div>
+		<c:choose>
+		    <c:when test="${accountData.role != '一般'}">
+				<div class="buttons-left">
+					<form action="purchase_request_detailServlet" method="post">
+						<input type="hidden" name="id" value="${request.id}">	
+						<button type="submit" name="submit" onclick="return confirmDelete();" class="delete-btn" value="delete">削除</button>
+					</form>	
+				</div>
+		    </c:when>
+		</c:choose>
+		
 		<div class="buttons-right">
 			<c:choose>
 			    <c:when test="${accountData.name == request.user_name}">

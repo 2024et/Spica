@@ -181,7 +181,9 @@ public class purchase_request_detailLogic {
 				mail.sendEmail(to.getEmail(), subject, text);
 			}
 			
-			mail.sendEmail(applicant,subject,text);
+			if(applicant != null) {
+				mail.sendEmail(applicant,subject,text);
+			}			
 			
 			return true;
 		}else {
