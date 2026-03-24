@@ -108,7 +108,7 @@ public class purchase_request_detailServlet extends HttpServlet {
 			}
 		}else if("send".equals(submit)) {
 			String message = request.getParameter("message");
-			boolean sendFlag = logic.sendMessage(accountData.getGroup_id(),requestID,message,accountData.getGroup_id());
+			boolean sendFlag = logic.sendMessage(accountData.getId(),requestID,message,accountData.getGroup_id());
 			
 			if(sendFlag) {
 				response.sendRedirect(request.getContextPath() + "/purchase_request_detailServlet?requestID=" + requestID);
