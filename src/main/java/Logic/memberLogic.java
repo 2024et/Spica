@@ -26,6 +26,7 @@ public class memberLogic {
 		
 		if(account == null) {
 			System.out.println("account Null");
+			return false;
 		}
 		
 		List<String> ids = new ArrayList<>();
@@ -36,6 +37,23 @@ public class memberLogic {
 			String id = signup_logic.RandomID();
 			ids.add(id);
 		}
+		
+		MailUtil mail = new MailUtil();
+		
+		String subject = "【Spica】会費が設定されました。";
+		
+		String html = "<html>" +
+				"<body style='font-family: Arial, sans-serif; background-color:#f5f5f5; padding:20px;'>" +
+
+				"<div style='max-width:600px; margin:0 auto; background:#ffffff; padding:24px; border-radius:8px;'>" +
+
+				"<h2 style='color:#333333;'>会費が設定されました。</h2>" +
+
+				"<p style='font-size:14px; color:#555555;'>会費が設定されました。<br>金額："+fee.getFee()+"円<br>徴収開始日："+fee.getStart_date()+"<br>締切日："+fee.getEnd_date()+"</p>" +
+
+				"</div>" +
+				"</body>" +
+				"</html>";
 
 		
 		membership_feeDao fee_dao = new membership_feeDao();
@@ -68,6 +86,11 @@ public class memberLogic {
 			}
 			
 			con.commit();
+			
+			for(accountBeans to : account) {
+				mail.sendEmail(to.getEmail(),subject,html);
+			}
+			
 			return true;
 			
 		} catch (SQLException e) {
