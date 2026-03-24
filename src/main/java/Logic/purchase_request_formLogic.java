@@ -21,6 +21,10 @@ public class purchase_request_formLogic {
 		noticeDao notice_dao = new noticeDao();
 		String type = "申請";
 		String text = "備品購入希望申請が提出されました。";
+		signupLogic signup_logic = new signupLogic();
+		String notice_id = signup_logic.RandomID();
+		String notice_id_group = signup_logic.RandomID();
+		
 		try {
 			Connection con = DBUtil.getConnection();
 			con.setAutoCommit(false);
@@ -46,14 +50,14 @@ public class purchase_request_formLogic {
 				return false;
 			}
 			
-			boolean notice_completeFlag = notice_dao.insertNotice(con, beans.getId(), beans.getUser_id(), beans.getCreated_at(), text);
+			boolean notice_completeFlag = notice_dao.insertNotice(con,notice_id, beans.getUser_id(), beans.getCreated_at(), text);
 			
 			if(!notice_completeFlag) {
 				con.rollback();
 				return false;
 			}
 			
-			boolean notice_completeFlag_g = notice_dao.insertNotice(con, beans.getId(), beans.getGroup_id(), beans.getCreated_at(), text);
+			boolean notice_completeFlag_g = notice_dao.insertNotice(con, notice_id_group, beans.getGroup_id(), beans.getCreated_at(), text);
 			
 			if(!notice_completeFlag_g) {
 				con.rollback();

@@ -64,7 +64,7 @@
 		<c:forEach var="c" items="${chat}">
 		    <div class="contents">
 		        <c:choose>
-		            <c:when test="${c.user_id == accountData.id}">
+		            <c:when test="${c.user_id != accountData.id}">
 		                <div class="message left">
 		                    <div class="message_box">
 		                        <div class="message_content">
@@ -75,7 +75,7 @@
 		            </c:when>
 		
 		            <c:otherwise>
-		            
+
 		                <div class="message right">
 		                    <div class="message_box">
 		                        <div class="message_content">
