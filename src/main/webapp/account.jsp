@@ -58,7 +58,7 @@
 
 <br>
 <form action="accountServlet" method="post">
-	<button type="submit" name="submit" class="delete-btn" value="delete" onclick="confirmDelete();">アカウントを削除する</button>
+	<button type="submit" name="submit" class="delete-btn" value="delete" onclick="return confirmDelete();">アカウントを削除する</button>
 </form>
 <div id="pw-ch-wrapper">
 	<div id="pw-ch-inside">
@@ -178,7 +178,7 @@ document.getElementById('ac-ch-wrapper')?.addEventListener('click', (e) => {
 });
 
 function confirmDelete(){
- return alert("本当に削除しますか？");
+ return confirm("本当に削除しますか？");
 }
 
 </script>

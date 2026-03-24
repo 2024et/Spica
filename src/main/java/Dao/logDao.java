@@ -42,7 +42,7 @@ public class logDao {
 	//ログの取得
 	public List<logBeans> getLogData(String group_id){
 		List<logBeans> list = new ArrayList<>();
-		String sql = "SELECT * FROM log_report WHERE group_id = ? AND created_at >= DATE_SUB(NOW(), INTERVAL 3 MONTH);";
+		String sql = "SELECT * FROM log_report WHERE group_id = ? AND created_at >= DATE_SUB(NOW(), INTERVAL 3 MONTH) ORDER BY created_at DESC;";
 		try (
 		        Connection con = DBUtil.getConnection();
 		        PreparedStatement stmt = con.prepareStatement(sql);

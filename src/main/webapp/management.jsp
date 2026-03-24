@@ -296,7 +296,7 @@ function filterDocuments(selectedYear) {
 			
 				<label><input type="checkbox" name="approver_reset"/>承認状況をリセットする。</label><br>
 				
-				<button type="submit" name="submit" class="delete-btn" value="delete" onclick="confirmDelete()">削除</button>
+				<button type="submit" name="submit" class="delete-btn" value="delete" onclick="return confirmDelete()">削除</button>
 				<button type="button" class="edit-close-btn" data-id="${c.id}">キャンセル</button>
 				<button type="submit" name="submit" class="btn" value="edit">保存</button>
 			</form>
@@ -391,7 +391,7 @@ function toggleReason(radio){
   }
 }
 function confirmDelete(){
-  return alert("本当に削除しますか？");
+  return confirm("本当に削除しますか？");
 }
 </script>
 

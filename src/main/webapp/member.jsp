@@ -237,7 +237,7 @@ function filterDocuments(selectedDate) {
 					  <c:if test="${c.role == '顧問'}">checked</c:if>/> 顧問
 					</label><br><br>
 				
-					<button type="submit" name="submit" class="delete-btn" onclick="confirmDelete();" value="delete">強制退会</button>
+					<button type="submit" name="submit" class="delete-btn" onclick="return confirmDelete();" value="delete">強制退会</button>
 					<button type="button" class="member-close-btn" data-id="${c.id}">キャンセル</button>
 					<button type="submit" name="submit" class="btn" value="role">保存</button>
 				</form>
@@ -324,7 +324,7 @@ document.querySelectorAll('.member-close-btn').forEach(btn => {
     });
 });
 function confirmDelete(){
-	 return alert("本当に退会させますか？");
+	 return confirm("本当に退会させますか？");
 	}
 
 </script>

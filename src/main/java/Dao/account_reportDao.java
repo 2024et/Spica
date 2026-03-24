@@ -14,7 +14,7 @@ public class account_reportDao {
 	public List<account_reportBeans> getAccountReportData(String group_id) {
 		List<account_reportBeans> list = new ArrayList<>();
 
-        String sql = "SELECT id,name FROM account_report WHERE group_id = ?;";
+        String sql = "SELECT id,name FROM account_report WHERE group_id = ? ORDER BY created_at DESC;";
         
 		try (
 		        Connection con = DBUtil.getConnection();

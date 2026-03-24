@@ -13,7 +13,7 @@ public class budget_reportDao {
 	//レポート一覧取得
 	public List<budget_reportBeans> getBudgetReportData(String group_id){
 		List<budget_reportBeans> list = new ArrayList<>();
-		String sql = "SELECT id, name FROM budget_report WHERE group_id = ?";
+		String sql = "SELECT id, name FROM budget_report WHERE group_id = ? ORDER BY created_at DESC";
 
 		try (
 		        Connection con = DBUtil.getConnection();
