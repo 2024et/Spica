@@ -42,6 +42,7 @@ public class select_groupServlet extends HttpServlet {
 			
 			if(completeFlag) {
 				accountBeans beans = dao.login(accountData.getEmail());
+				beans.setPass(null);
 				session.setAttribute("accountData", beans);
 				
 				request.getRequestDispatcher("/financialServlet").forward(request, response);
@@ -68,6 +69,7 @@ public class select_groupServlet extends HttpServlet {
 			
 			if(completeFlag) {
 				accountBeans beans = dao.login(accountData.getEmail());
+				beans.setPass(null);
 				session.setAttribute("accountData", beans);
 				
 				request.getRequestDispatcher("/financialServlet").forward(request, response);

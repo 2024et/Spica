@@ -35,6 +35,7 @@ public class signinServlet extends HttpServlet {
 		    return;
 		}
 		accountBeans beans = logic.getBeans();
+		beans.setPass(null);
 		session.setAttribute("accountData", beans);
 		if(completeFlag == 0) {
 			response.sendRedirect(request.getContextPath() + "/financialServlet");
