@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Properties;
 
 import Beans.accountBeans;
 import Beans.approverBeans;
@@ -23,7 +24,15 @@ import Dao.proceed_documentDao;
 public class managementLogic {
 	//書類の作成
 	public boolean insertDocumentData(String name, String fileName, InputStream fileStream, String group_id) {
-		String uploadDir = "C:/SpicaUploads/"; //本番環境移行時に修正が必要!
+		Properties props = new Properties();
+	    try (InputStream is = getClass().getClassLoader()
+	                            .getResourceAsStream("file.properties")) {
+	        props.load(is);
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+
+	    String uploadDir = props.getProperty("file.url");
 	    fileName = System.currentTimeMillis() + "_" + fileName;
 	    String filePath = uploadDir + fileName;
 
@@ -138,7 +147,15 @@ public class managementLogic {
 	public boolean updateDocumentData(proceed_documentsBeans beans,String fileName, InputStream fileStream, String reset) {
 		String filePath = null;
 		if(fileStream != null) {
-			String uploadDir = "C:/SpicaUploads/"; //本番環境移行時に修正が必要!
+			Properties props = new Properties();
+		    try (InputStream is = getClass().getClassLoader()
+		                            .getResourceAsStream("file.properties")) {
+		        props.load(is);
+		    } catch (IOException e) {
+		        e.printStackTrace();
+		    }
+
+		    String uploadDir = props.getProperty("file.url");
 		    fileName = System.currentTimeMillis() + "_" + fileName;
 		    filePath = uploadDir + fileName;
 
