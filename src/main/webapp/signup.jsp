@@ -21,10 +21,16 @@
 	<input type="email" name = "mail" required maxlength="30"><br><br>
 	
 	<label for="passwprd_1">パスワード<span class="req">*</span></label><br>
-	<input type="password" name="password_1" required maxlength="30"><br><br>
+	<div class="password-wrapper">
+		<input type="password" name="password_1" id="password" required maxlength="30">
+		<span class="toggle-btn" onclick="togglePassword()">🔓</span>
+	</div><br><br>
 	
 	<label for="passwprd_2">確認用パスワード<span class="req">*</span></label><br>
-	<input type="password" name="password_2" required maxlength="30"><br><br>
+		<div class="password-wrapper">
+		<input type="password" name="password_2" id="password" required maxlength="30">
+		<span class="toggle-btn" onclick="togglePassword()">🔓</span>
+	</div><br><br>
 	
 	<% String error = (String) request.getAttribute("errorMessage"); %>
     <% if (error != null) { %>
@@ -38,7 +44,15 @@
 <div class="center-btn">
 	<a href="signinServlet" class="signin-btn">ログイン</a>
 </div>
+<script>
 
+document.querySelectorAll(".toggle-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const input = btn.previousElementSibling;
+    input.type = input.type === "password" ? "text" : "password";
+  });
+});
+</script>
 <footer>
     <p>©2026 EBATA TAKUMI</p>
 </footer>

@@ -68,15 +68,30 @@
 				<table>
 					<tr>
 						<td>現在のパスワード<span>*</span></td>
-						<td><input type="password" name="currentPassword" required maxlength="30"></td>
+						<td>
+							<div class="password-wrapper">
+								<input type="password" name="currentPassword" id="password" required maxlength="30">
+								<span class="toggle-btn" onclick="togglePassword(this)">🔓</span>
+							</div>
+						</td>
 					</tr>
 					<tr>
 						<td>新しいパスワード<span>*</span></td>
-						<td><input type="password" name="newPassword_1" required maxlength="30"></td>
+						<td>
+							<div class="password-wrapper">
+								<input type="password" name="newPassword_1" id="password" required maxlength="30">
+								<span class="toggle-btn" onclick="togglePassword(this)">🔓</span>
+							</div>
+						</td>
 					</tr>
 					<tr>
 						<td>確認用パスワード<span>*</span></td>
-						<td><input type="password" name="newPassword_2" required maxlength="30"></td>
+						<td>
+							<div class="password-wrapper">
+								<input type="password" name="newPassword_2" id="password" required maxlength="30">
+								<span class="toggle-btn" onclick="togglePassword(this)">🔓</span>
+							</div>
+						</td>
 					</tr>
 				</table>
 				<a href="requestServlet">現在のパスワードを忘れた方</a><br>
@@ -181,8 +196,13 @@ function confirmDelete(){
  return confirm("本当に削除しますか？");
 }
 
+document.querySelectorAll(".toggle-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const input = btn.previousElementSibling;
+    input.type = input.type === "password" ? "text" : "password";
+  });
+});
 </script>
-
 <footer>
     <p>©2026 EBATA TAKUMI</p>
 </footer>
