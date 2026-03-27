@@ -8,9 +8,6 @@
 <link rel="stylesheet" href="css/change_password.css">
 </head>
 <body>
-<%
-String id = (String)request.getAttribute("id");
-%>
 <h1>Spica</h1>
 <h3>学生団体向け会計管理Webアプリ</h3>
 
@@ -30,7 +27,7 @@ String id = (String)request.getAttribute("id");
 		<span class="toggle-btn" onclick="togglePassword()">🔓</span>
 	</div><br><br>
 	
-	<input type="hidden" name="id" value="<%= id %>">
+	<input type="hidden" name="id" value="${id}">
 	
 	
 	<% String error = (String) request.getAttribute("errorMessage"); %>

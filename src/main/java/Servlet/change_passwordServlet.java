@@ -28,6 +28,7 @@ public class change_passwordServlet extends HttpServlet {
 		//パスワードが2つとも正しいか確認
 		if(!password_1.equals(password_2)) {
 			request.setAttribute("errorMessage", "パスワードが一致しませんでした。再度やり直してください。");
+			request.setAttribute("id", id);
 		    request.getRequestDispatcher("/change_password.jsp").forward(request, response);
 		    return;
 		}
@@ -42,6 +43,7 @@ public class change_passwordServlet extends HttpServlet {
 		    return;
 		}else {
 			request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
+			request.setAttribute("id", id);
 		    request.getRequestDispatcher("/change_password.jsp").forward(request, response);
 		    return;
 		}
