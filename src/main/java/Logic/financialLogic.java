@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -371,6 +372,9 @@ public class financialLogic {
 	
 	//検索結果収入グラフ整形
 	public Map<Integer,Integer> searchBalanceDataFormatIncome(List<balanceBeans> beans){
+		if (beans == null || beans.isEmpty()) {
+	        return new HashMap<>();
+	    }
 		Map<Integer, Integer> searchBalanceDataIncome = new LinkedHashMap<>();
 		String latestDate = beans.get(0).getCreated_at();
 		String oldestDate = beans.get(beans.size()-1).getCreated_at();
@@ -394,6 +398,9 @@ public class financialLogic {
 	}
 	//検索結果支出グラフ整形
 	public Map<Integer,Integer> searchBalanceDataFormatExpend(List<balanceBeans> beans){
+		if (beans == null || beans.isEmpty()) {
+	        return new HashMap<>();
+	    }
 		Map<Integer, Integer> searchBalanceDataExpend = new LinkedHashMap<>();
 		String latestDate = beans.get(0).getCreated_at();
 		String oldestDate = beans.get(beans.size()-1).getCreated_at();

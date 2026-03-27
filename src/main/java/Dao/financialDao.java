@@ -144,13 +144,13 @@ public class financialDao {
 		}
 		
 		if(name != null && !name.isEmpty()) {
-			columns.add("fi.name = ?");
-			prams.add(name);
+			columns.add("fi.name LIKE ?");
+			prams.add("%" + name + "%");
 		}
 		
 		if(item != null && !item.isEmpty()) {
-			columns.add("fi.item = ?");
-			prams.add(item);
+			columns.add("fi.item LIKE ?");
+			prams.add("%" + item + "%");
 		}
 		
 		if(type != null && !type.isEmpty()) {
