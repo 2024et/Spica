@@ -74,11 +74,11 @@
 				<input type="text" name="name" required maxlength="30"><br><br>
 				
 				<label>
-				  <input type="radio" name="type" value="収入"> 収入
+				  <input type="radio" name="type" value="収入" required> 収入
 				</label>
 				
 				<label>
-				  <input type="radio" name="type" value="支出"> 支出
+				  <input type="radio" name="type" value="支出" required> 支出
 				</label><br><br>
 			
 				<button type="button" class="insert-close-btn">キャンセル</button>
