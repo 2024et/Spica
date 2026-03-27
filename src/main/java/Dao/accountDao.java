@@ -418,7 +418,7 @@ public class accountDao {
 		PreparedStatement stmt = null;
 		try {
 			Connection con = DBUtil.getConnection();
-			String sql = "UPDATE account SET group_id = null WHERE id = ?";
+			String sql = "UPDATE account SET group_id = '' WHERE id = ?";
 			
 			stmt = con.prepareStatement(sql);
 			stmt.setString(1, id);			
