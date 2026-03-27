@@ -1,6 +1,8 @@
 package Servlet;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +25,15 @@ import Logic.signupLogic;
 public class financialServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
+	//編集年度の確認
+	private void checkEditable(List<balanceBeans> list) {
+	    LocalDate limit = LocalDate.now().minusYears(2);
+	    for (balanceBeans c : list) {
+	        LocalDate createdAt = LocalDate.parse(c.getCreated_at(),
+	                              DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+	        c.setEditable(createdAt.isAfter(limit));
+	    }
+	}
 ;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -45,7 +56,9 @@ public class financialServlet extends HttpServlet {
 		int thisYearNetBalance = logic.balance(thisYearIncome, thisYearExpend);
 		
 		Map<String,Integer> thisYearBalanceGraph = logic.thisYearBalanceDataFormat(thisYearBalanceList);
-				
+		
+		checkEditable(thisYearBalanceList);
+		
 		request.setAttribute("category", category);
 		request.setAttribute("project", project);
 		request.setAttribute("thisYearBalanceGraph", thisYearBalanceGraph);
@@ -70,7 +83,7 @@ public class financialServlet extends HttpServlet {
 		int thisYearExpend = logic.expendSum(thisYearBalanceList);
 		int thisYearNetBalance = logic.balance(thisYearIncome, thisYearExpend);
 		Map<String,Integer> thisYearBalanceGraph = logic.thisYearBalanceDataFormat(thisYearBalanceList);
-		
+		checkEditable(thisYearBalanceList);
 		
 		List<categoryBeans> data_category = logic.getCategoryData(accountData.getGroup_id());
 		List<projectBeans> data_project = logic.getProjectData(accountData.getGroup_id());
@@ -157,6 +170,7 @@ public class financialServlet extends HttpServlet {
 			String keyword = request.getParameter("keyword");
 			
 			List<balanceBeans> searchData = logic.searchBalanceData(group_id,startDate,endDate,category,project,store,item,type,keyword);
+			checkEditable(searchData);
 			
 			Map<String, Object> archive = new HashMap<>();
 			archive.put("startDate", startDate);

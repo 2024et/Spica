@@ -13,6 +13,7 @@ public class balanceBeans implements Serializable  {
 	private String category;	
 	private String memo;	
 	private String type;	//このカラムは収入/支出であって、購入申請/収支の話ではない。
+	private boolean editable;
 	
 	public balanceBeans() {
 		
@@ -99,6 +100,13 @@ public class balanceBeans implements Serializable  {
 	}
 	public void setType(String type) {
 		this.type = type;
+	}
+	
+	public Boolean getEditable() {
+		return editable;
+	}
+	public void setEditable(Boolean editable) {
+		this.editable = editable;
 	}
 
 }

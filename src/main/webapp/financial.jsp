@@ -136,7 +136,7 @@
 		<p>メモ：${c.memo}</p>
 		
 		<c:choose>
-		    <c:when test="${accountData.role != '一般'}">
+		    <c:when test="${accountData.role != '一般' && c.editable}">
 				<button type="button" class="ad_EditBtn reset-btn" data-id="${c.id}">編集</button>
 		    </c:when>
 		</c:choose>
