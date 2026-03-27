@@ -90,7 +90,7 @@
 		</c:forEach>	
 		<form action="purchase_request_detailServlet" method="post" class="send">
 			<input type="hidden" name="id" value="${request.id}">
-			<input type="text" name="message" class="send-message">
+			<input type="text" name="message" class="send-message" maxlength="150" required>
 			<button type="submit" name="submit" class="send-btn" value="send">送信</button>
 		</form>
 	</div>

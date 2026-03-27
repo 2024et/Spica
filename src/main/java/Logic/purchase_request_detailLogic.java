@@ -109,6 +109,9 @@ public class purchase_request_detailLogic {
 	
 	//ステータスの変更
 	public boolean updateStatus(String id,String status,String group_id, String log) {
+		purchase_requestBeans detail = getRequestData(id);
+		accountDao acc_dao = new accountDao();
+		String appicant = acc_dao.getUserEmail(detail.getUser_id());
 		purchase_requestDao pr_dao = new purchase_requestDao();
 		logDao log_dao = new logDao();
 		try {
@@ -134,6 +137,27 @@ public class purchase_request_detailLogic {
 			}
 			
 			con.commit();
+			
+			MailUtil mail = new MailUtil();
+			
+			String subject = "【Spica】申請中の購入希望について";
+			
+			String text = "<html>" +
+					"<body style='font-family: Arial, sans-serif; background-color:#f5f5f5; padding:20px;'>" +
+
+					"<div style='max-width:600px; margin:0 auto; background:#ffffff; padding:24px; border-radius:8px;'>" +
+
+					"<h2 style='color:#333333;'>申請中の購入希望備品についてステータスの変更がありました。</h2>" +
+
+					"<p style='font-size:14px; color:#555555;'>変更されたステータス：「"+ status +"」</p>" +
+
+					"</div>" +
+					"</body>" +
+					"</html>";
+			
+			mail.sendEmail(appicant, subject, text);
+			
+			
 			return true;
 			
 		} catch (SQLException e) {
