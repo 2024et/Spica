@@ -2,8 +2,10 @@ package Logic;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 import Beans.accountBeans;
@@ -14,6 +16,7 @@ import Dao.accountDao;
 import Dao.chatDao;
 import Dao.financialDao;
 import Dao.logDao;
+import Dao.noticeDao;
 import Dao.purchase_requestDao;
 
 public class purchase_request_detailLogic {
@@ -112,8 +115,14 @@ public class purchase_request_detailLogic {
 		purchase_requestBeans detail = getRequestData(id);
 		accountDao acc_dao = new accountDao();
 		String appicant = acc_dao.getUserEmail(detail.getUser_id());
+		Date now = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        String created_at = format.format(now);  
+        signupLogic signup_logic = new signupLogic();
+        String notice_id = signup_logic.RandomID();
 		purchase_requestDao pr_dao = new purchase_requestDao();
 		logDao log_dao = new logDao();
+		noticeDao notice_dao = new noticeDao();
 		try {
 			Connection con = DBUtil.getConnection();
 			con.setAutoCommit(false);
@@ -128,10 +137,18 @@ public class purchase_request_detailLogic {
 			}
 			
 			boolean log_completeFlag = log_dao.insertLog(con,group_id,log);
-			System.out.println(log_completeFlag);
 			
 			if(!log_completeFlag) {
 				System.out.println("Log失敗");
+				con.rollback();				
+				return false;
+			}
+			
+			String message = "申請中の購入希望備品についてステータスの変更がありました。";
+			boolean notice_completeFlag = notice_dao.insertNotice(con,notice_id, detail.getUser_id(), created_at,message);
+			
+			if(!notice_completeFlag) {
+				System.out.println("notice失敗");
 				con.rollback();				
 				return false;
 			}
