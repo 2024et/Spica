@@ -2,7 +2,9 @@ package Logic;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import Beans.accountBeans;
@@ -12,6 +14,7 @@ import Dao.DBUtil;
 import Dao.accountDao;
 import Dao.logDao;
 import Dao.membership_feeDao;
+import Dao.noticeDao;
 import Dao.paymentDao;
 
 public class memberLogic {
@@ -55,10 +58,16 @@ public class memberLogic {
 				"</body>" +
 				"</html>";
 
+		String text = "新しい会費（"+fee.getFee()+"）が設定されました。期間："+fee.getStart_date()+"から"+fee.getEnd_date()+"まで。";
 		
+		Date now = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+        String created_at = format.format(now);  
+        
 		membership_feeDao fee_dao = new membership_feeDao();
 		paymentDao pay_dao = new paymentDao();
 		logDao log_dao = new logDao();
+		noticeDao notice_dao = new noticeDao();
 		Connection con = null;
 		try {
 			con = DBUtil.getConnection();
@@ -81,6 +90,13 @@ public class memberLogic {
 			boolean log_completeFlag = log_dao.insertLog(con,fee.getGroup_id(),log);
 			
 			if(!log_completeFlag) {
+				con.rollback();
+				return false;
+			}
+			
+			boolean notice_completeFlag = notice_dao.insertNotices(con, ids, account, created_at,text);
+			
+			if(!notice_completeFlag) {
 				con.rollback();
 				return false;
 			}

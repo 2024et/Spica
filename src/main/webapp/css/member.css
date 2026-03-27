@@ -1,4 +1,8 @@
 @charset "UTF-8";
+
+.req,.error-message{
+	color:red;
+}
 /*画面*/
 section {
   display: flex;
