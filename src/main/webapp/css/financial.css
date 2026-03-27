@@ -163,6 +163,7 @@ h3{
 	border-radius: 50%;
 	align-items: center;
 	justify-content: center;
+	z-index:2000;
 }
 
 #ad_InsertBtn p{

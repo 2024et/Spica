@@ -100,7 +100,7 @@
 <div id="fo-ed-wrapper">
 	<div id="fo-ed-inside">
 		<div id="message">
-		
+		<h1>申請内容の編集</h1>
 		<form action="purchase_request_detailServlet" method="post">
 		<input type="hidden" name="id" value="${request.id}">
 		
@@ -123,6 +123,7 @@
 <div id="st-ed-wrapper">
 	<div id="st-ed-inside">
 		<div id="message">
+		<h1>申請のステータス変更</h1>
 		<form action="purchase_request_detailServlet" method="post">
 			<input type="hidden" name="id" value="${request.id}">
 		
