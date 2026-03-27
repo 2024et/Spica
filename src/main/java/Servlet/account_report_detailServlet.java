@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import Beans.accountBeans;
+import Beans.account_reportBeans;
 import Beans.account_report_summaryBeans;
 import Beans.balanceBeans;
 import Beans.budget_reportBeans;
@@ -36,6 +37,8 @@ public class account_report_detailServlet extends HttpServlet {
 		account_report_detailLogic acr_logic = new account_report_detailLogic();
 		budget_report_detailLogic bud_logic = new budget_report_detailLogic();
 		financialLogic fi_logic = new financialLogic();
+		
+		account_reportBeans reports = acr_logic.getAccountDetail(reportID);
 
 		String budget_id = bud_logic.getBudgetID(reportID);
 		//実際の収支データ取得
@@ -49,7 +52,7 @@ public class account_report_detailServlet extends HttpServlet {
 		List<account_report_summaryBeans> report_income = acr_logic.totallingIncome(totallingBalanceData, budgetData, categoryData);
 		List<account_report_summaryBeans> report_expend = acr_logic.totallingExpend(totallingBalanceData, budgetData, categoryData);
 		
-		
+		request.setAttribute("reports", reports);
 		request.setAttribute("report_income", report_income);
 		request.setAttribute("report_expend", report_expend);
 		request.getRequestDispatcher("/account_report_detail.jsp").forward(request, response);

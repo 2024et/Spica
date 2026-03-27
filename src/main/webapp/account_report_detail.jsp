@@ -13,8 +13,8 @@
 <jsp:include page="header.jsp" />
 
 <section>
-	<h1>${title}</h1>
-	<p>${title}～${title}</p>
+	<h1>${reports.name}</h1>
+	<p>${reports.start_period}～${reports.end_period}</p>
 	<h3>(収入の部)</h3>
 	<table>
 		<thead><tr><th>項目</th><th>予算額</th><th>決算額</th><th>比較増減</th></tr></thead>

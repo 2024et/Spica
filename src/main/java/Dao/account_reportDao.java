@@ -66,7 +66,7 @@ public class account_reportDao {
 	
 	//会計報告の詳細情報取得
 	public account_reportBeans getRange(String id) {
-        String sql = "SELECT id,group_id,start_period,end_period FROM account_report WHERE id = ?;";
+        String sql = "SELECT id,group_id,name,start_period,end_period FROM account_report WHERE id = ?;";
         
 		try (
 		        Connection con = DBUtil.getConnection();
@@ -76,9 +76,10 @@ public class account_reportDao {
 			try (ResultSet rs = stmt.executeQuery()) {
 				if (rs.next()) {
 					String group_id = rs.getString("group_id");
+					String name = rs.getString("name");
 	            	String start = rs.getString("start_period");
 	            	String end = rs.getString("end_period");
-	            	return new account_reportBeans(id,group_id,start,end);
+	            	return new account_reportBeans(id,group_id,name,start,end);
 	            }else {
 	            	return null;
 	            }

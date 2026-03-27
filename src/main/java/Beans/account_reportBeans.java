@@ -18,9 +18,10 @@ public class account_reportBeans implements Serializable {
 		this.id = id;
 		this.name = name;
 	}
-	public account_reportBeans(String id,String group_id,String start_period, String end_period) {
+	public account_reportBeans(String id,String group_id,String name,String start_period, String end_period) {
 		this.id = id;
 		this.group_id = group_id;
+		this.name = name;
 		this.start_period = start_period;
 		this.end_period = end_period;
 	}

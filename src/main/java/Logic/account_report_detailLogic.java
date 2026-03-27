@@ -15,6 +15,12 @@ import Dao.financialDao;
 
 public class account_report_detailLogic {
 	
+	//会計報告詳細データの取得
+	public account_reportBeans getAccountDetail(String id) {
+		account_reportDao dao = new account_reportDao();
+		return dao.getRange(id);
+	}
+	
 	//会計報告収支データの取得
 	public List<balanceBeans> getAccountReportData(String id) {
 		financialDao fi_dao = new financialDao();
