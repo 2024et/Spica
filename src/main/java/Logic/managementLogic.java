@@ -30,6 +30,7 @@ public class managementLogic {
 	        props.load(is);
 	    } catch (IOException e) {
 	        e.printStackTrace();
+	        return false;
 	    }
 
 	    String uploadDir = props.getProperty("file.url");

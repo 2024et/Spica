@@ -57,7 +57,7 @@
 	<div class="process">
 	<c:forEach var="d" items="${process_documents}">
 		<div class="item">
-			<a href="${d.path}">${d.name}</a>
+			<a href="${pageContext.request.contextPath}/fileServlet?path=${d.path}" target="_blank" rel="noopener noreferrer">${d.name}</a>
 			<div class="info">
 				<div class="left">
 					<div class="item-btn">
