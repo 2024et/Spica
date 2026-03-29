@@ -14,7 +14,7 @@
 <section>
 	<h1>会計報告書</h1>
 	<c:choose>
-	    <c:when test="${accountData.role != '一般'}">
+	    <c:when test="${accountData.role == '会計' || accountData.role == '顧問'}">
 			<button class="new-account-btn">会計報告書の作成</button>
 	    </c:when>
 	</c:choose>

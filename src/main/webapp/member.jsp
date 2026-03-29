@@ -43,7 +43,12 @@
 <section>
 	<div class="menu_subtitle">
 		<h3>会費管理</h3>
-		<button type="button" class="insert-btn">会費設定</button>
+		<c:choose>
+		    <c:when test="${accountData.role == '会計' || accountData.role == '代表' || accountData.role == '顧問'}">
+				<button type="button" class="insert-btn">会費設定</button>
+		    </c:when>
+		</c:choose>
+		
 	</div>
 	<div class="fee_management">
 		<h4>現在設定中の会費</h4>
@@ -236,8 +241,14 @@ function filterDocuments(selectedDate) {
 					  <input type="radio" name="role" value="顧問" 
 					  <c:if test="${c.role == '顧問'}">checked</c:if>/> 顧問
 					</label><br><br>
+					
+					<c:choose>
+					    <c:when test="${accountData.role == '代表' || accountData.role == '顧問'}">
+							<button type="submit" name="submit" class="delete-btn" onclick="return confirmDelete();" value="delete">強制退会</button>
+					    </c:when>
+					</c:choose>
 				
-					<button type="submit" name="submit" class="delete-btn" onclick="return confirmDelete();" value="delete">強制退会</button>
+					
 					<button type="button" class="member-close-btn" data-id="${c.id}">キャンセル</button>
 					<button type="submit" name="submit" class="btn" value="role">保存</button>
 				</form>

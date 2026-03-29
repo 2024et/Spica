@@ -267,7 +267,7 @@
 </c:forEach>
 
 <c:choose>
-    <c:when test="${accountData.role != '一般'}">
+    <c:when test="${accountData.role == '会計' || accountData.role == '顧問'}">
 		<div id="ad_InsertBtn"><p>収支新規登録</p></div>
     </c:when>
 </c:choose>
