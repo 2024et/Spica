@@ -153,9 +153,9 @@
 			<form action="financialServlet" method="post">
 				<table class="searchTable">
 					<tr>
-						<td>日付</td>
+						<td>日付<span class="req">*</span></td>
 						<td><input type="date" name="date" required></td>
-						<td>カテゴリ</td>
+						<td>カテゴリ<span class="req">*</span></td>
 						<td>
 							<select  class="textbox" name="category" required>
 								<option value="">==未選択==</option>	
@@ -175,13 +175,13 @@
 								</c:forEach>
 							</select>
 						</td>
-						<td>店名</td>
-						<td><input type="text" name="store" class="textbox" maxlength="30"></td>
+						<td>店名<span class="req">*</span></td>
+						<td><input type="text" name="store" class="textbox" maxlength="30" required></td>
 					</tr>
 					<tr>
-						<td>品目</td>
-						<td><input type="text" name="item" class="textbox" maxlength="300" ></td>
-						<td>入出金</td>
+						<td>品目<span class="req">*</span></td>
+						<td><input type="text" name="item" class="textbox" maxlength="300" required></td>
+						<td>入出金<span class="req">*</span></td>
 						<td>
 							<select  class="textbox" name="type" required>
 								<option value="">==未選択==</option>
@@ -191,7 +191,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td>金額</td>
+						<td>金額<span class="req">*</span></td>
 						<td><input type="number" name="number" class="textbox" required min="0" max="9999999"></td>
 						<td>メモ</td>
 						<td><textarea class="textbox" name="memo" maxlength="300"></textarea></td>

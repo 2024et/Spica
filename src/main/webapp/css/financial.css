@@ -1,6 +1,9 @@
 @charset "UTF-8";
 
 /*見出し*/
+.req,.error-message{
+	color:red;
+}
 h2{
 	display:inline-block;
 	width:270px;
