@@ -2,6 +2,8 @@ package Logic;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import Beans.accountBeans;
@@ -25,11 +27,15 @@ public class purchase_request_formLogic {
 		String notice_id = signup_logic.RandomID();
 		String notice_id_group = signup_logic.RandomID();
 		
+		Date now = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        String created_at = format.format(now);        
+		
 		try {
 			Connection con = DBUtil.getConnection();
 			con.setAutoCommit(false);
 			
-			boolean fi_completeFlag = fi_dao.insertRewuestData_financial(con,beans,type);
+			boolean fi_completeFlag = fi_dao.insertRequestData_financial(con,beans,type);
 			
 			if(!fi_completeFlag) {
 				con.rollback();
@@ -50,14 +56,14 @@ public class purchase_request_formLogic {
 				return false;
 			}
 			
-			boolean notice_completeFlag = notice_dao.insertNotice(con,notice_id, beans.getUser_id(), beans.getCreated_at(), text);
+			boolean notice_completeFlag = notice_dao.insertNotice(con,notice_id, beans.getUser_id(), created_at, text);
 			
 			if(!notice_completeFlag) {
 				con.rollback();
 				return false;
 			}
 			
-			boolean notice_completeFlag_g = notice_dao.insertNotice(con, notice_id_group, beans.getGroup_id(), beans.getCreated_at(), text);
+			boolean notice_completeFlag_g = notice_dao.insertNotice(con, notice_id_group, beans.getGroup_id(), created_at, text);
 			
 			if(!notice_completeFlag_g) {
 				con.rollback();

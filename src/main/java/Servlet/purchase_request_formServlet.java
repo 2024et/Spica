@@ -35,7 +35,7 @@ public class purchase_request_formServlet extends HttpServlet {
 		accountBeans accountData = (accountBeans) session.getAttribute("accountData");
 		
 		String option = request.getParameter("option");
-		String selected_date = null;
+		String selected_date = "";
 		if("あり".equals(option)) {
 			selected_date = request.getParameter("selected_date");
 		}

@@ -282,13 +282,17 @@ public class financialDao {
 		}
 	}
 	//備品購入希望申請
-	public boolean insertRewuestData_financial(Connection con,purchase_requestBeans beans, String type) {
+	public boolean insertRequestData_financial(Connection con,purchase_requestBeans beans, String type) {
 		String sql = "INSERT INTO finance_record (id,group_id,created_at,name,item,amount,type) VALUES (?,?,?,?,?,?,?);";
 		try(PreparedStatement stmt = con.prepareStatement(sql)) {
 			
 			stmt.setString(1, beans.getId());
 			stmt.setString(2, beans.getGroup_id());
-			stmt.setString(3, beans.getCreated_at());
+			if (beans.getCreated_at() != null && !beans.getCreated_at().isEmpty()) {
+			    stmt.setString(3, beans.getCreated_at());
+			} else {
+			    stmt.setNull(3, java.sql.Types.DATE);
+			}
 			stmt.setString(4, beans.getName());
 			stmt.setString(5, beans.getItem());
 			stmt.setInt(6, beans.getAmount());
