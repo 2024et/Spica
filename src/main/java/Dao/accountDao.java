@@ -269,7 +269,7 @@ public class accountDao {
 	}
 	
 	//アカウント情報の変更
-	public boolean updateInformation(String id, String name, String email, String code) {
+	public boolean updateInformation(String id, String name, String email) {
         PreparedStatement stmt = null;
         
 		List<String> columns = new ArrayList<>();
@@ -282,10 +282,6 @@ public class accountDao {
 		if(email != null && !email.isEmpty()) {
 			columns.add("user_email = ?");
 			prams.add(email);
-		}
-		if(code != null && !code.isEmpty()) {
-			columns.add("group_id = ?");
-			prams.add(code);
 		}
 		
 		sql += String.join(" , ", columns);
@@ -312,6 +308,50 @@ public class accountDao {
 			return false;
 		}
 		
+	}
+	
+	//所属変更
+	public boolean changeOrganizations(String id,String new_id,String name, String email,String role, String code) {
+		PreparedStatement stmt = null;
+        
+		List<String> columns = new ArrayList<>();
+		List<Object> prams = new ArrayList<>();
+		String sql = "UPDATE account SET id = ?, group_id = ?, role_type = ?";
+		
+		prams.add(new_id);
+		prams.add(code);
+		prams.add(role);
+		
+		if(name != null && !name.isEmpty()) {
+			columns.add(", user_name = ?");
+			prams.add(name);
+		}
+		if(email != null && !email.isEmpty()) {
+			columns.add(", user_email = ?");
+			prams.add(email);
+		}
+		
+		sql += String.join(" , ", columns);
+		
+		sql += (" WHERE id = ?");
+		prams.add(id);
+				
+		try {
+			Connection con = DBUtil.getConnection();
+			
+			stmt = con.prepareStatement(sql);
+			
+			for(int i = 0; i < prams.size(); i++) {
+				stmt.setObject(i+1, prams.get(i));
+			}
+			
+			int result = stmt.executeUpdate();
+			if(result > 0) {return true;}
+			else {return false;}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 	
 	//アカウント削除
