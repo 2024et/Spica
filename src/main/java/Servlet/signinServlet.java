@@ -38,10 +38,10 @@ public class signinServlet extends HttpServlet {
 		beans.setPass(null);
 		session.setAttribute("accountData", beans);
 		if(completeFlag == 0) {
-			response.sendRedirect(request.getContextPath() + "/financialServlet");
+			response.sendRedirect("/financialServlet");
 			return;
 		}else {
-			response.sendRedirect(request.getContextPath() + "/select_groupServlet");
+			response.sendRedirect("/select_groupServlet");
 			return;
 
 		}

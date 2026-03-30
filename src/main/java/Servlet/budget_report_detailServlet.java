@@ -23,7 +23,7 @@ public class budget_report_detailServlet extends HttpServlet {
 		accountBeans accountData = (accountBeans) session.getAttribute("accountData");
 		
 		if(accountData == null) {
-			response.sendRedirect(request.getContextPath() + "/signinServlet");
+			response.sendRedirect("/signinServlet");
 			return;
 		}
 		

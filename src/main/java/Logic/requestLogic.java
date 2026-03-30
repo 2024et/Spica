@@ -37,7 +37,7 @@ public class requestLogic {
 				+ "このリクエストメールにてお心当たりがない場合は、無視してください。<br><br>"
 				+ "以下のリンクをタップしてパスワードの再設定を行ってください。</p>" +
 
-				"<a href='http://takumi-e.com:8080/Spica/change_passwordServlet?id=" + id +
+				"<a href='https://Spica.takumi-e.com/change_passwordServlet?id=" + id +
 				"'>http://takumi-e.com:8080/Spica/change_passwordServlet?id=" + id + "</a>"+
 
 				"</div>" +

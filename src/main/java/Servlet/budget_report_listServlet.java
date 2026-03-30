@@ -26,7 +26,7 @@ public class budget_report_listServlet extends HttpServlet {
 		accountBeans accountData = (accountBeans) session.getAttribute("accountData");
 		
 		if(accountData == null) {
-			response.sendRedirect(request.getContextPath() + "/signinServlet");
+			response.sendRedirect("/signinServlet");
 			return;
 		}
 		
@@ -58,7 +58,7 @@ public class budget_report_listServlet extends HttpServlet {
 		boolean insertFlag = logic.insertBudgetData(name,accountData.getGroup_id(),log, inputValues);
 		
 		if(insertFlag) {
-			response.sendRedirect(request.getContextPath() + "/budget_report_listServlet");
+			response.sendRedirect("/budget_report_listServlet");
 			return;
 		}else {
 			request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：AC-cp1000");

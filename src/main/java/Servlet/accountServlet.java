@@ -26,7 +26,7 @@ public class accountServlet extends HttpServlet {
 		accountBeans accountData = (accountBeans) session.getAttribute("accountData");
 		
 		if(accountData == null) {
-			response.sendRedirect(request.getContextPath() + "/signinServlet");
+			response.sendRedirect("/signinServlet");
 			return;
 		}
 		
@@ -98,7 +98,7 @@ public class accountServlet extends HttpServlet {
 			
 			
 			
-			response.sendRedirect(request.getContextPath() + "/accountServlet");
+			response.sendRedirect("/accountServlet");
 			
 		}else if("acc".equals(submit)) {
 			//アカウント情報の変更
@@ -145,13 +145,13 @@ public class accountServlet extends HttpServlet {
 			session.setAttribute("accountData", new_accountData);
 			
 			
-			response.sendRedirect(request.getContextPath() + "/accountServlet");
+			response.sendRedirect("/accountServlet");
 			
 		}else if("delete".equals(submit)) {
 			boolean deleteFlag = acc_logic.deleteAccount(accountData.getId());
 			
 			if(deleteFlag) {
-				response.sendRedirect(request.getContextPath() + "/logoutServlet");
+				response.sendRedirect("/logoutServlet");
 				return;
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：AC-da1000");

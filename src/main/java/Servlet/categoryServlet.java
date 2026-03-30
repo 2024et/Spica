@@ -25,12 +25,12 @@ public class categoryServlet extends HttpServlet {
 		accountBeans accountData = (accountBeans) session.getAttribute("accountData");
 		
 		if(accountData == null) {
-			response.sendRedirect(request.getContextPath() + "/signinServlet");
+			response.sendRedirect("/signinServlet");
 			return;
 		}
 		
 		if("一般".equals(accountData.getRole())) {
-			response.sendRedirect(request.getContextPath() + "/financialServlet");
+			response.sendRedirect("/financialServlet");
 			return;
 		}
 		
@@ -61,11 +61,11 @@ public class categoryServlet extends HttpServlet {
 			boolean insertFlag = cat_logic.insertCategoryData(name,type,accountData.getGroup_id());
 			
 			if(insertFlag) {
-				response.sendRedirect(request.getContextPath() + "/categoryServlet");
+				response.sendRedirect("/categoryServlet");
 				return;
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
-				response.sendRedirect(request.getContextPath() + "/categoryServlet");
+				response.sendRedirect("/categoryServlet");
 				return;
 			}
 		}else if("edit".equals(submit)) {
@@ -85,11 +85,11 @@ public class categoryServlet extends HttpServlet {
 			boolean updateFlag = cat_logic.updateCategoryData(beans);
 			
 			if(updateFlag) {
-				response.sendRedirect(request.getContextPath() + "/categoryServlet");
+				response.sendRedirect("/categoryServlet");
 				return;
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
-				response.sendRedirect(request.getContextPath() + "/categoryServlet");
+				response.sendRedirect("/categoryServlet");
 				return;
 			}
 		}

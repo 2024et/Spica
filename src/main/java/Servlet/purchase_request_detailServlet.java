@@ -25,7 +25,7 @@ public class purchase_request_detailServlet extends HttpServlet {
 		accountBeans accountData = (accountBeans) session.getAttribute("accountData");
 		
 		if(accountData == null) {
-			response.sendRedirect(request.getContextPath() + "/signinServlet");
+			response.sendRedirect("/signinServlet");
 			return;
 		}
 		
@@ -61,7 +61,7 @@ public class purchase_request_detailServlet extends HttpServlet {
 			boolean deleteFlag = logic.deleteRequestData(requestID,accountData.getGroup_id(),log);
 			
 			if(deleteFlag) {
-				response.sendRedirect(request.getContextPath() + "/purchase_request_listServlet");
+				response.sendRedirect("/purchase_request_listServlet");
 				return;
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：PRD-deleteFlag");
@@ -84,7 +84,7 @@ public class purchase_request_detailServlet extends HttpServlet {
 			boolean updateFlag = logic.updateRequestData(updateBeans,log);
 			
 			if(updateFlag) {
-				response.sendRedirect(request.getContextPath() + "/purchase_request_detailServlet?requestID=" + requestID);
+				response.sendRedirect("/purchase_request_detailServlet?requestID=" + requestID);
 				return;
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：PRD-updateFlag");
@@ -99,7 +99,7 @@ public class purchase_request_detailServlet extends HttpServlet {
 			boolean statusFlag = logic.updateStatus(requestID,status,accountData.getGroup_id(),log);
 			
 			if(statusFlag) {
-				response.sendRedirect(request.getContextPath() + "/purchase_request_detailServlet?requestID=" + requestID);
+				response.sendRedirect("/purchase_request_detailServlet?requestID=" + requestID);
 				return;
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：PRD-statusFlag");
@@ -111,7 +111,7 @@ public class purchase_request_detailServlet extends HttpServlet {
 			boolean sendFlag = logic.sendMessage(accountData.getId(),requestID,message,accountData.getGroup_id());
 			
 			if(sendFlag) {
-				response.sendRedirect(request.getContextPath() + "/purchase_request_detailServlet?requestID=" + requestID);
+				response.sendRedirect("/purchase_request_detailServlet?requestID=" + requestID);
 				return;
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：PRD-sendFlag");

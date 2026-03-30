@@ -41,7 +41,7 @@ public class financialServlet extends HttpServlet {
 		accountBeans accountData = (accountBeans) session.getAttribute("accountData");
 		
 		if(accountData == null) {
-			response.sendRedirect(request.getContextPath() + "/signinServlet");
+			response.sendRedirect("/signinServlet");
 			return;
 		}
 		
@@ -120,11 +120,11 @@ public class financialServlet extends HttpServlet {
 			request.setAttribute("thisYearBalanceGraph", thisYearBalanceGraph);
 			request.setAttribute("balance", thisYearBalanceList);
 			if(insertFlag) {
-				response.sendRedirect(request.getContextPath() + "/financialServlet");
+				response.sendRedirect("/financialServlet");
 				return;
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
-				response.sendRedirect(request.getContextPath() + "/financialServlet");
+				response.sendRedirect("/financialServlet");
 				return;
 			}
 		}else if("edit".equals(submit)) {
@@ -150,11 +150,11 @@ public class financialServlet extends HttpServlet {
 			request.setAttribute("thisYearBalanceGraph", thisYearBalanceGraph);
 			request.setAttribute("balance", thisYearBalanceList);
 			if(editFlag) {
-				response.sendRedirect(request.getContextPath() + "/financialServlet");
+				response.sendRedirect("/financialServlet");
 				return;
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
-				response.sendRedirect(request.getContextPath() + "/financialServlet");
+				response.sendRedirect("/financialServlet");
 				return;
 			}
 			
@@ -210,16 +210,16 @@ public class financialServlet extends HttpServlet {
 			request.setAttribute("thisYearBalanceGraph", thisYearBalanceGraph);
 			request.setAttribute("thisYearBalanceGraph", thisYearBalanceList);
 			if(deleteFlag) {
-				response.sendRedirect(request.getContextPath() + "/financialServlet");
+				response.sendRedirect("/financialServlet");
 				return;
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
-				response.sendRedirect(request.getContextPath() + "/financialServlet");
+				response.sendRedirect("/financialServlet");
 				return;
 			}
 			
 		}else {
-			response.sendRedirect(request.getContextPath() + "/financialServlet");
+			response.sendRedirect("/financialServlet");
 			return;
 		}
 	}

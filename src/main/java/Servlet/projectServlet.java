@@ -25,12 +25,12 @@ public class projectServlet extends HttpServlet {
 		accountBeans accountData = (accountBeans) session.getAttribute("accountData");
 		
 		if(accountData == null) {
-			response.sendRedirect(request.getContextPath() + "/signinServlet");
+			response.sendRedirect("/signinServlet");
 			return;
 		}
 		
 		if("一般".equals(accountData.getRole())) {
-			response.sendRedirect(request.getContextPath() + "/financialServlet");
+			response.sendRedirect("/financialServlet");
 			return;
 		}
 		
@@ -59,11 +59,11 @@ public class projectServlet extends HttpServlet {
 			boolean insertFlag = pro_logic.insertProjectData(name,accountData.getGroup_id());
 			
 			if(insertFlag) {
-				response.sendRedirect(request.getContextPath() + "/projectServlet");
+				response.sendRedirect("/projectServlet");
 				return;
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
-				response.sendRedirect(request.getContextPath() + "/projectServlet");
+				response.sendRedirect("/projectServlet");
 				return;
 			}
 		}else if("edit".equals(submit)) {
@@ -82,11 +82,11 @@ public class projectServlet extends HttpServlet {
 			boolean updateFlag = pro_logic.updateProjectData(beans);
 			
 			if(updateFlag) {
-				response.sendRedirect(request.getContextPath() + "/projectServlet");
+				response.sendRedirect("/projectServlet");
 				return;
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
-				response.sendRedirect(request.getContextPath() + "/projectServlet");
+				response.sendRedirect("/projectServlet");
 				return;
 			}
 		}

@@ -23,7 +23,7 @@ public class purchase_request_formServlet extends HttpServlet {
 		accountBeans accountData = (accountBeans) session.getAttribute("accountData");
 		
 		if(accountData == null) {
-			response.sendRedirect(request.getContextPath() + "/signinServlet");
+			response.sendRedirect("/signinServlet");
 			return;
 		}
 		
@@ -57,7 +57,7 @@ public class purchase_request_formServlet extends HttpServlet {
 		boolean insertFlag = logic.insertRequestData(beans,log);
 		
 		if(insertFlag) {
-			response.sendRedirect(request.getContextPath() + "/purchase_request_listServlet");
+			response.sendRedirect("/purchase_request_listServlet");
 			return;
 		}else {
 			request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：AC-cp1000");

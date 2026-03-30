@@ -27,12 +27,12 @@ public class memberServlet extends HttpServlet {
 		accountBeans accountData = (accountBeans) session.getAttribute("accountData");
 		
 		if(accountData == null) {
-			response.sendRedirect(request.getContextPath() + "/signinServlet");
+			response.sendRedirect("/signinServlet");
 			return;
 		}
 		
 		if("一般".equals(accountData.getRole())) {
-			response.sendRedirect(request.getContextPath() + "/financialServlet");
+			response.sendRedirect("/financialServlet");
 			return;
 		}
 		
@@ -77,7 +77,7 @@ public class memberServlet extends HttpServlet {
 			boolean insertFlag = men_logic.insertMembershipFee(beans,log);
 			
 			if(insertFlag) {
-				response.sendRedirect(request.getContextPath() + "/memberServlet");
+				response.sendRedirect("/memberServlet");
 				return;
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：ME-insertMembershipFee");
@@ -93,7 +93,7 @@ public class memberServlet extends HttpServlet {
 			
 			
 			if(updateFlag) {
-				response.sendRedirect(request.getContextPath() + "/memberServlet");
+				response.sendRedirect("/memberServlet");
 				return;
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：ME-updatePaymentStatus");
@@ -107,7 +107,7 @@ public class memberServlet extends HttpServlet {
 			boolean updateFlag = men_logic.updateRole(id,role);
 			
 			if(updateFlag) {
-				response.sendRedirect(request.getContextPath() + "/memberServlet");
+				response.sendRedirect("/memberServlet");
 				return;
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：ME-updateRole");
@@ -121,7 +121,7 @@ public class memberServlet extends HttpServlet {
 			boolean deleteFlag = men_logic.deleteMemberList(id);
 			
 			if(deleteFlag) {
-				response.sendRedirect(request.getContextPath() + "/memberServlet");
+				response.sendRedirect("/memberServlet");
 				return;
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：ME-deleteMemberList");
