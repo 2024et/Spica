@@ -381,3 +381,14 @@ footer p{
         display: table-cell;
     }
 }
+@media screen and (max-width: 480px) {
+
+	#ad-is-inside,#ad-ed-inside {
+		width: 95%;
+		margin: 15% auto;
+		padding: 10px;
+		max-height: 80vh; 
+		overflow-y: auto; 
+	}
+
+}

@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>Spica | 団体選択</title>
 <link rel="stylesheet" href="css/select_group.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 <h1>Spica</h1>

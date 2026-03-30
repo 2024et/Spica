@@ -222,3 +222,114 @@ footer p{
 	font-size: 14px;
 	color: #555;
 }
+/*レスポンシブ*/
+@media screen and (max-width: 600px) {
+	
+	table {
+	  min-width: auto;
+	}
+	table, thead, tbody, th, td, tr {
+	  display: block;
+	}
+	 thead {
+	  display: none;
+	}
+	 tr {
+	  margin-bottom: 10px;
+	  border: 1px solid #ccc;
+	}
+  
+	.btn{
+	    display: block;
+	    width: 100%;
+	    box-sizing: border-box;
+	    margin: 8px 0;
+	    font-size: 14px;
+	    padding: 12px;
+		text-align: center;
+	}
+}
+
+/* 書類のレスポンシブ */
+@media screen and (max-width: 768px){
+
+    .process{
+        min-width: 0; 
+        height: auto;
+    }
+
+    .process .item{
+        padding: 10px;
+    }
+
+    .process .info{
+        flex-direction: column;
+    }
+
+    .left{
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .item-btn{
+        padding: 5px;
+    }
+
+    .approvel-btn{
+        width: 40px;
+        height: 40px;
+        font-size: medium;
+    }
+
+    .right{
+        margin-top: 10px;
+        width: 100%;
+    }
+
+    .edit-btn,
+    .submited-btn{
+        width: 100%;
+        margin: 5px 0;
+    }
+	
+	.submited{
+	    min-width:0; 
+	    height: auto;
+	}
+
+	.submited .item{
+	    flex-direction: column; 
+	    align-items: stretch;
+	    padding: 10px;
+	}
+
+	.submited .item a{
+	    margin-bottom: 8px;
+	    word-break: break-all;
+	}
+
+	.submited form{
+	    width: 100%;
+	}
+
+	.submited-btn{
+	    width: 100%;
+	}
+}
+/*モーダル用*/
+@media screen and (max-width: 768px){
+
+    #insert-wrapper,.edit-wrapper,.approvel-wrapper{
+        padding: 10px 5px; 
+		align-items: center;   
+		justify-content: center; 
+    }
+
+    #insert-inside,#edit-inside,#approvel-inside{
+        max-width: 90%; 
+        padding: 15px 10px;
+        border-radius: 6px;
+    }
+}
+
+

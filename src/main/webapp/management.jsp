@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>Spica | 役員ページ</title>
 <link rel="stylesheet" href="css/management.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 <jsp:include page="header.jsp" />
@@ -16,7 +17,7 @@
 	<h3>お知らせ</h3>
 	<div class="notice-table">
 		<table>
-			<thead><th>日付</th><th>内容</th></thead>
+			<thead><tr><th>日付</th><th>内容</th></tr></thead>
 			<tbody>
 				<c:forEach var="n" items="${notice}">
 					<tr>

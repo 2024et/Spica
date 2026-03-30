@@ -72,3 +72,42 @@
 	font-size:15px;
 	color:#234;
 }
+
+@media (max-width: 600px) {
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+ 
+  .information {
+    margin: 12px 12px 4px;
+  }
+ 
+  .navigation {
+    margin: 4px 12px 12px;
+  }
+ 
+  .nav_up,
+  .nav_down {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+ 
+  .general,
+  .admin,
+  .empty {
+    width: 100%;     
+    font-size: 13px;
+    padding: 10px 4px;
+  }
+ 
+  .empty {
+    display: none;
+  }
+ 
+  .nav_up {
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: stretch;
+  }
+}

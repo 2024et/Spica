@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>Spica | アカウント</title>
 <link rel="stylesheet" href="css/account.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 <jsp:include page="header.jsp" />

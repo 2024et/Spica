@@ -112,3 +112,38 @@ footer p{
 	font-size: 14px;
 	color: #555;
 }
+/*テーブルのレスポンシブ*/
+@media screen and (max-width: 600px) {
+
+table {
+    min-width: auto;
+  }
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tr {
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+  }
+}
+
+/*モーダル用*/
+@media screen and (max-width: 768px){
+
+    #wrapper{
+        padding: 10px 5px; 
+		align-items: center;   
+		justify-content: center; 
+    }
+
+    #inside{
+        max-width: 90%; 
+        padding: 15px 10px;
+        border-radius: 6px;
+    }
+}

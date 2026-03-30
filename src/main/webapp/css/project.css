@@ -140,3 +140,45 @@ footer p{
 	font-size: 14px;
 	color: #555;
 }
+/*レスポンシブ*/
+@media screen and (max-width: 600px) {
+	
+	table {
+	  min-width: auto;
+	}
+	table, thead, tbody, th, td, tr {
+	  display: block;
+	}
+	 thead {
+	  display: none;
+	}
+	 tr {
+	  margin-bottom: 10px;
+	  border: 1px solid #ccc;
+	}
+  
+	.btn{
+	    display: block;
+	    width: 100%;
+	    box-sizing: border-box;
+	    margin: 8px 0;
+	    font-size: 14px;
+	    padding: 12px;
+		text-align: center;
+	}
+}
+
+@media screen and (max-width: 768px){
+
+    #insert-wrapper,.edit-wrapper{
+        padding: 10px 5px; 
+		align-items: center;   
+		justify-content: center; 
+    }
+
+    #insert-inside,#edit-inside{
+        max-width: 90%; 
+        padding: 15px 10px;
+        border-radius: 6px;
+    }
+}

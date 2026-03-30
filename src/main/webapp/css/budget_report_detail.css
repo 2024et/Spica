@@ -37,3 +37,22 @@ footer p{
 	font-size: 14px;
 	color: #555;
 }
+/*テーブルのレスポンシブ*/
+@media screen and (max-width: 600px) {
+
+table {
+    min-width: auto;
+  }
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tr {
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+  }
+}

@@ -9,6 +9,7 @@
 <title>Spica | 備品購入希望詳細</title>
 <link rel="stylesheet" href="css/purchase_request_detail.css">
 <link rel="stylesheet" href="css/chat.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 <jsp:include page="header.jsp" />

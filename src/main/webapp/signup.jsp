@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>Spica | 新規登録</title>
 <link rel="stylesheet" href="css/signup.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 <h1>Spica</h1>
