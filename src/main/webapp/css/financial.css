@@ -91,6 +91,7 @@ h3{
 
 .dataTable{
 	border-collapse: collapse;
+	table-layout: fixed;
 	width:100%;
 	padding:18px;
 }
@@ -99,7 +100,14 @@ h3{
 	background-color:#4169e1;
 	color:#ffffff;
 }
-
+.cell{
+	white-space: nowrap;     
+	overflow: hidden;        
+	text-overflow: ellipsis;  
+}
+.amount{
+	text-align: right;
+}
 /*ボタン*/
 .searchBtns{
 	text-align:right;
@@ -227,6 +235,7 @@ h3{
 	z-index: 1001;
 	box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
+
 
 /*footer*/
 footer{
@@ -392,3 +401,4 @@ footer p{
 	}
 
 }
+

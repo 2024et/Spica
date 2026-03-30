@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html>
@@ -98,13 +98,14 @@
 		<c:forEach var="c" items="${balance}">
 		<tr onmouseover="openPopup('${c.id}',event)">
 			<td>${c.created_at}</td>
-			<td>${c.project}</td>
-			<td>${c.category}</td>
-			<td>${c.name}</td>
-			<td>${c.item}</td>
+			<td class="cell">${c.project}</td>
+			<td class="cell">${c.category}</td>
+			<td class="cell">${c.name}</td>
+			<td class="cell">${c.item}</td>
 		    <c:choose>
 		        <c:when test="${c.type eq 'income'}">
-		            <td>${c.amount}</td>
+		        
+		            <td class="amount"><fmt:formatNumber value="${c.amount}" pattern="#,###" /></td>
 		        </c:when>
 		        <c:otherwise>
 		            <td></td>
@@ -112,13 +113,13 @@
 		    </c:choose>
 		    <c:choose>
 		        <c:when test="${c.type eq 'expend'}">
-		            <td>${c.amount}</td>
+		            <td class="amount"><fmt:formatNumber value="${c.amount}" pattern="#,###" /></td>
 		        </c:when>
 		        <c:otherwise>
 		            <td></td>
 		        </c:otherwise>
 		    </c:choose>
-		    <td>${c.memo}</td>
+		    <td class="cell">${c.memo}</td>
 		   </tr>
 		</c:forEach>
 		

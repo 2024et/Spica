@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,7 +22,7 @@
 			<c:forEach var="c" items="${budget}">
 				<tr>
 					<td>${c.category_name}</td>
-					<td>${c.amount}</td>
+					<td class="amount"><fmt:formatNumber value="${c.amount}" pattern="#,###" /></td>
 				</tr>
 			</c:forEach>
 		</tbody>

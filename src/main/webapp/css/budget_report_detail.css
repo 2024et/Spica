@@ -23,7 +23,9 @@ td {
 th, td {
   border: dashed 1px #777;
 }
-
+.amount{
+	text-align: right;
+}
 /*footer*/
 footer{
 	width: 100%;

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -23,9 +23,9 @@
 			<c:forEach var="c" items="${report_income}">
 				<tr>
 					<td>${c.name}</td>
-					<td>${c.budget}</td>
-					<td>${c.amount}</td>
-					<td>${c.fluctuation}</td>
+					<td class="amount"><fmt:formatNumber value="${c.budget}" pattern="#,###" /></td>
+					<td class="amount"><fmt:formatNumber value="${c.amount}" pattern="#,###" /></td>
+					<td class="amount"><fmt:formatNumber value="${c.fluctuation}" pattern="#,###" /></td>
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -38,9 +38,9 @@
 			<c:forEach var="c" items="${report_expend}">
 				<tr>
 					<td>${c.name}</td>
-					<td>${c.budget}</td>
-					<td>${c.amount}</td>
-					<td>${c.fluctuation}</td>
+					<td class="amount"><fmt:formatNumber value="${c.budget}" pattern="#,###" /></td>
+					<td class="amount"><fmt:formatNumber value="${c.amount}" pattern="#,###" /></td>
+					<td class="amount"><fmt:formatNumber value="${c.fluctuation}" pattern="#,###" /></td>
 				</tr>
 			</c:forEach>
 		</tbody>
