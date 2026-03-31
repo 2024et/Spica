@@ -313,15 +313,16 @@ public class accountDao {
 	//所属変更
 	public boolean changeOrganization(String id,String new_id,String role) {
 		
-		String sql = "UPDATE account SET id = ?, group_id = ?, role_type = ?";
+		String sql = "UPDATE account SET id = ?, group_id = ?, role_type = ? WHERE id = ?";
 		try (
 		        Connection con = DBUtil.getConnection();
 		        PreparedStatement stmt = con.prepareStatement(sql);
 		    ) {
 			
-			stmt.setString(1, id);
+			stmt.setString(1, new_id);
 			stmt.setString(2, "");
 			stmt.setString(3, role);
+			stmt.setString(4, id);
 			
 			int result = stmt.executeUpdate();
 			if(result > 0) {return true;}
