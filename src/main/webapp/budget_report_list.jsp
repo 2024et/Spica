@@ -24,7 +24,7 @@
 		<thead><tr><th>予算計画書</th></tr></thead>
 		<tbody>
 		<c:choose>
-            <c:when test="${empty account_list}">
+            <c:when test="${empty budget_list}">
                 <tr>
                     <td>予算計画書は作られていません。</td>
                 </tr>

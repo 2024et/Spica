@@ -19,7 +19,7 @@
 		<thead><tr><th>申請者名</th><th>申請品目</th><th>ステータス</th><th>詳細</th></tr></thead>
 		<tbody>
 			<c:choose>
-	            <c:when test="${empty account_list}">
+	            <c:when test="${empty request_list}">
 	                <tr>
 	                    <td>データがありません</td>
 	                </tr>

@@ -20,7 +20,7 @@
 			<thead><tr><th>日付</th><th>内容</th></tr></thead>
 			<tbody>
 			<c:choose>
-	            <c:when test="${empty account_list}">
+	            <c:when test="${empty notice}">
 	                <tr>
 	                    <td>通知はありません</td>
 	                </tr>
@@ -61,7 +61,7 @@
 			<thead><tr><th>プロジェクト</th><th>状態</th><th>操作</th></tr></thead>
 			<tbody>
 			<c:choose>
-            <c:when test="${empty account_list}">
+            <c:when test="${empty project}">
                 <tr>
                     <td>プロジェクトがありません</td>
                 </tr>

@@ -20,7 +20,7 @@
 			<thead><tr><th>日付</th><th>内容</th></tr></thead>
 			<tbody>
 			<c:choose>
-	            <c:when test="${empty account_list}">
+	            <c:when test="${empty notice}">
 	                <tr>
 	                    <td>通知はありません</td>
 	                </tr>
@@ -62,7 +62,7 @@
 	</div>
 	<div class="fee_management">
 		<h4>現在設定中の会費</h4>
-		<p>${membership_fee.fee}円　期間：${membership_fee.start_date} ～ ${membership_fee.end_date}</p>
+		<p>${membership_fee.fee}円 期間：${membership_fee.start_date} ～ ${membership_fee.end_date}</p>
 	</div>
 </section>
 

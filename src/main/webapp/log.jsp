@@ -20,7 +20,7 @@
 			<thead><tr><th>日付</th><th>内容</th></tr></thead>
 			<tbody>
 			<c:choose>
-	            <c:when test="${empty account_list}">
+	            <c:when test="${empty notice}">
 	                <tr>
 	                    <td>通知はありません</td>
 	                </tr>

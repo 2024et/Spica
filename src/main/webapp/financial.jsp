@@ -96,7 +96,7 @@
 	<thead><th>日付</th><th>プロジェクト</th><th>カテゴリ</th><th>店名</th><th>品目</th><th>入金</th><th>出金</th><th>詳細</th></thead>
 	<tbody>
 	<c:choose>
-            <c:when test="${empty account_list}">
+            <c:when test="${empty balance}">
                 <tr>
                     <td>データがありません</td>
                 </tr>

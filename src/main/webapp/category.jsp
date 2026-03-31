@@ -61,7 +61,7 @@
 			<thead><tr><th>カテゴリ</th><th>入出金</th><th>状態</th><th>操作</th></tr></thead>
 			<tbody>
 			<c:choose>
-            <c:when test="${empty account_list}">
+            <c:when test="${empty category}">
                 <tr>
                     <td>カテゴリがありません</td>
                 </tr>
