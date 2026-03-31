@@ -38,7 +38,7 @@ public class requestLogic {
 				+ "以下のリンクをタップしてパスワードの再設定を行ってください。</p>" +
 
 				"<a href='https://spica.takumi-e.com/change_passwordServlet?id=" + id +
-				"'>http://takumi-e.com:8080/Spica/change_passwordServlet?id=" + id + "</a>"+
+				"'>http://https://spica.takumi-e.com/change_passwordServlet?id=" + id + "</a>"+
 
 				"</div>" +
 				"</body>" +
