@@ -22,6 +22,7 @@ public class signinServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
+		response.setHeader("Set-Cookie", "JSESSIONID=" + session.getId() + "; Path=/; HttpOnly; Secure; SameSite=Lax");
 		String mail = request.getParameter("mail");
 		String password = request.getParameter("password");
 		

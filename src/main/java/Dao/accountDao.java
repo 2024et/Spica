@@ -311,39 +311,17 @@ public class accountDao {
 	}
 	
 	//所属変更
-	public boolean changeOrganizations(String id,String new_id,String name, String email,String role, String code) {
-		PreparedStatement stmt = null;
-        
-		List<String> columns = new ArrayList<>();
-		List<Object> prams = new ArrayList<>();
+	public boolean changeOrganization(String id,String new_id,String role) {
+		
 		String sql = "UPDATE account SET id = ?, group_id = ?, role_type = ?";
-		
-		prams.add(new_id);
-		prams.add(code);
-		prams.add(role);
-		
-		if(name != null && !name.isEmpty()) {
-			columns.add(", user_name = ?");
-			prams.add(name);
-		}
-		if(email != null && !email.isEmpty()) {
-			columns.add(", user_email = ?");
-			prams.add(email);
-		}
-		
-		sql += String.join(" , ", columns);
-		
-		sql += (" WHERE id = ?");
-		prams.add(id);
-				
-		try {
-			Connection con = DBUtil.getConnection();
+		try (
+		        Connection con = DBUtil.getConnection();
+		        PreparedStatement stmt = con.prepareStatement(sql);
+		    ) {
 			
-			stmt = con.prepareStatement(sql);
-			
-			for(int i = 0; i < prams.size(); i++) {
-				stmt.setObject(i+1, prams.get(i));
-			}
+			stmt.setString(1, id);
+			stmt.setString(2, "");
+			stmt.setString(3, role);
 			
 			int result = stmt.executeUpdate();
 			if(result > 0) {return true;}

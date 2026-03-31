@@ -148,6 +148,7 @@ public class accountServlet extends HttpServlet {
 			response.sendRedirect("/accountServlet");
 			
 		}else if("delete".equals(submit)) {
+			//アカウントの削除
 			boolean deleteFlag = acc_logic.deleteAccount(accountData.getId());
 			
 			if(deleteFlag) {
@@ -159,6 +160,20 @@ public class accountServlet extends HttpServlet {
 			    return;
 			}
 			
+		}else if("change".equals(submit)) {
+			//所属の変更
+			boolean changeFlag = acc_logic.updateGroupChange(accountData.getId());
+			if(changeFlag) {
+				accountBeans new_accountData = acc_logic.login_system(accountData.getEmail());
+				session.setAttribute("accountData", new_accountData);
+				
+				response.sendRedirect("/select_groupServlet");
+				return;
+			}else {
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：AC-ucc1000");
+			    request.getRequestDispatcher("/account.jsp").forward(request, response);
+			    return;
+			}
 		}else {
 			request.getRequestDispatcher("/account.jsp").forward(request, response);
 			return;

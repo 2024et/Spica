@@ -21,14 +21,18 @@ public class accountLogic {
 	
 	//アカウント情報の変更
 	public boolean changeInformation(String id,String name, String email, String code) {
+		accountDao dao = new accountDao();		
+		return dao.updateInformation(id,name,email);
+	}
+	
+	//所属変更
+	public boolean updateGroupChange(String id) {
 		signupLogic logic = new signupLogic();
 		String new_id = logic.RandomID();
 		accountDao dao = new accountDao();
-		if(code != null) {
-			String role = "一般";
-			return dao.changeOrganizations(id,new_id,name,email,role,code);
-		}
-		return dao.updateInformation(id,name,email);
+		String role = "一般";
+		return dao.changeOrganization(id,new_id,role);
+		
 	}
 	
 	//ログイン

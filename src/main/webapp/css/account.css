@@ -54,7 +54,7 @@
 	background-color: #4169e1;
 	color:#ffffff;
 }
-.delete-btn{
+.delete-btn,.groupChange-btn{
 	background: transparent;
 	border: none;
 	appearance: none;   

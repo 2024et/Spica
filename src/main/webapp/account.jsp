@@ -120,7 +120,7 @@
 					</tr>
 					<tr>
 						<td>所属団体</td>
-						<td><input type="text" name="code" maxlength="10"></td>
+						<td><button type="submit" name="submit" class="groupChange-btn" value="change" onclick="return confirmChange();">所属団体を変更する</button></td>
 					</tr>
 				</table>
 				<p>※ユーザーIDの変更はできません。</p>
@@ -196,6 +196,11 @@ document.getElementById('ac-ch-wrapper')?.addEventListener('click', (e) => {
 function confirmDelete(){
  return confirm("本当に削除しますか？");
 }
+
+function confirmChange(){
+ return confirm("本当に変更しますか？");
+}
+
 
 document.querySelectorAll(".toggle-btn").forEach(btn => {
   btn.addEventListener("click", () => {
