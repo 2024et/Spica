@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Spica | 予算報告書詳細</title>
+<title>Spica | 予算計画書詳細</title>
 <link rel="stylesheet" href="css/budget_report_detail.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>

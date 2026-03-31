@@ -16,21 +16,30 @@
 	<h1>備品購入希望状況</h1>
 	<button onclick="location.href='purchase_request_formServlet'" class="new-request-btn">新しい希望申請を出す</button>
 	<table>
-		<thead><th>申請者名</th><th>申請品目</th><th>ステータス</th><th>詳細</th></thead>
+		<thead><tr><th>申請者名</th><th>申請品目</th><th>ステータス</th><th>詳細</th></tr></thead>
 		<tbody>
-			<c:forEach var="c" items="${request_list}">
-				<tr>
-					<td>${c.user_name}</td>
-					<td>${c.name}</td>
-					<td>${c.status}</td>
-					<td>
-					<form method="get" action="purchase_request_detailServlet">
-						<input type="hidden" name="requestID" value="${c.id}">
-						<input type="submit" name="submit" class="detail-btn" value="詳細">
-					</form>
-					</td>
-				</tr>
-			</c:forEach>
+			<c:choose>
+	            <c:when test="${empty account_list}">
+	                <tr>
+	                    <td>データがありません</td>
+	                </tr>
+	            </c:when>
+	            <c:otherwise>
+				<c:forEach var="c" items="${request_list}">
+					<tr>
+						<td>${c.user_name}</td>
+						<td>${c.name}</td>
+						<td>${c.status}</td>
+						<td>
+						<form method="get" action="purchase_request_detailServlet">
+							<input type="hidden" name="requestID" value="${c.id}">
+							<input type="submit" name="submit" class="detail-btn" value="詳細">
+						</form>
+						</td>
+					</tr>
+				</c:forEach>
+				</c:otherwise>
+			</c:choose>
 		</tbody>
 	</table>
 </section>

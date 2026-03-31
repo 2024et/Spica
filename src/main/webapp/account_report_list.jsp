@@ -23,6 +23,13 @@
 	<table>
 		<thead><tr><th>会計報告書</th></tr></thead>
 		<tbody>
+		<c:choose>
+            <c:when test="${empty account_list}">
+                <tr>
+                    <td>会計報告書は作られていません。</td>
+                </tr>
+            </c:when>
+            <c:otherwise>
 			<c:forEach var="acc_repo" items="${account_list}">
 				<tr>
 					<td>
@@ -33,6 +40,8 @@
 					</td>
 				</tr>
 			</c:forEach>
+			</c:otherwise>
+		</c:choose>
 		</tbody>
 	</table>
 </section>

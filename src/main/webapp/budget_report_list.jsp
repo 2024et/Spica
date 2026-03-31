@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Spica | 予算報告書一覧</title>
+<title>Spica | 予算計画書一覧</title>
 <link rel="stylesheet" href="css/budget_report_list.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -16,13 +16,20 @@
 	<h1>予算報告書</h1>
 	<c:choose>
 	    <c:when test="${accountData.role == '会計' || accountData.role == '顧問'}">
-			<button class="new-budget-btn">予算報告書の作成</button>
+			<button class="new-budget-btn">予算計画書の作成</button>
 	    </c:when>
 	</c:choose>
 	
 	<table>
-		<thead><th>予算報告書</th></thead>
+		<thead><tr><th>予算計画書</th></tr></thead>
 		<tbody>
+		<c:choose>
+            <c:when test="${empty account_list}">
+                <tr>
+                    <td>予算計画書は作られていません。</td>
+                </tr>
+            </c:when>
+            <c:otherwise>
 			<c:forEach var="c" items="${budget_list}">
 				<tr>
 					<td>
@@ -33,13 +40,15 @@
 					</td>
 				</tr>
 			</c:forEach>
+			</c:otherwise>
+		</c:choose>
 		</tbody>
 	</table>
 </section>
 <div id="wrapper">
 	<div id="inside">
 		<div id="message">
-		<h1>予算報告書の作成</h1>
+		<h1>予算計画書の作成</h1>
 		<form action="budget_report_listServlet" method="post">
 		<table>
 		<tr>

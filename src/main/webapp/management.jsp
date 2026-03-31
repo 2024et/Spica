@@ -19,12 +19,21 @@
 		<table>
 			<thead><tr><th>日付</th><th>内容</th></tr></thead>
 			<tbody>
-				<c:forEach var="n" items="${notice}">
-					<tr>
-						<td>${n.created_at}</td>
-						<td>${n.message}</td>
-					</tr>
-				</c:forEach>
+			<c:choose>
+	            <c:when test="${empty account_list}">
+	                <tr>
+	                    <td>通知はありません</td>
+	                </tr>
+	            </c:when>
+	            <c:otherwise>
+					<c:forEach var="n" items="${notice}">
+						<tr>
+							<td>${n.created_at}</td>
+							<td>${n.message}</td>
+						</tr>
+					</c:forEach>
+				</c:otherwise>
+			</c:choose>	
 			</tbody>
 		</table>
 	</div>
