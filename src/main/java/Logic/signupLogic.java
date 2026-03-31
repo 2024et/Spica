@@ -79,7 +79,7 @@ public class signupLogic {
 
 				"<p style='font-size:14px; color:#555555;'>以下の確認URLをタップして、登録を完了してください。<br>登録を完了することで、Spicaの利用を開始できます！</p>" +
 
-				"<a href='http://takumi-e.com:8080/Spica/confirmServlet?id=" + id +
+				"<a href='https://Spica.takumi-e.com/confirmServlet?id=" + id +
 				"'>http://takumi-e.com:8080/Spica/confirmServlet?id=" + id + "</a>"+
 
 				"</div>" +
