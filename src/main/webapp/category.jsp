@@ -54,7 +54,12 @@
 <section>
 	<div class="menu_subtitle">
 		<h3>カテゴリ管理</h3>
-		<button type="button" class="insert-btn">カテゴリの新規作成</button>
+		<c:choose>
+		    <c:when test="${accountData.role == '会計' || accountData.role == '顧問'}">
+				<button type="button" class="insert-btn">カテゴリの新規作成</button>
+		    </c:when>
+		</c:choose>
+		
 	</div>
 	<div class="category_table">
 		<table>
@@ -73,7 +78,11 @@
 						<td>${c.type}</td>
 						<td>${c.status}</td>
 						<td>
-							<button class="setting-btn" data-id="${c.id}">設定</button>
+							<c:choose>
+							    <c:when test="${accountData.role == '会計' || accountData.role == '顧問'}">
+									<button class="setting-btn" data-id="${c.id}">設定</button>
+							    </c:when>
+							</c:choose>							
 						</td>
 					</tr>
 				</c:forEach>

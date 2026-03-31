@@ -31,7 +31,7 @@
 <h5>団体を新規作成する方</h5>
 <form action="select_groupServlet" method="post" >
 	
-	<label for="name">団体名(記号は利用できません)<span class="req">*</span></label><br>
+	<label for="name">新設団体名<span class="req">*</span></label><br>
 	<input type="text" name = "name" required maxlength="30"><br><br>
 	
 	<% String make_error = (String) request.getAttribute("make_errorMessage"); %>

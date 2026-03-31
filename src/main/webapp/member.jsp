@@ -54,7 +54,7 @@
 	<div class="menu_subtitle">
 		<h3>会費管理</h3>
 		<c:choose>
-		    <c:when test="${accountData.role == '会計' || accountData.role == '代表' || accountData.role == '顧問'}">
+		    <c:when test="${accountData.role != 'その他役員'">
 				<button type="button" class="insert-btn">会費設定</button>
 		    </c:when>
 		</c:choose>
@@ -157,7 +157,11 @@ function filterDocuments(selectedDate) {
 						<td>${c.email}</td>
 						<td>${c.role}</td>
 						<td>
-							<button class="member-setting-btn" data-id="${c.id}">設定</button>
+							<c:choose>
+							    <c:when test="${accountData.role == '副代表' || accountData.role == '代表' || accountData.role == '顧問'}">
+									<button class="member-setting-btn" data-id="${c.id}">設定</button>
+							    </c:when>
+							</c:choose>							
 						</td>
 					</tr>
 				</c:forEach>

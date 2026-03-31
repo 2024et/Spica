@@ -140,7 +140,12 @@
 					<p>${d.comment}</p>
 				</div>
 			</div>
-			<button type="button" class="edit-btn" data-id="${d.id}">設定</button>
+			<c:choose>
+			    <c:when test="${accountData.role != 'その他役員'}">
+					<button type="button" class="edit-btn" data-id="${d.id}">設定</button>
+			    </c:when>
+			</c:choose>
+			
 			<c:choose>
 				<c:when test="${d.accountant == 'OK' and d.vice_president == 'OK' and d.president == 'OK' and d.advisor == 'OK'}">
 					<form action="managementServlet" method="post">
@@ -250,25 +255,33 @@ function filterDocuments(selectedYear) {
 		<div id="approvel-inside">
 			<div id="message">
 				<h1>承認設定</h1>
-				<form action="managementServlet" method="post">
-				<input type="hidden" name="document_id" value="${c.id}" />
-					<p>「${c.name}」に承認しますか？</p>
-					<label>
-					  <input type="radio" name="answer" value="OK" onclick="toggleReason(this)"> はい
-					</label>
-					
-					<label>
-					  <input type="radio" name="answer" value="NG" onclick="toggleReason(this)"> いいえ
-					</label><br><br>
-					
-					<div class="reasonBox" style="display:none;">
-					  <p>不承認理由を記載してください。</p>
-					  <textarea name="comment" rows="4" cols="40" maxlength="300"></textarea>
-					</div>
-				
-					<button type="button" class="approvel-close-btn" data-id="${c.id}">キャンセル</button>
-					<button type="submit" name="submit" class="btn" value="approver">保存</button>
-				</form>
+				<c:choose>
+				    <c:when test="${accountData.role != 'その他役員'}">
+						<form action="managementServlet" method="post">
+							<input type="hidden" name="document_id" value="${c.id}" />
+							<p>「${c.name}」に承認しますか？</p>
+							<label>
+							  <input type="radio" name="answer" value="OK" onclick="toggleReason(this)"> はい
+							</label>
+							
+							<label>
+							  <input type="radio" name="answer" value="NG" onclick="toggleReason(this)"> いいえ
+							</label><br><br>
+							
+							<div class="reasonBox" style="display:none;">
+							  <p>不承認理由を記載してください。</p>
+							  <textarea name="comment" rows="4" cols="40" maxlength="300"></textarea>
+							</div>
+						
+							<button type="button" class="approvel-close-btn" data-id="${c.id}">キャンセル</button>
+							<button type="submit" name="submit" class="btn" value="approver">保存</button>
+						</form>
+				    </c:when>
+				    <c:otherwise>
+				    	<p>承認には「会計」「副代表」「代表」「顧問」の何れかの権限が必要です。</p>
+				    </c:otherwise>
+				</c:choose>
+
 			</div>
 		</div>
 	</div>

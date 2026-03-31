@@ -34,7 +34,7 @@
 <section>
 	<div class="buttons">
 		<c:choose>
-		    <c:when test="${accountData.role != '一般'}">
+		    <c:when test="${accountData.name == request.user_name || accountData.role == '代表' || accountData.role == '顧問'}">
 				<div class="buttons-left">
 					<form action="purchase_request_detailServlet" method="post">
 						<input type="hidden" name="id" value="${request.id}">	
