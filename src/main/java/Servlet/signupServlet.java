@@ -32,7 +32,7 @@ public class signupServlet extends HttpServlet {
 		    request.getRequestDispatcher("/signup.jsp").forward(request, response);
 		    return;
 		}else if(mailDupliFlag==2) {
-			request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：SU-mD1000");
+			request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：SU-mailDupli");
 		    request.getRequestDispatcher("/signup.jsp").forward(request, response);
 		    return;
 		}
@@ -52,7 +52,7 @@ public class signupServlet extends HttpServlet {
 		    request.getRequestDispatcher("/signup.jsp").forward(request, response);
 		    return;
 		}else {
-			request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：SU-tA1000");
+			request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：SU-tempAccount");
 		    request.getRequestDispatcher("/signup.jsp").forward(request, response);
 		    return;
 		}

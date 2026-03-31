@@ -62,7 +62,7 @@ public class projectServlet extends HttpServlet {
 				response.sendRedirect("/projectServlet");
 				return;
 			}else {
-				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：PR-insertProjectData");
 				response.sendRedirect("/projectServlet");
 				return;
 			}
@@ -85,7 +85,7 @@ public class projectServlet extends HttpServlet {
 				response.sendRedirect("/projectServlet");
 				return;
 			}else {
-				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：updateProjectData");
 				response.sendRedirect("/projectServlet");
 				return;
 			}

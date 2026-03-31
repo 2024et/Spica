@@ -61,7 +61,7 @@ public class budget_report_listServlet extends HttpServlet {
 			response.sendRedirect("/budget_report_listServlet");
 			return;
 		}else {
-			request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：AC-cp1000");
+			request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：BL-insertBudgetData");
 		    request.getRequestDispatcher("/budget_report_list.jsp").forward(request, response);
 		    return;
 		}

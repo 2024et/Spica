@@ -42,7 +42,7 @@ public class change_passwordServlet extends HttpServlet {
 		    request.getRequestDispatcher("/signinServlet").forward(request, response);
 		    return;
 		}else {
-			request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
+			request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：CP-updatePassword");
 			request.setAttribute("id", id);
 		    request.getRequestDispatcher("/change_password.jsp").forward(request, response);
 		    return;

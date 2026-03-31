@@ -64,7 +64,7 @@ public class categoryServlet extends HttpServlet {
 				response.sendRedirect("/categoryServlet");
 				return;
 			}else {
-				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：CA-insertCategoryData");
 				response.sendRedirect("/categoryServlet");
 				return;
 			}
@@ -88,7 +88,7 @@ public class categoryServlet extends HttpServlet {
 				response.sendRedirect("/categoryServlet");
 				return;
 			}else {
-				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：CA-updateCategoryData");
 				response.sendRedirect("/categoryServlet");
 				return;
 			}

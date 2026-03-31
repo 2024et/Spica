@@ -37,7 +37,7 @@ public class purchase_request_detailServlet extends HttpServlet {
 		List<chatBeans> chat = logic.getChat(requestID);
 		
 		if(beans == null || chat == null) {
-			request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：PRD-getData");
+			request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：FD-getRequestData/getChat");
 			request.getRequestDispatcher("/purchase_request_list.jsp").forward(request, response);
 		}
 		
@@ -64,7 +64,7 @@ public class purchase_request_detailServlet extends HttpServlet {
 				response.sendRedirect("/purchase_request_listServlet");
 				return;
 			}else {
-				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：PRD-deleteFlag");
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：FD-deleteRequestData");
 				request.getRequestDispatcher("/purchase_request_detail.jsp").forward(request, response);
 				return;
 			}
@@ -87,7 +87,7 @@ public class purchase_request_detailServlet extends HttpServlet {
 				response.sendRedirect("/purchase_request_detailServlet?requestID=" + requestID);
 				return;
 			}else {
-				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：PRD-updateFlag");
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：FD-updateRequestData");
 				request.getRequestDispatcher("/purchase_request_detail.jsp").forward(request, response);
 				return;
 			}
@@ -102,7 +102,7 @@ public class purchase_request_detailServlet extends HttpServlet {
 				response.sendRedirect("/purchase_request_detailServlet?requestID=" + requestID);
 				return;
 			}else {
-				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：PRD-statusFlag");
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：FD-updateStatus");
 				request.getRequestDispatcher("/purchase_request_detail.jsp").forward(request, response);
 				return;
 			}
@@ -114,7 +114,7 @@ public class purchase_request_detailServlet extends HttpServlet {
 				response.sendRedirect("/purchase_request_detailServlet?requestID=" + requestID);
 				return;
 			}else {
-				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：PRD-sendFlag");
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：FD-sendMessage");
 				request.getRequestDispatcher("/purchase_request_detail.jsp").forward(request, response);
 				return;
 			}

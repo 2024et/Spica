@@ -69,8 +69,8 @@ public class managementServlet extends HttpServlet {
 			String name = request.getParameter("name");
 			
 			Part filePart = request.getPart("file");
-	        String fileName = filePart.getSubmittedFileName(); // 元のファイル名
-	        InputStream fileStream = filePart.getInputStream(); // バイナリストリーム
+	        String fileName = filePart.getSubmittedFileName(); 
+	        InputStream fileStream = filePart.getInputStream(); 
 
 	        boolean insertFlag = man_logic.insertDocumentData(name, fileName, fileStream,accountData.getGroup_id());
 	        

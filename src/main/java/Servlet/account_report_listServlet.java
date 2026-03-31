@@ -57,7 +57,7 @@ public class account_report_listServlet extends HttpServlet {
 			response.sendRedirect("/account_report_listServlet");
 			return;
 		}else {
-			request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：AC-cp1000");
+			request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：AL-insertReportData");
 		    request.getRequestDispatcher("/account_report_list.jsp").forward(request, response);
 		    return;
 		}

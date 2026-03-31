@@ -80,7 +80,7 @@ public class memberServlet extends HttpServlet {
 				response.sendRedirect("/memberServlet");
 				return;
 			}else {
-				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：ME-insertMembershipFee");
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：LI-insertMembershipFee");
 			    request.getRequestDispatcher("/member.jsp").forward(request, response);
 			    return;
 			}
@@ -96,7 +96,7 @@ public class memberServlet extends HttpServlet {
 				response.sendRedirect("/memberServlet");
 				return;
 			}else {
-				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：ME-updatePaymentStatus");
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：LI-updatePaymentStatus");
 			    request.getRequestDispatcher("/member.jsp").forward(request, response);
 			    return;
 			}
@@ -110,7 +110,7 @@ public class memberServlet extends HttpServlet {
 				response.sendRedirect("/memberServlet");
 				return;
 			}else {
-				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：ME-updateRole");
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：LI-updateRole");
 			    request.getRequestDispatcher("/member.jsp").forward(request, response);
 			    return;
 			}
@@ -124,7 +124,7 @@ public class memberServlet extends HttpServlet {
 				response.sendRedirect("/memberServlet");
 				return;
 			}else {
-				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：ME-deleteMemberList");
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：LI-deleteMemberList");
 			    request.getRequestDispatcher("/member.jsp").forward(request, response);
 			    return;
 			}

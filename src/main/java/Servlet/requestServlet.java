@@ -26,7 +26,7 @@ public class requestServlet extends HttpServlet {
 		
 		//メールアドレスが存在しない場合もエラー扱いとして表示
 		if(checkMail == 0 || checkMail == 2) {
-			request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
+			request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：MS-searchMail");
 		    request.getRequestDispatcher("/request.jsp").forward(request, response);
 		    return;
 		}
@@ -38,7 +38,7 @@ public class requestServlet extends HttpServlet {
 		    request.getRequestDispatcher("/request.jsp").forward(request, response);
 		    return;
 		}else {
-			request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
+			request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：MS-sendMail");
 		    request.getRequestDispatcher("/request.jsp").forward(request, response);
 		    return;
 		}

@@ -60,7 +60,7 @@ public class purchase_request_formServlet extends HttpServlet {
 			response.sendRedirect("/purchase_request_listServlet");
 			return;
 		}else {
-			request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：AC-cp1000");
+			request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：FM-insertRequestData");
 		    request.getRequestDispatcher("/purchase_request_form.jsp").forward(request, response);
 		    return;
 		}

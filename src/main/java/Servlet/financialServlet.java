@@ -123,7 +123,7 @@ public class financialServlet extends HttpServlet {
 				response.sendRedirect("/financialServlet");
 				return;
 			}else {
-				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：IN-insertBalanceData");
 				response.sendRedirect("/financialServlet");
 				return;
 			}
@@ -153,7 +153,7 @@ public class financialServlet extends HttpServlet {
 				response.sendRedirect("/financialServlet");
 				return;
 			}else {
-				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：IN-editBalanceData");
 				response.sendRedirect("/financialServlet");
 				return;
 			}
@@ -213,7 +213,7 @@ public class financialServlet extends HttpServlet {
 				response.sendRedirect("/financialServlet");
 				return;
 			}else {
-				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。");
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：IN-deleteBalanceData");
 				response.sendRedirect("/financialServlet");
 				return;
 			}

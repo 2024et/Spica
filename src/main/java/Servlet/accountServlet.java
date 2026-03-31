@@ -87,7 +87,7 @@ public class accountServlet extends HttpServlet {
 			//再ログイン
 			accountBeans new_accountData = acc_logic.login_system(accountData.getEmail());
 			if(new_accountData == null) {
-				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：AC-cp1000");
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：AC-login_system(pass)");
 			    request.getRequestDispatcher("/account.jsp").forward(request, response);
 			    return;
 			}
@@ -114,7 +114,7 @@ public class accountServlet extends HttpServlet {
 				    request.getRequestDispatcher("/account.jsp").forward(request, response);
 				    return;
 				}else if(mailDupliFlag==2) {
-					request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：AC-mD1000");
+					request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：AC-mailDupli");
 				    request.getRequestDispatcher("/account.jsp").forward(request, response);
 				    return;
 				}
@@ -124,7 +124,7 @@ public class accountServlet extends HttpServlet {
 			boolean acc_updateFlag = acc_logic.changeInformation(accountData.getId(),name, email, code);
 			
 			if(!acc_updateFlag) {
-				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：AC-ci2000");
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：AC-changeInformation");
 			    request.getRequestDispatcher("/account.jsp").forward(request, response);
 			    return;
 			}
@@ -136,7 +136,7 @@ public class accountServlet extends HttpServlet {
 			}
 			accountBeans new_accountData = acc_logic.login_system(email);
 			if(new_accountData == null) {
-				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：AC-ci1000");
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：AC-login_system(acc)");
 			    request.getRequestDispatcher("/account.jsp").forward(request, response);
 			    return;
 			}
@@ -155,7 +155,7 @@ public class accountServlet extends HttpServlet {
 				response.sendRedirect("/logoutServlet");
 				return;
 			}else {
-				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：AC-da1000");
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：AC-deleteAccount");
 			    request.getRequestDispatcher("/account.jsp").forward(request, response);
 			    return;
 			}
@@ -170,7 +170,7 @@ public class accountServlet extends HttpServlet {
 				response.sendRedirect("/select_groupServlet");
 				return;
 			}else {
-				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：AC-ucc1000");
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：AC-updateGroupChange");
 			    request.getRequestDispatcher("/account.jsp").forward(request, response);
 			    return;
 			}
