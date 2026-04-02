@@ -2,8 +2,6 @@ package Logic;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import Beans.categoryBeans;
@@ -36,10 +34,7 @@ public class categoryLogic {
 		noticeDao notice_dao = new noticeDao();
 		signupLogic signup_logic = new signupLogic();
 		String notice_id = signup_logic.RandomID();
-		String notice = "新規カテゴリ「"+name+"」が追加されました。";
-		Date now = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        String created_at = format.format(now);         
+		String notice = "新規カテゴリ「"+name+"」が追加されました。";     
 		
 		Connection con = null;
 		try {
@@ -60,7 +55,7 @@ public class categoryLogic {
 	            return false;
 	        }
 	        
-	        boolean notice_completeFlag = notice_dao.insertNotice(con, notice_id, group_id,created_at,notice);
+	        boolean notice_completeFlag = notice_dao.insertNotice(con, notice_id, group_id,notice);
             
 	        if(!notice_completeFlag) {
 	            con.rollback();
@@ -94,9 +89,6 @@ public class categoryLogic {
 		signupLogic signup_logic = new signupLogic();
 		String notice_id = signup_logic.RandomID();
 		String notice = "カテゴリ「"+beans.getName()+"」に変更がありました。";
-		Date now = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        String created_at = format.format(now);     
 		
 		Connection con = null;
 		try {
@@ -117,7 +109,7 @@ public class categoryLogic {
 	            return false;
 	        }        
 	        
-	        boolean notice_completeFlag = notice_dao.insertNotice(con, notice_id, beans.getGroup_id(),created_at,notice);
+	        boolean notice_completeFlag = notice_dao.insertNotice(con, notice_id, beans.getGroup_id(),notice);
             
 	        if(!notice_completeFlag) {
 	            con.rollback();

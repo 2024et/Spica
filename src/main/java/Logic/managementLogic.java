@@ -189,9 +189,43 @@ public class managementLogic {
 	}
 	
 	//書類の承認
-	public boolean approverDocument(approverBeans beans) {
+	public boolean approverDocument(approverBeans beans,String user_name,String document_name,String group_id) {
 		approverDao dao = new approverDao();
-		return dao.insertApproverData(beans);
+		Connection con = null;
+		//ログの前処理
+		logDao log_dao = new logDao();
+		String log = user_name+"が、書類「"+document_name+"」を承認しました。";
+		
+		try {
+			con = DBUtil.getConnection();
+			con.setAutoCommit(false);
+			
+			boolean ar_completeFlag = dao.insertApproverData(beans);
+			
+			if(!ar_completeFlag) {
+				con.rollback();
+				return false;
+			}
+			boolean log_completeFlag = log_dao.insertLog(con, group_id, log);
+            
+	        if(!log_completeFlag) {
+	            con.rollback();
+	            return false;
+	        }		
+			
+			con.commit();
+			return true;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}finally {
+	        try {
+	            if(con != null) con.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
 	}
 	
 	//書類の編集
@@ -272,12 +306,12 @@ public class managementLogic {
 	    }
 	}
 	//書類・承認の削除
-	public boolean deleteDocumentData(proceed_documentsBeans beans,String user_name) {
+	public boolean deleteDocumentData(proceed_documentsBeans beans,String user_name,String document_name) {
 		approverDao ar_dao = new approverDao();
 		proceed_documentDao pd_dao = new proceed_documentDao();
 		//ログの前処理
 		logDao log_dao = new logDao();
-		String log = user_name+"が、書類「"+beans.getName()+"」の承認をリセットしました。";
+		String log = user_name+"が、書類「"+document_name+"」を削除しました。";
 		
 		Connection con = null;
 		try {

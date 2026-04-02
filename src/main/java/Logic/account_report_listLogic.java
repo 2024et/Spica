@@ -90,7 +90,7 @@ public class account_report_listLogic {
 				return false;
 			}
 			
-			boolean notice_completeFlag = notice_dao.insertNotices(con, ids, account, created_at,text);
+			boolean notice_completeFlag = notice_dao.insertNotices(con, ids, account,text);
 			
 			if(!notice_completeFlag) {
 				con.rollback();

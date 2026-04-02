@@ -3,7 +3,9 @@ package Dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import Beans.accountBeans;
@@ -11,7 +13,11 @@ import Beans.accountBeans;
 public class noticeDao {
 	
 	//通知の記録
-	public boolean insertNotice(Connection con,String id,String to,String at, String message) {
+	public boolean insertNotice(Connection con,String id,String to, String message) {
+        Date now = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        String created_at = format.format(now); 
+        
 		String sql = "INSERT INTO notice (id,user_id,created_at,message) VALUES (?,?,?,?)";
 		try(
 		        PreparedStatement stmt = con.prepareStatement(sql);
@@ -19,7 +25,7 @@ public class noticeDao {
 						
 			stmt.setString(1, id);
 			stmt.setString(2, to);
-			stmt.setString(3, at);
+			stmt.setString(3, created_at);
 			stmt.setString(4, message);			
 			
 			int result = stmt.executeUpdate();
@@ -32,7 +38,11 @@ public class noticeDao {
 	}
 	
 	//通知の記録(複数)
-	public boolean insertNotices(Connection con, List<String>ids, List<accountBeans> accounts,String created_at, String message) {               
+	public boolean insertNotices(Connection con, List<String>ids, List<accountBeans> accounts, String message) {
+        Date now = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        String created_at = format.format(now); 
+        
         String placeholder = "(?,?,?,?)";
 		String placeholders = String.join(", ",Collections.nCopies(accounts.size(), placeholder));
 		

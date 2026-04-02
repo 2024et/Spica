@@ -2,6 +2,7 @@ package Beans;
 
 public class accountPaymentBeans {
 	private String id;
+	private String user_id;
 	private String name;
 	private String date;
 	private String status;
@@ -10,8 +11,9 @@ public class accountPaymentBeans {
 	public accountPaymentBeans() {
 	}
 	
-	public accountPaymentBeans(String id, String name, String date, String status, String role) {
+	public accountPaymentBeans(String id, String user_id,String name, String date, String status, String role) {
 		this.id = id;
+		this.user_id = user_id;
 		this.name = name;
 		this.date = date;
 		this.status = status;
@@ -24,6 +26,14 @@ public class accountPaymentBeans {
 
 	public void setId(String id) {
 	    this.id = id;
+	}
+	
+	public String getUser_id() {
+	    return user_id;
+	}
+
+	public void setUser_id(String user_id) {
+	    this.user_id = user_id;
 	}
 	
 	public String getName() {

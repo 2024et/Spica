@@ -2,10 +2,8 @@ package Logic;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 
 import Beans.accountBeans;
@@ -137,9 +135,6 @@ public class purchase_request_detailLogic {
 				"</body>" +
 				"</html>";
 		
-		Date now = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        String created_at = format.format(now);  
         signupLogic signup_logic = new signupLogic();
         String notice_id = signup_logic.RandomID();
 		purchase_requestDao pr_dao = new purchase_requestDao();
@@ -167,7 +162,7 @@ public class purchase_request_detailLogic {
 			String message = "申請中の購入希望備品についてステータスの変更がありました。";
 			
 			if(detail.getUser_id() != null && !detail.getUser_id().isEmpty()) {
-				boolean notice_completeFlag = notice_dao.insertNotice(con,notice_id, detail.getUser_id(), created_at,message);
+				boolean notice_completeFlag = notice_dao.insertNotice(con,notice_id, detail.getUser_id(), message);
 				
 				if(!notice_completeFlag) {
 					con.rollback();				

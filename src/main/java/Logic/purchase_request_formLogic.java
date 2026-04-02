@@ -2,8 +2,6 @@ package Logic;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import Beans.accountBeans;
@@ -25,11 +23,7 @@ public class purchase_request_formLogic {
 		String text = "備品購入希望申請が提出されました。";
 		signupLogic signup_logic = new signupLogic();
 		String notice_id = signup_logic.RandomID();
-		String notice_id_group = signup_logic.RandomID();
-		
-		Date now = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        String created_at = format.format(now);        
+		String notice_id_group = signup_logic.RandomID();   
 		
 		try {
 			Connection con = DBUtil.getConnection();
@@ -56,14 +50,14 @@ public class purchase_request_formLogic {
 				return false;
 			}
 			
-			boolean notice_completeFlag = notice_dao.insertNotice(con,notice_id, beans.getUser_id(), created_at, text);
+			boolean notice_completeFlag = notice_dao.insertNotice(con,notice_id, beans.getUser_id(), text);
 			
 			if(!notice_completeFlag) {
 				con.rollback();
 				return false;
 			}
 			
-			boolean notice_completeFlag_g = notice_dao.insertNotice(con, notice_id_group, beans.getGroup_id(), created_at, text);
+			boolean notice_completeFlag_g = notice_dao.insertNotice(con, notice_id_group, beans.getGroup_id(), text);
 			
 			if(!notice_completeFlag_g) {
 				con.rollback();

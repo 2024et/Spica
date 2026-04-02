@@ -77,7 +77,7 @@ public class projectServlet extends HttpServlet {
 				status = "稼働中";
 			}
 			
-			projectBeans beans = new projectBeans(id,name,status);
+			projectBeans beans = new projectBeans(id,name,accountData.getGroup_id(),status);
 			
 			boolean updateFlag = pro_logic.updateProjectData(beans,accountData.getName());
 			

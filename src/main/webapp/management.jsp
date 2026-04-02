@@ -259,6 +259,7 @@ function filterDocuments(selectedYear) {
 				    <c:when test="${accountData.role != 'その他役員'}">
 						<form action="managementServlet" method="post">
 							<input type="hidden" name="document_id" value="${c.id}" />
+							<input type="hidden" name="document_name" value="${c.name}" />
 							<p>「${c.name}」に承認しますか？</p>
 							<label>
 							  <input type="radio" name="answer" value="OK" onclick="toggleReason(this)"> はい
@@ -311,6 +312,7 @@ function filterDocuments(selectedYear) {
 			<h1>書類の編集</h1>
 			<form action="managementServlet" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="document_id" value="${c.id}" />
+			<input type="hidden" name="document_name" value="${c.name}" />
 				<label for="name">書類名</label><br>
 				<input type="text" name="name" value="${c.name}" maxlength="100"><br><br>
 				

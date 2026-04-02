@@ -86,19 +86,22 @@ public class managementServlet extends HttpServlet {
 		}else if("approver".equals(submit)) {
 			//書類の承認
 			String document_id = request.getParameter("document_id");
+			String document_name = request.getParameter("document_name");
 			String answer = request.getParameter("answer");
 			
-			proceed_documentsBeans document = new proceed_documentsBeans(document_id);
+			proceed_documentsBeans document = new proceed_documentsBeans(document_id,accountData.getGroup_id());
 			
 			signupLogic signup_logic = new signupLogic();
 			String id = signup_logic.RandomID();
 			approverBeans beans = new approverBeans(id,document_id,accountData.getRole(),answer);
 			boolean approverlFlag = false;
 			if("NG".equals(answer)) {
+				//承認しない
 				String comment = request.getParameter("comment");
-				approverlFlag = man_logic.disApproverDocument(beans,comment,accountData.getName(),document.getName(),accountData.getGroup_id());
+				approverlFlag = man_logic.disApproverDocument(beans,comment,accountData.getName(),document_name,accountData.getGroup_id());
 			}else {
-				approverlFlag = man_logic.approverDocument(beans);
+				//承認する
+				approverlFlag = man_logic.approverDocument(beans,accountData.getName(),document_name,accountData.getGroup_id());
 			}
 			
 			if(approverlFlag) {
@@ -110,6 +113,7 @@ public class managementServlet extends HttpServlet {
 			    return;
 			}
 		}else if("edit".equals(submit)) {
+			//書類の編集
 			InputStream fileStream = null;
 			String fileName = null;
 			String document_id = request.getParameter("document_id");
@@ -132,11 +136,13 @@ public class managementServlet extends HttpServlet {
 			    return;
 			}
 		}else if("delete".equals(submit)) {
+			//書類の削除
 			String id = request.getParameter("document_id");
+			String document_name = request.getParameter("document_name");
 			
-			proceed_documentsBeans beans = new proceed_documentsBeans(id);
+			proceed_documentsBeans beans = new proceed_documentsBeans(id,accountData.getGroup_id());
 			
-			boolean deleteFlag = man_logic.deleteDocumentData(beans,accountData.getName());
+			boolean deleteFlag = man_logic.deleteDocumentData(beans,accountData.getName(),document_name);
 			
 			if(deleteFlag) {
 				response.sendRedirect("/managementServlet");
@@ -147,6 +153,7 @@ public class managementServlet extends HttpServlet {
 			    return;
 			}
 		}else if("submited".equals(submit)) {
+			//書類の提出切り替え
 			String id = request.getParameter("document_id");
 			
 			boolean submitedFlag = man_logic.submitedDocumentData(id);
@@ -161,6 +168,7 @@ public class managementServlet extends HttpServlet {
 			}
 			
 		}else if("no_submit".equals(submit)) {
+			//書類の未提出切り替え
 			String id = request.getParameter("document_id");
 			
 			boolean no_submitedFlag = man_logic.noSubmitedDocumentData(id);

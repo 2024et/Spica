@@ -41,7 +41,7 @@ public class paymentDao {
 	//支払い状況の取得
 	public List<accountPaymentBeans> getPaymentUser(String group_id){
 		List<accountPaymentBeans> list = new ArrayList<>();
-		String sql = "SELECT p.id AS id, a.user_name AS user_name, m.end_date AS date, p.status AS status, a.role_type AS role FROM payment AS p INNER JOIN account AS a ON p.user_id = a.id INNER JOIN membership_fee AS m ON p.membership_fee_id = m.id WHERE a.group_id = ?;";
+		String sql = "SELECT p.id AS id, a.id AS user_id, a.user_name AS user_name, m.end_date AS date, p.status AS status, a.role_type AS role FROM payment AS p INNER JOIN account AS a ON p.user_id = a.id INNER JOIN membership_fee AS m ON p.membership_fee_id = m.id WHERE a.group_id = ?;";
 		try (
 		        Connection con = DBUtil.getConnection();
 		        PreparedStatement stmt = con.prepareStatement(sql);
@@ -52,6 +52,7 @@ public class paymentDao {
 	            	
 	            	accountPaymentBeans beans = new accountPaymentBeans(
 	            			rs.getString("id"),
+	            			rs.getString("user_id"),
 	                        rs.getString("user_name"),
 	                        rs.getString("date"),
 	                        rs.getString("status"),

@@ -2,9 +2,7 @@ package Logic;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import Beans.accountBeans;
@@ -28,7 +26,6 @@ public class memberLogic {
 		List<accountBeans> account = getMembership(fee.getGroup_id());
 		
 		if(account == null) {
-			System.out.println("account Null");
 			return false;
 		}
 		
@@ -59,10 +56,6 @@ public class memberLogic {
 				"</html>";
 
 		String text = "新しい会費（"+fee.getFee()+"）が設定されました。期間："+fee.getStart_date()+"から"+fee.getEnd_date()+"まで。";
-		
-		Date now = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
-        String created_at = format.format(now);  
         
 		membership_feeDao fee_dao = new membership_feeDao();
 		paymentDao pay_dao = new paymentDao();
@@ -94,7 +87,7 @@ public class memberLogic {
 				return false;
 			}
 			
-			boolean notice_completeFlag = notice_dao.insertNotices(con, ids, account, created_at,text);
+			boolean notice_completeFlag = notice_dao.insertNotices(con, ids, account, text);
 			
 			if(!notice_completeFlag) {
 				con.rollback();
@@ -150,10 +143,7 @@ public class memberLogic {
 		noticeDao notice_dao = new noticeDao();
 		signupLogic signup_logic = new signupLogic();
 		String notice_id = signup_logic.RandomID();
-		String notice = target_name+"の会費の支払い状況が「"+status+"」になりました。";
-		Date now = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        String created_at = format.format(now);      
+		String notice = target_name.getName()+"の会費の支払い状況が「"+status+"」になりました。";
         
         //メール通知の前処理        
         MailUtil mail = new MailUtil();
@@ -192,7 +182,7 @@ public class memberLogic {
 	            return false;
 	        }        
 	        
-	        boolean notice_completeFlag = notice_dao.insertNotice(con, notice_id, group_id,created_at,notice);
+	        boolean notice_completeFlag = notice_dao.insertNotice(con, notice_id,target,notice);
             
 	        if(!notice_completeFlag) {
 	            con.rollback();
@@ -217,10 +207,10 @@ public class memberLogic {
 	}
 	
 	//ロールの更新
-	public boolean updateRole(String id, String role,String user_name,String target,String group_id) {
+	public boolean updateRole(String id, String role,String user_name,String group_id) {
 		accountDao dao = new accountDao();
 		
-		String to = dao.getUserEmail(target);
+		String to = dao.getUserEmail(id);
 		accountBeans target_name = dao.login(to);
 		
 		//ログの前処理
@@ -231,11 +221,8 @@ public class memberLogic {
 		noticeDao notice_dao = new noticeDao();
 		signupLogic signup_logic = new signupLogic();
 		String notice_id = signup_logic.RandomID();
-		String notice = target_name+"が「"+role+"」になりました。";
-		Date now = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        String created_at = format.format(now);      
-        
+		String notice = target_name.getName()+"が「"+role+"」になりました。";
+
         //メール通知の前処理        
         MailUtil mail = new MailUtil();
 		
@@ -273,7 +260,7 @@ public class memberLogic {
 	            return false;
 	        }        
 	        
-	        boolean notice_completeFlag = notice_dao.insertNotice(con, notice_id, group_id,created_at,notice);
+	        boolean notice_completeFlag = notice_dao.insertNotice(con, notice_id, id,notice);
             
 	        if(!notice_completeFlag) {
 	            con.rollback();

@@ -2,10 +2,8 @@ package Logic;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 
 import Beans.projectBeans;
@@ -62,7 +60,7 @@ public class projectLogic {
 	            return false;
 	        }
 	        
-	        boolean notice_completeFlag = notice_dao.insertNotice(con, notice_id, group_id,created_at,notice);
+	        boolean notice_completeFlag = notice_dao.insertNotice(con, notice_id, group_id,notice);
             
 	        if(!notice_completeFlag) {
 	            con.rollback();
@@ -85,22 +83,19 @@ public class projectLogic {
 		}
 	}
 	
-	//カテゴリの更新
+	//プロジェクトの更新
 	public boolean updateProjectData(projectBeans beans,String user_name) {
 		projectDao dao = new projectDao();
 		
 		//ログの前処理
 		logDao log_dao = new logDao();
-		String log = user_name+"が、プロジェクト「"+beans.getName()+"」を作成しました。";
+		String log = user_name+"が、プロジェクト「"+beans.getName()+"」を変更しました。";
 
         //アプリ内通知の前処理
 		noticeDao notice_dao = new noticeDao();
 		signupLogic signup_logic = new signupLogic();
 		String notice_id = signup_logic.RandomID();
-		String notice = "新規カテゴリ「"+beans.getName()+"」が追加されました。";
-		Date now = new Date();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        String created_at = format.format(now);         
+		String notice = "プロジェクト「"+beans.getName()+"」が変更されました。";
         
         Connection con = null;
 		try {
@@ -121,7 +116,7 @@ public class projectLogic {
 	            return false;
 	        }        
 	        
-	        boolean notice_completeFlag = notice_dao.insertNotice(con, notice_id, beans.getGroup_id(),created_at,notice);
+	        boolean notice_completeFlag = notice_dao.insertNotice(con, notice_id, beans.getGroup_id(),notice);
             
 	        if(!notice_completeFlag) {
 	            con.rollback();

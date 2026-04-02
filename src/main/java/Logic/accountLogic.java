@@ -101,6 +101,7 @@ public class accountLogic {
 	//アカウント削除
 	public boolean deleteAccount(String id) {
 		accountDao dao = new accountDao();
+		String to = dao.getUserEmail(id);
 		boolean completeFlag = dao.deleteAccount(id);
 		if(completeFlag) {
 			MailUtil mail = new MailUtil();
@@ -119,7 +120,6 @@ public class accountLogic {
 					"</div>" +
 					"</body>" +
 					"</html>";
-			String to = dao.getUserEmail(id);
 			
 			mail.sendEmail(to,subject,html);
 			return true;

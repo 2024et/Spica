@@ -103,10 +103,9 @@ public class memberServlet extends HttpServlet {
 			}
 		}else if("role".equals(submit)) {
 			String id = request.getParameter("id");
-			String target_id = request.getParameter("user_id");
 			String role = request.getParameter("role");
 			
-			boolean updateFlag = men_logic.updateRole(id,role,accountData.getName(),target_id,accountData.getGroup_id());
+			boolean updateFlag = men_logic.updateRole(id,role,accountData.getName(),accountData.getGroup_id());
 			
 			if(updateFlag) {
 				response.sendRedirect("/memberServlet");
