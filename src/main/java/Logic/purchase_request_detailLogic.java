@@ -20,6 +20,7 @@ import Dao.noticeDao;
 import Dao.purchase_requestDao;
 
 public class purchase_request_detailLogic {
+	
 	//詳細の取得
 	public purchase_requestBeans getRequestData(String id) {
 		financialDao dao = new financialDao();
@@ -114,7 +115,28 @@ public class purchase_request_detailLogic {
 	public boolean updateStatus(String id,String status,String group_id, String log) {
 		purchase_requestBeans detail = getRequestData(id);
 		accountDao acc_dao = new accountDao();
-		String appicant = acc_dao.getUserEmail(detail.getUser_id());
+		String applicant = null;
+		if(detail.getUser_name() != null && !detail.getUser_name().isEmpty()) {
+			applicant = acc_dao.getUserEmail(detail.getUser_id());
+		}
+		
+		MailUtil mail = new MailUtil();
+		
+		String subject = "【Spica】申請中の購入希望について";
+		
+		String text = "<html>" +
+				"<body style='font-family: Arial, sans-serif; background-color:#f5f5f5; padding:20px;'>" +
+
+				"<div style='max-width:600px; margin:0 auto; background:#ffffff; padding:24px; border-radius:8px;'>" +
+
+				"<h2 style='color:#333333;'>申請中の購入希望備品についてステータスの変更がありました。</h2>" +
+
+				"<p style='font-size:14px; color:#555555;'>変更されたステータス：「"+ status +"」</p>" +
+
+				"</div>" +
+				"</body>" +
+				"</html>";
+		
 		Date now = new Date();
         SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         String created_at = format.format(now);  
@@ -131,7 +153,6 @@ public class purchase_request_detailLogic {
 			System.out.println(tr_completeFlag);
 					
 			if(!tr_completeFlag) {
-				System.out.println("Request失敗");
 				con.rollback();
 				return false;
 			}
@@ -139,47 +160,30 @@ public class purchase_request_detailLogic {
 			boolean log_completeFlag = log_dao.insertLog(con,group_id,log);
 			
 			if(!log_completeFlag) {
-				System.out.println("Log失敗");
 				con.rollback();				
 				return false;
 			}
 			
 			String message = "申請中の購入希望備品についてステータスの変更がありました。";
-			boolean notice_completeFlag = notice_dao.insertNotice(con,notice_id, detail.getUser_id(), created_at,message);
 			
-			if(!notice_completeFlag) {
-				System.out.println("notice失敗");
-				con.rollback();				
-				return false;
+			if(detail.getUser_id() != null && !detail.getUser_id().isEmpty()) {
+				boolean notice_completeFlag = notice_dao.insertNotice(con,notice_id, detail.getUser_id(), created_at,message);
+				
+				if(!notice_completeFlag) {
+					con.rollback();				
+					return false;
+				}
 			}
 			
 			con.commit();
 			
-			MailUtil mail = new MailUtil();
-			
-			String subject = "【Spica】申請中の購入希望について";
-			
-			String text = "<html>" +
-					"<body style='font-family: Arial, sans-serif; background-color:#f5f5f5; padding:20px;'>" +
-
-					"<div style='max-width:600px; margin:0 auto; background:#ffffff; padding:24px; border-radius:8px;'>" +
-
-					"<h2 style='color:#333333;'>申請中の購入希望備品についてステータスの変更がありました。</h2>" +
-
-					"<p style='font-size:14px; color:#555555;'>変更されたステータス：「"+ status +"」</p>" +
-
-					"</div>" +
-					"</body>" +
-					"</html>";
-			
-			mail.sendEmail(appicant, subject, text);
-			
-			
+			if(applicant != null && !applicant.isEmpty()){
+			    mail.sendEmail(applicant, subject, text);
+			}
 			return true;
 			
 		} catch (SQLException e) {
-			System.out.println("エラー"+e);
-			e.printStackTrace();			
+			e.printStackTrace();
 			return false;
 		}
 	}

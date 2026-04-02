@@ -54,7 +54,7 @@
 	<div class="menu_subtitle">
 		<h3>会費管理</h3>
 		<c:choose>
-		    <c:when test="${accountData.role != 'その他役員'">
+		    <c:when test="${accountData.role != 'その他役員'}">
 				<button type="button" class="insert-btn">会費設定</button>
 		    </c:when>
 		</c:choose>
