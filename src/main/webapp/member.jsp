@@ -199,6 +199,7 @@ function filterDocuments(selectedDate) {
 				<h1>支払い状況の管理</h1>
 				<form action="memberServlet" method="post">
 					<input type="hidden" name="id" value="${c.id}" />
+					<input type="hidden" name="id" value="${c.user_id}" />
 					<p>ユーザー名：「${c.name}」さんの支払い状況...</p>
 					<label>
 					  <input type="radio" name="answer" value="支払済み" 
@@ -225,6 +226,7 @@ function filterDocuments(selectedDate) {
 				<h1>会員の設定</h1>
 				<form action="memberServlet" method="post">
 				<input type="hidden" name="id" value="${c.id}" />
+				<input type="hidden" name="id" value="${c.user_id}" />
 				<p>ロール</p>
 					<label>
 					  <input type="radio" name="role" value="一般" 

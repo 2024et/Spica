@@ -58,7 +58,7 @@ public class categoryServlet extends HttpServlet {
 			String name = request.getParameter("name");
 			String type = request.getParameter("type");
 			
-			boolean insertFlag = cat_logic.insertCategoryData(name,type,accountData.getGroup_id());
+			boolean insertFlag = cat_logic.insertCategoryData(name,type,accountData.getGroup_id(),accountData.getName());
 			
 			if(insertFlag) {
 				response.sendRedirect("/categoryServlet");
@@ -82,7 +82,7 @@ public class categoryServlet extends HttpServlet {
 			
 			categoryBeans beans = new categoryBeans(id,accountData.getGroup_id(),name,type,status);
 			
-			boolean updateFlag = cat_logic.updateCategoryData(beans);
+			boolean updateFlag = cat_logic.updateCategoryData(beans,accountData.getName());
 			
 			if(updateFlag) {
 				response.sendRedirect("/categoryServlet");

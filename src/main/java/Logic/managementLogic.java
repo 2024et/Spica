@@ -19,11 +19,13 @@ import Beans.proceed_documentsBeans;
 import Dao.DBUtil;
 import Dao.accountDao;
 import Dao.approverDao;
+import Dao.logDao;
 import Dao.proceed_documentDao;
 
 public class managementLogic {
 	//書類の作成
-	public boolean insertDocumentData(String name, String fileName, InputStream fileStream, String group_id) {
+	public boolean insertDocumentData(String name, String fileName, InputStream fileStream, String group_id,String user_name) {
+		//pdfファイル前処理
 		Properties props = new Properties();
 	    try (InputStream is = getClass().getClassLoader()
 	                            .getResourceAsStream("file.properties")) {
@@ -44,7 +46,7 @@ public class managementLogic {
 			e.printStackTrace();
 			return false;
 		}
-	    
+	    //登録書類の前処理
 	    signupLogic signup_logic = new signupLogic();
 	    String id = signup_logic.RandomID();
 	    
@@ -58,12 +60,11 @@ public class managementLogic {
 	    
 	    proceed_documentDao dao = new proceed_documentDao();
 	    
-	    boolean insertFlag = dao.insertDocumentData(beans);
-	    
+	    //メールの前処理
 	    memberLogic mem_logic = new memberLogic();
 		List<accountBeans> account = mem_logic.getMembership(group_id);
 		
-		MailUtil mail = new MailUtil();
+	    MailUtil mail = new MailUtil();
 		
 		String subject = "【Spica】書類が追加されました。";
 		
@@ -79,14 +80,51 @@ public class managementLogic {
 				"</div>" +
 				"</body>" +
 				"</html>";
-		
-	    if(insertFlag) {
-	    	for(accountBeans to : account) {
+	    
+	    //ログの前処理
+		logDao log_dao = new logDao();
+		String log = user_name+"が新しい書類「"+name+"」が追加されました。";
+	    
+	    
+	    //トランザクション
+	    Connection con = null;
+	    try {
+	        con = DBUtil.getConnection();
+	        con.setAutoCommit(false);
+	        
+	        boolean insert_completeFlag = dao.insertDocumentData(con,beans);
+	        
+	        if(!insert_completeFlag) {
+	            con.rollback();
+	            return false;
+	        }
+	        
+	        boolean log_completeFlag = log_dao.insertLog(con, group_id, log);
+	                
+	        if(!log_completeFlag) {
+	            con.rollback();
+	            return false;
+	        }
+	        
+	        
+	        con.commit();
+	        
+	        for(accountBeans to : account) {
 				mail.sendEmail(to.getEmail(),subject,text);
 			}
-	    	return true;
-	    }else {
-	    	return false;
+	        
+	        return true;
+	        
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return false;
+	    }finally {
+	        try {
+	            if(con != null) con.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	            return false;
+	        }
 	    }
 	}
 	//未提出書類の取得
@@ -100,10 +138,14 @@ public class managementLogic {
 		return dao.getSubmitedDocumentsData(group_id);
 	}
 	//書類の承認(コメント付)
-	public boolean disApproverDocument(approverBeans beans, String comment) {
+	public boolean disApproverDocument(approverBeans beans, String comment,String user_name, String document_name,String group_id) {
 		approverDao ar_dao = new approverDao();
 		proceed_documentDao pd_dao = new proceed_documentDao();
 		Connection con = null;
+		//ログの前処理
+		logDao log_dao = new logDao();
+		String log = user_name+"が、書類「"+document_name+"」を承認しました。";
+		
 		try {
 			con = DBUtil.getConnection();
 			con.setAutoCommit(false);
@@ -121,6 +163,14 @@ public class managementLogic {
 				con.rollback();
 				return false;
 			}
+			
+			boolean log_completeFlag = log_dao.insertLog(con, group_id, log);
+            
+	        if(!log_completeFlag) {
+	            con.rollback();
+	            return false;
+	        }
+	        
 			
 			
 			con.commit();
@@ -145,7 +195,8 @@ public class managementLogic {
 	}
 	
 	//書類の編集
-	public boolean updateDocumentData(proceed_documentsBeans beans,String fileName, InputStream fileStream, String reset) {
+	public boolean updateDocumentData(proceed_documentsBeans beans,String fileName, InputStream fileStream, String reset,String user_name) {
+		//pdfファイルの前処理
 		String filePath = null;
 		if(fileStream != null) {
 			Properties props = new Properties();
@@ -168,10 +219,15 @@ public class managementLogic {
 				return false;
 			}
 		}
-		
+		//変更データの前処理
 		approverDao ar_dao = new approverDao();
 		proceed_documentDao pd_dao = new proceed_documentDao();
 		Connection con = null;
+		
+		//ログの前処理
+		logDao log_dao = new logDao();
+		String log = user_name+"が、書類「"+beans.getName()+"」を編集しました。";
+		
 		try {
 			con = DBUtil.getConnection();
 			con.setAutoCommit(false);
@@ -193,6 +249,13 @@ public class managementLogic {
 				return false;
 			}
 			
+			boolean log_completeFlag = log_dao.insertLog(con, beans.getGroup_id(), log);
+            
+	        if(!log_completeFlag) {
+	            con.rollback();
+	            return false;
+	        }
+	        
 			
 			con.commit();
 			return true;
@@ -209,9 +272,13 @@ public class managementLogic {
 	    }
 	}
 	//書類・承認の削除
-	public boolean deleteDocumentData(proceed_documentsBeans beans) {
+	public boolean deleteDocumentData(proceed_documentsBeans beans,String user_name) {
 		approverDao ar_dao = new approverDao();
 		proceed_documentDao pd_dao = new proceed_documentDao();
+		//ログの前処理
+		logDao log_dao = new logDao();
+		String log = user_name+"が、書類「"+beans.getName()+"」の承認をリセットしました。";
+		
 		Connection con = null;
 		try {
 			con = DBUtil.getConnection();
@@ -231,6 +298,13 @@ public class managementLogic {
 				return false;
 			}
 			
+			boolean log_completeFlag = log_dao.insertLog(con, beans.getGroup_id(), log);
+            
+	        if(!log_completeFlag) {
+	            con.rollback();
+	            return false;
+	        }
+	        
 			
 			con.commit();
 			return true;

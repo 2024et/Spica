@@ -70,13 +70,10 @@ public class paymentDao {
 	}
 	
 	//支払い状況の更新
-	public boolean updatePaymentStatus(String id, String status) {
-		PreparedStatement stmt = null;
-		try {
-			Connection con = DBUtil.getConnection();
-			String sql = "UPDATE payment SET status = ? WHERE id = ?";
+	public boolean updatePaymentStatus(Connection con, String id, String status) {
+		String sql = "UPDATE payment SET status = ? WHERE id = ?";
+		try(PreparedStatement stmt = con.prepareStatement(sql)) {
 			
-			stmt = con.prepareStatement(sql);
 			stmt.setString(1, status);
 			stmt.setString(2, id);			
 			int result = stmt.executeUpdate();

@@ -414,13 +414,9 @@ public class accountDao {
 	}
 	
 	//ロールの更新
-	public boolean updateRole(String id, String role) {
-		PreparedStatement stmt = null;
-		try {
-			Connection con = DBUtil.getConnection();
-			String sql = "UPDATE account SET role_type = ? WHERE id = ?";
-			
-			stmt = con.prepareStatement(sql);
+	public boolean updateRole(Connection con,String id, String role) {
+		String sql = "UPDATE account SET role_type = ? WHERE id = ?";
+		try(PreparedStatement stmt = con.prepareStatement(sql)) {
 			stmt.setString(1, role);
 			stmt.setString(2, id);			
 			int result = stmt.executeUpdate();
@@ -433,13 +429,9 @@ public class accountDao {
 	}
 	
 	//強制退会
-	public boolean deleteMemberList(String id) {
-		PreparedStatement stmt = null;
-		try {
-			Connection con = DBUtil.getConnection();
-			String sql = "UPDATE account SET group_id = '' WHERE id = ?";
-			
-			stmt = con.prepareStatement(sql);
+	public boolean deleteMemberList(Connection con,String id) {
+		String sql = "UPDATE account SET group_id = '' WHERE id = ?";
+		try(PreparedStatement stmt = con.prepareStatement(sql)) {
 			stmt.setString(1, id);			
 			int result = stmt.executeUpdate();
 			if(result > 0) {return true;}

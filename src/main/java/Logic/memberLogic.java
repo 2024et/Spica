@@ -134,21 +134,234 @@ public class memberLogic {
 	}
 	
 	//支払い状況の更新
-	public boolean updatePaymentStatus(String id, String status) {
+	public boolean updatePaymentStatus(String id, String status,String user_name,String target,String group_id) {
 		paymentDao dao = new paymentDao();
-		return dao.updatePaymentStatus(id,status);
+		accountDao acc_dao = new accountDao();
+		
+		String to = acc_dao.getUserEmail(target);
+		accountBeans target_name = acc_dao.login(to);
+		
+		
+		//ログの前処理
+		logDao log_dao = new logDao();
+		String log = user_name+"が、「"+target_name.getName()+"」の支払い状況を「"+status+"」に変更しました。";
+
+        //アプリ内通知の前処理
+		noticeDao notice_dao = new noticeDao();
+		signupLogic signup_logic = new signupLogic();
+		String notice_id = signup_logic.RandomID();
+		String notice = target_name+"の会費の支払い状況が「"+status+"」になりました。";
+		Date now = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        String created_at = format.format(now);      
+        
+        //メール通知の前処理        
+        MailUtil mail = new MailUtil();
+		
+		String subject = "【Spica】会費の支払い状況について";
+		
+		String html = "<html>" +
+				"<body style='font-family: Arial, sans-serif; background-color:#f5f5f5; padding:20px;'>" +
+
+				"<div style='max-width:600px; margin:0 auto; background:#ffffff; padding:24px; border-radius:8px;'>" +
+
+				"<h2 style='color:#333333;'>会費の支払い状況について、お知らせします。</h2>" +
+
+				"<p style='font-size:14px; color:#555555;'>"+target_name.getName()+"様の会費支払い状況："+status+"</p>" +
+
+				"</div>" +
+				"</body>" +
+				"</html>";
+		
+		Connection con = null;
+		try {
+		    con = DBUtil.getConnection();
+		    con.setAutoCommit(false);
+		    
+		    boolean update_completeFlag = dao.updatePaymentStatus(con,id,status);
+		    
+		    if(!update_completeFlag) {
+		        con.rollback();
+		        return false;
+		    }
+		    
+		    boolean log_completeFlag = log_dao.insertLog(con,group_id, log);
+            
+	        if(!log_completeFlag) {
+	            con.rollback();
+	            return false;
+	        }        
+	        
+	        boolean notice_completeFlag = notice_dao.insertNotice(con, notice_id, group_id,created_at,notice);
+            
+	        if(!notice_completeFlag) {
+	            con.rollback();
+	            return false;
+	        }
+		    
+		    con.commit();
+		    
+		    mail.sendEmail(to,subject,html);
+		    return true;
+		    
+		} catch (SQLException e) {
+		    e.printStackTrace();
+		    return false;
+		}finally {
+		    try {
+		        if(con != null) con.close();
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+		}
 	}
 	
 	//ロールの更新
-	public boolean updateRole(String id, String role) {
+	public boolean updateRole(String id, String role,String user_name,String target,String group_id) {
 		accountDao dao = new accountDao();
-		return dao.updateRole(id,role);
+		
+		String to = dao.getUserEmail(target);
+		accountBeans target_name = dao.login(to);
+		
+		//ログの前処理
+		logDao log_dao = new logDao();
+		String log = user_name+"が、「"+target_name.getName()+"」の支払い状況を「"+role+"」に変更しました。";
+
+        //アプリ内通知の前処理
+		noticeDao notice_dao = new noticeDao();
+		signupLogic signup_logic = new signupLogic();
+		String notice_id = signup_logic.RandomID();
+		String notice = target_name+"が「"+role+"」になりました。";
+		Date now = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        String created_at = format.format(now);      
+        
+        //メール通知の前処理        
+        MailUtil mail = new MailUtil();
+		
+		String subject = "【Spica】ロールの変更について";
+		
+		String html = "<html>" +
+				"<body style='font-family: Arial, sans-serif; background-color:#f5f5f5; padding:20px;'>" +
+
+				"<div style='max-width:600px; margin:0 auto; background:#ffffff; padding:24px; border-radius:8px;'>" +
+
+				"<h2 style='color:#333333;'>ロールの変更について、お知らせします。</h2>" +
+
+				"<p style='font-size:14px; color:#555555;'>"+target_name.getName()+"様のロール："+role+"</p>" +
+
+				"</div>" +
+				"</body>" +
+				"</html>";
+		
+		Connection con = null;
+		try {
+		    con = DBUtil.getConnection();
+		    con.setAutoCommit(false);
+		    
+		    boolean update_completeFlag = dao.updateRole(con,id,role);
+		    
+		    if(!update_completeFlag) {
+		        con.rollback();
+		        return false;
+		    }
+		    
+		    boolean log_completeFlag = log_dao.insertLog(con,group_id, log);
+            
+	        if(!log_completeFlag) {
+	            con.rollback();
+	            return false;
+	        }        
+	        
+	        boolean notice_completeFlag = notice_dao.insertNotice(con, notice_id, group_id,created_at,notice);
+            
+	        if(!notice_completeFlag) {
+	            con.rollback();
+	            return false;
+	        }
+		    
+		    con.commit();
+		    
+		    mail.sendEmail(to,subject,html);
+		    return true;
+		    
+		} catch (SQLException e) {
+		    e.printStackTrace();
+		    return false;
+		}finally {
+		    try {
+		        if(con != null) con.close();
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+		}
 	}
 	
 	//強制退会
-	public boolean deleteMemberList(String id) {
+	public boolean deleteMemberList(String id,String user_name,String group_id) {
 		accountDao dao = new accountDao();
-		return dao.deleteMemberList(id);
+		
+		String to = dao.getUserEmail(id);
+		
+		accountBeans target_name = dao.login(to);
+
+		//ログの前処理
+		logDao log_dao = new logDao();
+		String log = user_name+"が、「"+target_name.getName()+"」を強制退会しました。";
+		
+        //メール通知の前処理        
+        MailUtil mail = new MailUtil();
+		
+		String subject = "【Spica】所属団体について";
+		
+		String html = "<html>" +
+				"<body style='font-family: Arial, sans-serif; background-color:#f5f5f5; padding:20px;'>" +
+
+				"<div style='max-width:600px; margin:0 auto; background:#ffffff; padding:24px; border-radius:8px;'>" +
+
+				"<h2 style='color:#333333;'>所属団体に関して、お知らせいたします。</h2>" +
+
+				"<p style='font-size:14px; color:#555555;'>所属していた団体役員により、退会となりました。</p>" +
+
+				"</div>" +
+				"</body>" +
+				"</html>";
+		
+		
+		Connection con = null;
+		try {
+		    con = DBUtil.getConnection();
+		    con.setAutoCommit(false);
+		    
+		    boolean delete_completeFlag = dao.deleteMemberList(con,id);
+		    
+		    if(!delete_completeFlag) {
+		        con.rollback();
+		        return false;
+		    }
+		    
+		    boolean log_completeFlag = log_dao.insertLog(con,group_id, log);
+            
+	        if(!log_completeFlag) {
+	            con.rollback();
+	            return false;
+	        }        
+	        
+		    con.commit();
+		    
+		    mail.sendEmail(to,subject,html);
+		    return true;
+		    
+		} catch (SQLException e) {
+		    e.printStackTrace();
+		    return false;
+		}finally {
+		    try {
+		        if(con != null) con.close();
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+		}
 	}
 
 

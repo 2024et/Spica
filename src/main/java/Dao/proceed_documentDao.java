@@ -13,13 +13,11 @@ import Beans.proceed_documentsBeans;
 
 public class proceed_documentDao {
 	//書類の作成
-	public boolean insertDocumentData(proceed_documentsBeans beans) {
-		PreparedStatement stmt = null;
-		try {
-			Connection con = DBUtil.getConnection();
-			String sql = "INSERT INTO proceed_document (id,group_id,created_at,name,pdf_path,status,comment) VALUES (?,?,?,?,?,?,?)";
+	public boolean insertDocumentData(Connection con,proceed_documentsBeans beans) {
+		String sql = "INSERT INTO proceed_document (id,group_id,created_at,name,pdf_path,status,comment) VALUES (?,?,?,?,?,?,?)";
+		
+		try(PreparedStatement stmt = con.prepareStatement(sql)) {
 			
-			stmt = con.prepareStatement(sql);
 			stmt.setString(1, beans.getId());
 			stmt.setString(2, beans.getGroup_id());
 			stmt.setString(3, beans.getCreated_at());

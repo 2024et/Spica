@@ -87,9 +87,10 @@ public class memberServlet extends HttpServlet {
 			
 		}else if("payment".equals(submit)) {
 			String id = request.getParameter("id");
+			String target_id = request.getParameter("user_id");
 			String status = request.getParameter("answer");
 			
-			boolean updateFlag = men_logic.updatePaymentStatus(id,status);
+			boolean updateFlag = men_logic.updatePaymentStatus(id,status,accountData.getName(),target_id,accountData.getGroup_id());
 			
 			
 			if(updateFlag) {
@@ -102,9 +103,10 @@ public class memberServlet extends HttpServlet {
 			}
 		}else if("role".equals(submit)) {
 			String id = request.getParameter("id");
+			String target_id = request.getParameter("user_id");
 			String role = request.getParameter("role");
 			
-			boolean updateFlag = men_logic.updateRole(id,role);
+			boolean updateFlag = men_logic.updateRole(id,role,accountData.getName(),target_id,accountData.getGroup_id());
 			
 			if(updateFlag) {
 				response.sendRedirect("/memberServlet");
@@ -118,7 +120,7 @@ public class memberServlet extends HttpServlet {
 		}else if("delete".equals(submit)) {
 			String id = request.getParameter("id");
 			
-			boolean deleteFlag = men_logic.deleteMemberList(id);
+			boolean deleteFlag = men_logic.deleteMemberList(id,accountData.getName(),accountData.getGroup_id());
 			
 			if(deleteFlag) {
 				response.sendRedirect("/memberServlet");

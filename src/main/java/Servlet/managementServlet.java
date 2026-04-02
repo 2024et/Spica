@@ -72,7 +72,7 @@ public class managementServlet extends HttpServlet {
 	        String fileName = filePart.getSubmittedFileName(); 
 	        InputStream fileStream = filePart.getInputStream(); 
 
-	        boolean insertFlag = man_logic.insertDocumentData(name, fileName, fileStream,accountData.getGroup_id());
+	        boolean insertFlag = man_logic.insertDocumentData(name, fileName, fileStream,accountData.getGroup_id(),accountData.getName());
 	        
 			if(insertFlag) {
 				response.sendRedirect("/managementServlet");
@@ -88,13 +88,15 @@ public class managementServlet extends HttpServlet {
 			String document_id = request.getParameter("document_id");
 			String answer = request.getParameter("answer");
 			
+			proceed_documentsBeans document = new proceed_documentsBeans(document_id);
+			
 			signupLogic signup_logic = new signupLogic();
 			String id = signup_logic.RandomID();
 			approverBeans beans = new approverBeans(id,document_id,accountData.getRole(),answer);
 			boolean approverlFlag = false;
 			if("NG".equals(answer)) {
 				String comment = request.getParameter("comment");
-				approverlFlag = man_logic.disApproverDocument(beans,comment);
+				approverlFlag = man_logic.disApproverDocument(beans,comment,accountData.getName(),document.getName(),accountData.getGroup_id());
 			}else {
 				approverlFlag = man_logic.approverDocument(beans);
 			}
@@ -120,7 +122,7 @@ public class managementServlet extends HttpServlet {
 		        fileStream = filePart.getInputStream();
 			}
 			proceed_documentsBeans beans = new proceed_documentsBeans(document_id,accountData.getGroup_id(),name);
-			boolean updateFlag = man_logic.updateDocumentData(beans,fileName,fileStream,reset);
+			boolean updateFlag = man_logic.updateDocumentData(beans,fileName,fileStream,reset,accountData.getName());
 			if(updateFlag) {
 				response.sendRedirect("/managementServlet");
 				return;
@@ -134,7 +136,7 @@ public class managementServlet extends HttpServlet {
 			
 			proceed_documentsBeans beans = new proceed_documentsBeans(id);
 			
-			boolean deleteFlag = man_logic.deleteDocumentData(beans);
+			boolean deleteFlag = man_logic.deleteDocumentData(beans,accountData.getName());
 			
 			if(deleteFlag) {
 				response.sendRedirect("/managementServlet");

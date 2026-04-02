@@ -46,13 +46,11 @@ public class projectDao {
 		}
 	}
 	//プロジェクトの新規作成
-	public boolean insertProjectData(projectBeans beans) {
-		PreparedStatement stmt = null;
-		try {
-			Connection con = DBUtil.getConnection();
-			String sql = "INSERT INTO balance_project (id,group_id,created_at,name,status) VALUES (?,?,?,?,?)";
+	public boolean insertProjectData(Connection con,projectBeans beans) {
+		String sql = "INSERT INTO balance_project (id,group_id,created_at,name,status) VALUES (?,?,?,?,?)";
+		try (PreparedStatement stmt = con.prepareStatement(sql)){
 			
-			stmt = con.prepareStatement(sql);
+			
 			stmt.setString(1, beans.getId());
 			stmt.setString(2, beans.getGroup_id());
 			stmt.setString(3, beans.getCreated_at());
@@ -69,13 +67,11 @@ public class projectDao {
 		}
 	}
 	//カテゴリの更新
-	public boolean updateProjectData(projectBeans beans) {
-		PreparedStatement stmt = null;
-		try {
-			Connection con = DBUtil.getConnection();
-			String sql = "UPDATE balance_project SET name = ?,status = ? WHERE id = ?";
+	public boolean updateProjectData(Connection con,projectBeans beans) {
+
+		String sql = "UPDATE balance_project SET name = ?,status = ? WHERE id = ?";
+		try (PreparedStatement stmt = con.prepareStatement(sql)){
 			
-			stmt = con.prepareStatement(sql);
 			stmt.setString(1, beans.getName());
 			stmt.setString(2, beans.getStatus());
 			stmt.setString(3, beans.getId());			

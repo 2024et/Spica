@@ -45,13 +45,10 @@ public class categoryDao {
 		}
 	}
 	//カテゴリの新規登録
-	public boolean insertCategoryData(categoryBeans beans) {
-		PreparedStatement stmt = null;
-		try {
-			Connection con = DBUtil.getConnection();
-			String sql = "INSERT INTO category (id,group_id,name,type,status) VALUES (?,?,?,?,?)";
+	public boolean insertCategoryData(Connection con,categoryBeans beans) {
+		String sql = "INSERT INTO category (id,group_id,name,type,status) VALUES (?,?,?,?,?)";
+		try(PreparedStatement stmt = con.prepareStatement(sql)) {
 			
-			stmt = con.prepareStatement(sql);
 			stmt.setString(1, beans.getId());
 			stmt.setString(2, beans.getGroup_id());
 			stmt.setString(3, beans.getName());
@@ -69,13 +66,11 @@ public class categoryDao {
 	}
 	
 	//カテゴリの更新
-	public boolean updateCategoryData(categoryBeans beans) {
-		PreparedStatement stmt = null;
-		try {
-			Connection con = DBUtil.getConnection();
-			String sql = "UPDATE category SET name = ?,type = ?,status = ? WHERE id = ?";
+	public boolean updateCategoryData(Connection con,categoryBeans beans) {
+		String sql = "UPDATE category SET name = ?,type = ?,status = ? WHERE id = ?";
+		
+		try(PreparedStatement stmt = con.prepareStatement(sql)) {
 			
-			stmt = con.prepareStatement(sql);
 			stmt.setString(1, beans.getName());
 			stmt.setString(2, beans.getType());
 			stmt.setString(3, beans.getStatus());

@@ -56,7 +56,7 @@ public class projectServlet extends HttpServlet {
 		if("insert".equals(submit)) {
 			String name = request.getParameter("name");
 			
-			boolean insertFlag = pro_logic.insertProjectData(name,accountData.getGroup_id());
+			boolean insertFlag = pro_logic.insertProjectData(name,accountData.getGroup_id(),accountData.getName());
 			
 			if(insertFlag) {
 				response.sendRedirect("/projectServlet");
@@ -79,7 +79,7 @@ public class projectServlet extends HttpServlet {
 			
 			projectBeans beans = new projectBeans(id,name,status);
 			
-			boolean updateFlag = pro_logic.updateProjectData(beans);
+			boolean updateFlag = pro_logic.updateProjectData(beans,accountData.getName());
 			
 			if(updateFlag) {
 				response.sendRedirect("/projectServlet");
