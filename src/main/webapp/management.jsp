@@ -67,7 +67,7 @@
 	<div class="process">
 	<c:forEach var="d" items="${process_documents}">
 		<div class="item">
-			<a href="${pageContext.request.contextPath}/fileServlet?path=${d.path}" target="_blank" rel="noopener noreferrer">${d.name}</a>
+			<a href="fileServlet?path=${d.path}" target="_blank" rel="noopener noreferrer">${d.name}</a>
 			<div class="info">
 				<div class="left">
 					<div class="item-btn">
@@ -235,7 +235,7 @@ function filterDocuments(selectedYear) {
         html += 
             '<div class="submited">' +
                 '<div class="item">' +
-                    '<a href="' + doc.path + '">' + doc.name + '</a>' +
+                    '<a href="fileServlet?path=' + doc.path + '" target="_blank" rel="noopener noreferrer">' + doc.name + '</a>' +
                     '<form action="managementServlet" method="post">' +
                         '<input type="hidden" name="document_id" value="' + doc.id + '" />' +
                         '<button type="submit" name="submit" class="submited-btn" value="no_submit">未提出</button>' +

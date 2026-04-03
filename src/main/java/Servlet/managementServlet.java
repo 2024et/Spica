@@ -89,8 +89,6 @@ public class managementServlet extends HttpServlet {
 			String document_name = request.getParameter("document_name");
 			String answer = request.getParameter("answer");
 			
-			proceed_documentsBeans document = new proceed_documentsBeans(document_id,accountData.getGroup_id());
-			
 			signupLogic signup_logic = new signupLogic();
 			String id = signup_logic.RandomID();
 			approverBeans beans = new approverBeans(id,document_id,accountData.getRole(),answer);
