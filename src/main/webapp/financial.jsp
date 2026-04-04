@@ -361,13 +361,13 @@ console.log(
 	
 	const ctx2 = document.getElementById("searchBalanceGraph");
 
-	<c:forEach var="b" items="${searchIncome}">
-		searchLabels.push("${b.key}");
-		searchDataIncome.push(${b.value});
+	<c:forEach var="i" items="${searchIncome}">
+		searchLabels.push("${i.key}");
+		searchDataIncome.push(${i.value});
 	</c:forEach>
 	
-	<c:forEach var="b" items="${searchExpend}">
-		searchDataExpend.push(${b.value});
+	<c:forEach var="e" items="${searchExpend}">
+		searchDataExpend.push(${e.value});
 	</c:forEach>
 
 	if (searchLabels.length === 0) {

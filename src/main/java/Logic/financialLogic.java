@@ -370,56 +370,34 @@ public class financialLogic {
 		
 	}
 	
-	//検索結果収入グラフ整形
-	public Map<Integer,Integer> searchBalanceDataFormatIncome(List<balanceBeans> beans){
+	//検索結果グラフ整形
+	public Map<Integer,Integer> searchBalanceDataFormat(List<balanceBeans> beans, String sort){
 		if (beans == null || beans.isEmpty()) {
 	        return new HashMap<>();
 	    }
-		Map<Integer, Integer> searchBalanceDataIncome = new LinkedHashMap<>();
+		Map<Integer, Integer> searchBalanceData = new LinkedHashMap<>();
 		String latestDate = beans.get(0).getCreated_at();
 		String oldestDate = beans.get(beans.size()-1).getCreated_at();
 		int latestFiscalYear = getFiscalYear(latestDate);
 		int oldestFiscalYear = getFiscalYear(oldestDate);
-		int total = 0;
+		
 		for(int i = 0;i <= latestFiscalYear - oldestFiscalYear; i++) {
 			int targetYear = oldestFiscalYear + i;
+			int total = 0;
 			for(balanceBeans data : beans) {
-				String date = data.getCreated_at();
-				int year = getFiscalYear(date);
-				if(year ==targetYear) {
-					
-					total += data.getAmount();
+				if(sort.equals(data.getType())) {
+					String date = data.getCreated_at();
+					int year = getFiscalYear(date);
+					if(year ==targetYear) {
+						
+						total += data.getAmount();
+					}
 				}
-				
 			}
-			searchBalanceDataIncome.put(targetYear, total);
+			searchBalanceData.put(targetYear, total);
 		}
-		return searchBalanceDataIncome;
+		return searchBalanceData;
 	}
-	//検索結果支出グラフ整形
-	public Map<Integer,Integer> searchBalanceDataFormatExpend(List<balanceBeans> beans){
-		if (beans == null || beans.isEmpty()) {
-	        return new HashMap<>();
-	    }
-		Map<Integer, Integer> searchBalanceDataExpend = new LinkedHashMap<>();
-		String latestDate = beans.get(0).getCreated_at();
-		String oldestDate = beans.get(beans.size()-1).getCreated_at();
-		int latestFiscalYear = getFiscalYear(latestDate);
-		int oldestFiscalYear = getFiscalYear(oldestDate);
-		int total = 0;
-		for(int i = 0;i <= latestFiscalYear - oldestFiscalYear; i++) {
-			int targetYear = oldestFiscalYear + i;
-			for(balanceBeans data : beans) {
-				String date = data.getCreated_at();
-				int year = getFiscalYear(date);
-				if(year ==targetYear) {
-					total += data.getAmount();
-				}
-				
-			}
-			searchBalanceDataExpend.put(targetYear, total);
-		}
-		return searchBalanceDataExpend;
-	}
+	
 	
 }

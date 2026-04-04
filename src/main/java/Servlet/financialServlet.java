@@ -182,8 +182,8 @@ public class financialServlet extends HttpServlet {
 			archive.put("type", type);
 			archive.put("keyword", keyword);
 			
-			Map<Integer,Integer> income = logic.searchBalanceDataFormatIncome(searchData);
-			Map<Integer,Integer> expend = logic.searchBalanceDataFormatExpend(searchData);
+			Map<Integer,Integer> income = logic.searchBalanceDataFormat(searchData,"income");
+			Map<Integer,Integer> expend = logic.searchBalanceDataFormat(searchData,"expend");
 			
 			request.setAttribute("searchArchive", archive);
 			request.setAttribute("searchIncome", income);
