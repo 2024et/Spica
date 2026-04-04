@@ -3,6 +3,7 @@ package Beans;
 public class chatBeans {
 	private String id;	
 	private String user_id;	
+	private String user_name;
 	private String request_id;
 	private String created_at;	
 	private String message;	
@@ -10,9 +11,10 @@ public class chatBeans {
 	public chatBeans() {
 	}
 	
-	public chatBeans(String id, String user_id, String request_id, String created_at, String message) {
+	public chatBeans(String id, String user_id,String user_name, String request_id, String created_at, String message) {
 		this.id = id;
 		this.user_id = user_id;
+		this.user_name = user_name;
 		this.request_id = request_id;
 		this.created_at = created_at;
 		this.message = message;
@@ -30,6 +32,13 @@ public class chatBeans {
 	}
 	public void setUser_id(String user_id) {
 		this.user_id = user_id;
+	}
+	
+	public String getUser_name() {
+		return user_name;
+	}
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
 	}
 	
 	public String getRequest_id() {

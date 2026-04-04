@@ -13,7 +13,7 @@ public class chatDao {
 	//チャットの取得
 	public List<chatBeans> getChat(String requestID){
 		List<chatBeans> list = new ArrayList<>();
-		String sql = "SELECT * FROM chat WHERE request_id = ? ORDER BY created_at;";
+		String sql = "SELECT c.id AS id, c.user_id AS user_id, a.user_name AS user_name, c.created_at AS created_at, c.message AS message FROM chat AS c LEFT JOIN account AS a ON c.user_id = a.id WHERE request_id = ? ORDER BY created_at;";
 		try (
 		        Connection con = DBUtil.getConnection();
 		        PreparedStatement stmt = con.prepareStatement(sql);
@@ -24,12 +24,14 @@ public class chatDao {
 				while (rs.next()) {
 	            	String id = rs.getString("id");
 	            	String user_id = rs.getString("user_id");
+	            	String user_name = rs.getString("user_name");
 	            	String created_at = rs.getString("created_at");
 	            	String message = rs.getString("message");
 	            	
 	            	chatBeans beans = new chatBeans(
 	                        id,
 	                        user_id,
+	                        user_name,
 	                        requestID,
 	                        created_at,
 	                        message

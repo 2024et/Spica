@@ -61,6 +61,7 @@
 </section>
 <br>
 <section>
+	<h3>チャット</h3>
 	<div class="chat">
 		<c:forEach var="c" items="${chat}">
 		    <div class="contents">
@@ -68,6 +69,7 @@
 		            <c:when test="${c.user_id != accountData.id}">
 		                <div class="message left">
 		                    <div class="message_box">
+		                    	<div class="user_name">${c.user_name}</div>
 		                        <div class="message_content">
 		                            <div class="message_text">${c.message}</div>
 		                        </div>
