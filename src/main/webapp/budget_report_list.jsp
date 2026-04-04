@@ -8,6 +8,7 @@
 <title>Spica | 予算計画書一覧</title>
 <link rel="stylesheet" href="css/budget_report_list.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="images/spica.ico">
 </head>
 <body>
 <jsp:include page="header.jsp" />

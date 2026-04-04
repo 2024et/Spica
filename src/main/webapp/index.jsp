@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Spica</title>
+<link rel="icon" href="images/spica.ico">
 </head>
 <body>
 <%

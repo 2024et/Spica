@@ -7,6 +7,7 @@
 <title>Spica | パスワードの再設定</title>
 <link rel="stylesheet" href="css/change_password.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="images/spica.ico">
 </head>
 <body>
 <h1>Spica</h1>

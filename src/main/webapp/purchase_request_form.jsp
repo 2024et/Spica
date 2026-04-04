@@ -7,6 +7,7 @@
 <title>Spica | 備品購入希望申請</title>
 <link rel="stylesheet" href="css/purchase_request_form.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="images/spica.ico">
 </head>
 <body>
 <jsp:include page="header.jsp" />

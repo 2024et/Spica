@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="css/account_report_list.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="images/spica.ico">
 </head>
 <body>
 <jsp:include page="header.jsp" />

@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>Spica | ヘッダー</title>
 <link rel="stylesheet" href="css/header.css">
+<link rel="icon" href="images/spica.ico">
 </head>
 <body>
 <header>
