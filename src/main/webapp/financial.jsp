@@ -167,7 +167,7 @@
 						<td><input type="date" name="date" required></td>
 						<td>カテゴリ<span class="req">*</span></td>
 						<td>
-							<select  class="textbox" name="category" required>
+							<select  class="textbox" name="category">
 								<option value="">==未選択==</option>	
 								<c:forEach var="c" items="${category}">
 									<option value="${c.name}">${c.name}</option>
