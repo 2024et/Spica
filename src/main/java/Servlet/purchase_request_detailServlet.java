@@ -56,6 +56,7 @@ public class purchase_request_detailServlet extends HttpServlet {
 		purchase_request_detailLogic logic = new purchase_request_detailLogic();
 		
 		if("delete".equals(submit)) {
+			//申請の取り消し
 			log = accountData.getName()+"さんが、希望申請を取り消しました。";
 			
 			boolean deleteFlag = logic.deleteRequestData(requestID,accountData.getGroup_id(),log);
@@ -69,9 +70,11 @@ public class purchase_request_detailServlet extends HttpServlet {
 				return;
 			}
 		}else if("form".equals(submit)) {
+			//申請内容の編集
 			log = accountData.getName()+"さんが、希望申請を編集しました。";
 			
-			String selected_date = request.getParameter("selected_date");
+			String selected_date = "";
+			selected_date = request.getParameter("selected_date");
 			String name = request.getParameter("name");
 			String item = request.getParameter("item");
 			String purpose = request.getParameter("purpose");
@@ -92,6 +95,7 @@ public class purchase_request_detailServlet extends HttpServlet {
 				return;
 			}
 		}else if("status".equals(submit)) {
+			//申請のステータス変更
 			log = accountData.getName()+"さんが、希望申請ステータスを変更しました。";
 			
 			String status = request.getParameter("radio");
@@ -107,6 +111,7 @@ public class purchase_request_detailServlet extends HttpServlet {
 				return;
 			}
 		}else if("send".equals(submit)) {
+			//チャット
 			String message = request.getParameter("message");
 			boolean sendFlag = logic.sendMessage(accountData.getId(),requestID,message,accountData.getGroup_id());
 			

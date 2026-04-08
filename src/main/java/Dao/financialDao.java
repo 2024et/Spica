@@ -377,7 +377,11 @@ public class financialDao {
 		String sql = "UPDATE finance_record SET created_at  = ?,name  = ?,item  = ?,amount  = ? WHERE id = ?;";
 		try(PreparedStatement stmt = con.prepareStatement(sql)) {
 			
-			stmt.setString(1, beans.getCreated_at());
+			if (beans.getCreated_at() != null && !beans.getCreated_at().isEmpty()) {
+			    stmt.setString(1, beans.getCreated_at());
+			} else {
+			    stmt.setNull(1, java.sql.Types.DATE);
+			}
 			stmt.setString(2, beans.getName());
 			stmt.setString(3, beans.getItem());
 			stmt.setInt(4, beans.getAmount());
