@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Spica | 会計報告一覧</title>
 <link rel="stylesheet" href="css/account_report_list.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="images/spica.ico">
