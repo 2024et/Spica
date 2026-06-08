@@ -71,6 +71,14 @@ public class managementServlet extends HttpServlet {
 			Part filePart = request.getPart("file");
 	        String fileName = filePart.getSubmittedFileName(); 
 	        InputStream fileStream = filePart.getInputStream(); 
+	        
+	        boolean fileChecker = man_logic.fileChecker(fileStream);
+	        
+	        if(!fileChecker) {
+				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：MA-fileChecker");
+			    request.getRequestDispatcher("/management.jsp").forward(request, response);
+			    return;
+	        }
 
 	        boolean insertFlag = man_logic.insertDocumentData(name, fileName, fileStream,accountData.getGroup_id(),accountData.getName());
 	        
