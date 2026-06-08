@@ -48,12 +48,12 @@
 		<div class="buttons-right">
 			<c:choose>
 			    <c:when test="${accountData.name == request.user_name}">
-					<button class="form-edit-btn" id="form-edit-btn">編集(申請者)</button>
+					<button class="form-edit-btn" id="form-edit-btn">申請内容の編集</button>
 			    </c:when>
 			</c:choose>
 			<c:choose>
 			    <c:when test="${accountData.role != '一般'}">
-					<button class="status-edit-btn" id="status-edit-btn">編集(役員)</button>
+					<button class="status-edit-btn" id="status-edit-btn">ステータス変更</button>
 			    </c:when>
 			</c:choose>
 			
@@ -109,13 +109,13 @@
 		<input type="hidden" name="id" value="${request.id}">
 		
 			<table>
-				<tr><td>購入希望日</td>
+				<tr><td>購入希望日<span class="req">*</span></td>
 					<td><input type="date" id="date_input" name="selected_date" value="${request.created_at}"><span class="date-icon">📅</span></td>
 				</tr>
-				<tr><td>店名</td><td><input type="text" name="name" required value="${request.name}" maxlength="30"></td></tr>
-				<tr><td>品目</td><td><input type="text" name="item" required value="${request.item}" maxlength="300"></td></tr>
-				<tr><td>目的</td><td><textarea name="purpose" maxlength="200" required maxlength="200">${request.purpose}</textarea></td></tr>
-				<tr><td>金額</td><td><input type="number" name="amount" required value="${request.amount}" min="0" max="9999999"></td></tr>
+				<tr><td>店名<span class="req">*</span></td><td><input type="text" name="name" required value="${request.name}" maxlength="30"></td></tr>
+				<tr><td>品目<span class="req">*</span></td><td><input type="text" name="item" required value="${request.item}" maxlength="300"></td></tr>
+				<tr><td>目的<span class="req">*</span></td><td><textarea name="purpose" maxlength="200" required maxlength="200">${request.purpose}</textarea></td></tr>
+				<tr><td>金額<span class="req">*</span></td><td><input type="number" name="amount" required value="${request.amount}" min="0" max="9999999"></td></tr>
 				<tr><td>販売元URL</td><td><input type="text" name="link" maxlength="200" value="${request.store_link}"></td></tr>
 			</table>
 			<button type="button" class="fo-ed-btn" id="fo-ed-btn">キャンセル</button>
