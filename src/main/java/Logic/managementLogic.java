@@ -370,4 +370,20 @@ public class managementLogic {
 		accountDao dao = new accountDao();
 		return dao.getBoardMember(group_id);
 	}
+	
+	//pdfチェック
+	public boolean fileChecker(InputStream fileStream) {
+		byte[] header = new byte[4];
+		try {
+			fileStream.read(header);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
+		if (!new String(header).equals("%PDF")) {
+		    return false;
+		}else {
+			return true;
+		}
+	}
 }
