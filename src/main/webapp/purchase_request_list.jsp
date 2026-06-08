@@ -29,7 +29,7 @@
 				<c:forEach var="c" items="${request_list}">
 					<tr>
 						<td>${c.user_name}</td>
-						<td>${c.name}</td>
+						<td>${c.item}</td>
 						<td>${c.status}</td>
 						<td>
 						<form method="get" action="purchase_request_detailServlet">
