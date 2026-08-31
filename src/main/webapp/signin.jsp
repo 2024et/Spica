@@ -23,7 +23,7 @@
 	
 	<label for="passwprd_1">パスワード<span class="req">*</span></label><br>
 	<div class="password-wrapper">
-		<input type="password" name="password" id="password" required maxlength="30">
+		<input type="password" name="password" id="password" minlength="8" required maxlength="30">
 		<span class="toggle-btn" onclick="togglePassword()">🔓</span>
 	</div>
 	<br><br>

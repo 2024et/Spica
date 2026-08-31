@@ -18,15 +18,15 @@
 <p>新しいパスワードを入力してください。</p>
 <form action="change_passwordServlet" method="post" >
 	
-	<label for="passwprd_1">パスワード<span class="req">*</span></label><br>
+	<label for="passwprd_1">パスワード<span class="req">*</span>（英数字8文字以上30文字以下）</label><br>
 	<div class="password-wrapper">
-		<input type="password" name="password_1" id="password" required maxlength="30">
+		<input type="password" name="password_1" id="password" required minlength="8" maxlength="30">
 		<span class="toggle-btn" onclick="togglePassword()">🔓</span>
 	</div><br><br>
 	
 	<label for="passwprd_2">確認用パスワード<span class="req">*</span></label><br>
 	<div class="password-wrapper">
-		<input type="password" name="password_2" id="password" required maxlength="30">
+		<input type="password" name="password_2" id="password" required minlength="8" maxlength="30">
 		<span class="toggle-btn" onclick="togglePassword()">🔓</span>
 	</div><br><br>
 	

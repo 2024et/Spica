@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import Logic.change_passwordLogic;
+import Logic.signupLogic;
 
 @WebServlet("/change_passwordServlet")
 public class change_passwordServlet extends HttpServlet {
@@ -28,6 +29,16 @@ public class change_passwordServlet extends HttpServlet {
 		//パスワードが2つとも正しいか確認
 		if(!password_1.equals(password_2)) {
 			request.setAttribute("errorMessage", "パスワードが一致しませんでした。再度やり直してください。");
+			request.setAttribute("id", id);
+		    request.getRequestDispatcher("/change_password.jsp").forward(request, response);
+		    return;
+		}
+		
+		//パスワードチェック
+		signupLogic signup_logic = new signupLogic();
+		boolean check = signup_logic.checkPassword(password_1);
+		if(!check) {
+			request.setAttribute("errorMessage", "パスワードが条件を満たしていません。再度やり直してください。\\nパスワードは、英数字8桁以上30文字以下である必要があります。");
 			request.setAttribute("id", id);
 		    request.getRequestDispatcher("/change_password.jsp").forward(request, response);
 		    return;
