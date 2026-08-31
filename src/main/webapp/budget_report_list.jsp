@@ -15,10 +15,10 @@
 <jsp:include page="header.jsp" />
 
 <section>
-	<h1>予算報告書</h1>
+	<h1>予算計画書</h1>
 	<c:choose>
 	    <c:when test="${accountData.role == '会計' || accountData.role == '顧問'}">
-			<button class="new-budget-btn">予算計画書の作成</button>
+			<button class="new-budget-btn">予算計画書の作成と公開</button>
 	    </c:when>
 	</c:choose>
 	
@@ -67,7 +67,7 @@
 		 </table>
 			<br>
 			<button type="button" class="close-btn" id="close-btn">キャンセル</button>
-			<button type="submit" name="submit" class="save-btn" value="status">保存</button>
+			<button type="submit" name="submit" class="save-btn" value="status" onclick="return confirm();">保存</button>
 		</form>
 		</div>
 	</div>
@@ -100,6 +100,9 @@ document.getElementById('wrapper')?.addEventListener('click', (e) => {
         e.target.style.display = 'none';
     }
 });
+function confirm(){
+	return confirm("公開してもよろしいですか？一度公開すると、編集・削除することはできません。");
+}
 </script>
 <br><br>
 <% String error = (String) request.getAttribute("errorMessage"); %>
