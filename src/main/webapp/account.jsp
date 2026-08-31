@@ -46,7 +46,7 @@
 	<h3>アカウント情報</h3>
 		<table>
 			<tbody>
-				<tr><td>ユーザー名：</td><td>${accountData.name}</td></tr>
+				<tr><td>氏名：</td><td>${accountData.name}</td></tr>
 				<tr><td>ユーザーID：</td><td>${accountData.id}</td></tr>
 				<tr><td>メールアドレス：</td><td>${accountData.email}</td></tr>
 				<tr><td>ロール権限：</td><td>${accountData.role}</td></tr>
@@ -122,7 +122,7 @@
 			<form action="accountServlet" method="post">
 							<table>
 					<tr>
-						<td>ユーザー名</td>
+						<td>氏名</td>
 						<td><input type="text" name="name" maxlength="30"></td>
 					</tr>
 					<tr>

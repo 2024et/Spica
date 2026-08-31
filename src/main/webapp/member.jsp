@@ -203,7 +203,7 @@ function filterDocuments(selectedDate) {
 				<form action="memberServlet" method="post">
 					<input type="hidden" name="id" value="${c.id}" />
 					<input type="hidden" name="user_id" value="${c.user_id}" />
-					<p>ユーザー名：「${c.name}」さんの支払い状況...</p>
+					<p>氏名：「${c.name}」さんの支払い状況...</p>
 					<label>
 					  <input type="radio" name="answer" value="支払済み" 
 					  <c:if test="${c.status == '支払済み'}">checked</c:if>/> 支払い済み
