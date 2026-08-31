@@ -108,7 +108,7 @@ public class memberServlet extends HttpServlet {
 			boolean updateFlag = men_logic.updateRole(id,role,accountData.getName(),accountData.getGroup_id());
 			
 			if(updateFlag) {
-				if(id == accountData.getId()) {
+				if(id.equals(accountData.getId())) {
 					//自分自身のロールを修正した場合
 					response.sendRedirect("/logoutServlet");
 				}else {
@@ -127,7 +127,7 @@ public class memberServlet extends HttpServlet {
 			boolean deleteFlag = men_logic.deleteMemberList(id,accountData.getName(),accountData.getGroup_id());
 			
 			if(deleteFlag) {
-				if(id == accountData.getId()) {
+				if(id.equals(accountData.getId())) {
 					//自分自身を削除した場合
 					response.sendRedirect("/logoutServlet");
 				}else {
