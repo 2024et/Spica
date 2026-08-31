@@ -62,6 +62,8 @@
 	</div>
 </section>
 <br>
+<hr>
+
 <section>
 	<h3>チャット</h3>
 	<div class="chat">
