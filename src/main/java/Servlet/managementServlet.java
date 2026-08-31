@@ -104,6 +104,7 @@ public class managementServlet extends HttpServlet {
 			if("NG".equals(answer)) {
 				//承認しない
 				String comment = request.getParameter("comment");
+				comment += "（"+ accountData.getName() + "）";
 				approverlFlag = man_logic.disApproverDocument(beans,comment,accountData.getName(),document_name,accountData.getGroup_id());
 			}else {
 				//承認する
