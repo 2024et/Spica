@@ -24,9 +24,10 @@ public class signupServlet extends HttpServlet {
 		String password_1 = request.getParameter("password_1");
 		String password_2 = request.getParameter("password_2");
 		
+		signupLogic logic = new signupLogic();
+		
 		//メールアドレスの重複を確認
-		signupLogic mail_logic = new signupLogic();
-		int mailDupliFlag = mail_logic.mailDupli(mail);
+		int mailDupliFlag = logic.mailDupli(mail);
 		if(mailDupliFlag==1) {
 			request.setAttribute("errorMessage", "すでにこのメールアドレスは使用されています。別のメールアドレスを登録してください。");
 		    request.getRequestDispatcher("/signup.jsp").forward(request, response);
@@ -44,9 +45,16 @@ public class signupServlet extends HttpServlet {
 		    return;
 		}
 		
-		//仮登録
-		signupLogic temp_logic = new signupLogic();
-		boolean signupFlag = temp_logic.tempAccount(name,mail,password_1);
+		//パスワードチェック
+		boolean check = logic.checkPassword(password_1);
+		if(!check) {
+			request.setAttribute("errorMessage", "パスワードが条件を満たしていません。再度やり直してください。\nパスワードは、英数字8桁以上30文字以下である必要があります。");
+		    request.getRequestDispatcher("/signup.jsp").forward(request, response);
+		    return;	
+		}
+		
+		//仮登録		
+		boolean signupFlag = logic.tempAccount(name,mail,password_1);
 		if(signupFlag) {
 			request.setAttribute("Message", "入力されたメールアドレス宛に仮登録のご案内メールを送信しました。メール内記載のリンクにアクセスして本登録を完了させてください。");
 		    request.getRequestDispatcher("/signup.jsp").forward(request, response);

@@ -39,6 +39,11 @@ public class signupLogic {
 		return mailSendFlag;
 	}
 	
+	//パスワード正規表現
+	public boolean checkPassword(String password) {
+	    return password != null && password.matches("^[a-zA-Z0-9]{8,30}$");
+	}
+	
 	//ID発行
 	public String RandomID() {
 		String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
