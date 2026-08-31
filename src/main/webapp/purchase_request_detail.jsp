@@ -9,6 +9,7 @@
 <title>Spica | 備品購入希望詳細</title>
 <link rel="stylesheet" href="css/purchase_request_detail.css">
 <link rel="stylesheet" href="css/chat.css">
+<link rel="stylesheet" href="css/agent.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="images/spica.ico">
 </head>
@@ -211,7 +212,12 @@ function confirmDelete(){
 }
 
 </script>
-
+<script src="js/agent.js"></script>
+<script
+ src="https://udify.app/embed.min.js"
+ id="bhUdFy45eInwe4F2"
+ defer>
+</script>
 <footer>
     <p>©2026 EBATA TAKUMI</p>
 </footer>

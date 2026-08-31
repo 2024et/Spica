@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>Spica | アカウント</title>
 <link rel="stylesheet" href="css/account.css">
+<link rel="stylesheet" href="css/agent.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="images/spica.ico">
 </head>
@@ -218,6 +219,12 @@ document.querySelectorAll(".toggle-btn").forEach(btn => {
     input.type = input.type === "password" ? "text" : "password";
   });
 });
+</script>
+<script src="js/agent.js"></script>
+<script
+ src="https://udify.app/embed.min.js"
+ id="bhUdFy45eInwe4F2"
+ defer>
 </script>
 <footer>
     <p>©2026 EBATA TAKUMI</p>

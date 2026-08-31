@@ -9,6 +9,7 @@
 <meta charset="UTF-8">
 <title>Spica</title>
 <link rel="stylesheet" href="css/financial.css">
+<link rel="stylesheet" href="css/agent.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="images/spica.ico">
@@ -282,7 +283,12 @@
 		<div id="ad_InsertBtn"><p>収支新規登録</p></div>
     </c:when>
 </c:choose>
-
+<script src="js/agent.js"></script>
+<script
+ src="https://udify.app/embed.min.js"
+ id="bhUdFy45eInwe4F2"
+ defer>
+</script>
 
 <footer>
     <p>©2026 EBATA TAKUMI</p>
