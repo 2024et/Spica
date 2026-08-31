@@ -45,6 +45,7 @@
 <section>
 	<h3 class="menu_subtitle">メニュー</h3>
 	<div class="menu">	
+	 	<a href="managementServlet" class="btn">管理者トップ</a>
 		<a href="categoryServlet" class="btn">カテゴリ管理</a>
 		<a href="projectServlet" class="btn">プロジェクト管理</a>
 		<a href="memberServlet" class="btn">会費・名簿管理</a>
