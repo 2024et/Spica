@@ -108,7 +108,12 @@ public class memberServlet extends HttpServlet {
 			boolean updateFlag = men_logic.updateRole(id,role,accountData.getName(),accountData.getGroup_id());
 			
 			if(updateFlag) {
-				response.sendRedirect("/memberServlet");
+				if(id == accountData.getId()) {
+					//自分自身のロールを修正した場合
+					response.sendRedirect("/logoutServlet");
+				}else {
+					response.sendRedirect("/memberServlet");
+				}				
 				return;
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：LI-updateRole");
@@ -122,8 +127,12 @@ public class memberServlet extends HttpServlet {
 			boolean deleteFlag = men_logic.deleteMemberList(id,accountData.getName(),accountData.getGroup_id());
 			
 			if(deleteFlag) {
-				response.sendRedirect("/memberServlet");
-				return;
+				if(id == accountData.getId()) {
+					//自分自身を削除した場合
+					response.sendRedirect("/logoutServlet");
+				}else {
+					response.sendRedirect("/memberServlet");
+				}	
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：LI-deleteMemberList");
 			    request.getRequestDispatcher("/member.jsp").forward(request, response);
