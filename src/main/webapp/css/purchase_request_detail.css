@@ -1,5 +1,7 @@
 @charset "UTF-8";
-
+.req,.error-message{
+	color:red;
+}
 /*ポップアップ*/
 #fo-ed-wrapper,#st-ed-wrapper {
     background-color: rgba(0, 0, 0, .5);
