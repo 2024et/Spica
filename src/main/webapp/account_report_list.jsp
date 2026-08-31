@@ -81,7 +81,7 @@
 		 </table>
 			<br>
 			<button type="button" class="close-btn" id="close-btn">キャンセル</button>
-			<button type="submit" name="submit" class="save-btn" value="status" onclick="return confirm();">保存</button>
+			<button type="submit" name="submit" class="save-btn" value="status" onclick="return confirmSave();">保存</button>
 		</form>
 		</div>
 	</div>
@@ -115,8 +115,8 @@ document.getElementById('wrapper')?.addEventListener('click', (e) => {
     }
 });
 
-function confirm(){
-	return confirm("公開してもよろしいですか？一度公開すると、編集・削除することはできません。");
+function confirmSave(){
+	return window.confirm("公開してもよろしいですか？一度公開すると、編集・削除することはできません。");
 }
 	
 </script>
