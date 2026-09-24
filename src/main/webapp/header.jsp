@@ -35,9 +35,9 @@
 		</div>
 		<div class="nav_down">
 			<a href="financialServlet" class="general">収支一覧</a>
-			<a href="budget_report_listServlet" class="general">予算計画書</a>
-			<a href="account_report_listServlet" class="general">会計報告書</a>			
 			<a href="purchase_request_listServlet" class="general">購入申請</a>
+			<a href="budget_report_listServlet" class="general">予算計画書</a>
+			<a href="account_report_listServlet" class="general">会計報告書</a>	
 			<a href="accountServlet" class="general">アカウント</a>
 		</div>
 	</div>

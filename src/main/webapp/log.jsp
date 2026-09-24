@@ -24,7 +24,7 @@
 			<c:choose>
 	            <c:when test="${empty notice}">
 	                <tr>
-	                    <td>通知はありません</td>
+	                    <td colspan="2">通知がありません</td>
 	                </tr>
 	            </c:when>
 	            <c:otherwise>
@@ -63,12 +63,21 @@
 		<table>
 			<thead><tr><th>日付</th><th>内容</th></tr></thead>
 			<tbody>
+			<c:choose>
+	            <c:when test="${empty log}">
 				<c:forEach var="c" items="${log}">
 					<tr>
 						<td>${c.created_at}</td>
 						<td>${c.log}</td>
 					</tr>
 				</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<tr>
+	                    <td colspan="2">ログがありません</td>
+	                </tr>
+				</c:otherwise>
+			</c:choose>
 			</tbody>
 		</table>
 	</div>

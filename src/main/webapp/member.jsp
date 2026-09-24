@@ -24,7 +24,7 @@
 			<c:choose>
 	            <c:when test="${empty notice}">
 	                <tr>
-	                    <td>通知はありません</td>
+	                    <td colspan="2">通知がありません</td>
 	                </tr>
 	            </c:when>
 	            <c:otherwise>
@@ -103,6 +103,14 @@ const payment_documents = [
 console.log(payment_documents);
 window.onload = function() {
     const dates = [...new Set(payment_documents.map(doc => doc.date))].filter(d => d).sort((a, b) => b.localeCompare(a)); 
+
+    if (dates.length === 0) {
+        const select = document.getElementById("sectionSelect");
+        select.innerHTML = '<option value="">データがありません</option>';
+        select.disabled = true;
+        document.getElementById("paymentList").innerHTML ='<tr><td colspan="4">データがありません</td></tr>';
+        return;
+    }
 
     const today = new Date();
     const todayStr = today.getFullYear() + "-" + String(today.getMonth() + 1).padStart(2, "0") + "-01";

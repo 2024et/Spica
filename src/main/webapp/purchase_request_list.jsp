@@ -23,7 +23,7 @@
 			<c:choose>
 	            <c:when test="${empty request_list}">
 	                <tr>
-	                    <td>データがありません</td>
+	                    <td colspan="4">備品の購入希望は出ていません。</td>
 	                </tr>
 	            </c:when>
 	            <c:otherwise>

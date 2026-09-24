@@ -24,7 +24,7 @@
 			<c:choose>
 	            <c:when test="${empty notice}">
 	                <tr>
-	                    <td>通知はありません</td>
+	                    <td colspan="2">通知がありません</td>
 	                </tr>
 	            </c:when>
 	            <c:otherwise>
@@ -71,7 +71,7 @@
 			<c:choose>
             <c:when test="${empty project}">
                 <tr>
-                    <td>プロジェクトがありません</td>
+                    <td colspan="4">プロジェクトがありません</td>
                 </tr>
             </c:when>
             <c:otherwise>
