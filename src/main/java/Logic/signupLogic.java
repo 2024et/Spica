@@ -39,9 +39,16 @@ public class signupLogic {
 		return mailSendFlag;
 	}
 	
+	// メールアドレス形式チェック
+	public boolean checkMail(String mail) {
+	    return mail != null
+	        && mail.length() <= 254
+	        && mail.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
+	}
+	
 	//パスワード正規表現
 	public boolean checkPassword(String password) {
-	    return password != null && password.matches("^[a-zA-Z0-9]{8,30}$");
+	    return password != null && password.matches("^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]{8,30}$");
 	}
 	
 	//ID発行

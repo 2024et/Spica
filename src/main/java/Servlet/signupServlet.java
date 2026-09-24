@@ -45,9 +45,16 @@ public class signupServlet extends HttpServlet {
 		    return;
 		}
 		
+		//メールアドレスチェック
+		if(!logic.checkMail(mail)) {
+			request.setAttribute("errorMessage", "メールアドレスの形式が正しくありません。");
+		    request.getRequestDispatcher("/signup.jsp").forward(request, response);
+		    return;	
+		}
+		
+		
 		//パスワードチェック
-		boolean check = logic.checkPassword(password_1);
-		if(!check) {
+		if(!logic.checkPassword(password_1)) {
 			request.setAttribute("errorMessage", "パスワードが条件を満たしていません。再度やり直してください。\nパスワードは、英数字8桁以上30文字以下である必要があります。");
 		    request.getRequestDispatcher("/signup.jsp").forward(request, response);
 		    return;	

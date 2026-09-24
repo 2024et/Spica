@@ -23,13 +23,15 @@
 	<label for="mail">メールアドレス<span class="req">*</span></label><br>
 	<input type="email" name = "mail" required maxlength="30"><br><br>
 	
-	<label for="passwprd_1">パスワード<span class="req">*</span>（英数字8文字以上30文字以下）</label><br>
+	<label for="password">パスワード<span class="req">*</span>（英数字8文字以上30文字以下）</label><br>
 	<div class="password-wrapper">
 		<input type="password" name="password_1" id="password" required minlength="8" maxlength="30">
 		<span class="toggle-btn" onclick="togglePassword()">🔓</span>
-	</div><br><br>
+	</div>
 	
-	<label for="passwprd_2">確認用パスワード<span class="req">*</span></label><br>
+	<p id="passwordCheckError" class="error-message"></p>
+	
+	<label for="passwprd">確認用パスワード<span class="req">*</span></label><br>
 		<div class="password-wrapper">
 		<input type="password" name="password_2" id="password" required minlength="8" maxlength="30">
 		<span class="toggle-btn" onclick="togglePassword()">🔓</span>
@@ -55,6 +57,31 @@ document.querySelectorAll(".toggle-btn").forEach(btn => {
     input.type = input.type === "password" ? "text" : "password";
   });
 });
+
+
+const passwordInput = document.querySelector('[name="password_1"]');
+const errorCheck = document.getElementById("passwordCheckError");
+
+function passwordCheck(){
+	const value = passwordInput.value;
+	const errors = [];
+
+	if(value.length < 8){
+		errors.push("8文字以上で入力してください。");
+	}
+	if(!/[A-Za-z]/.test(value)){
+		errors.push("英字を含めてください。");
+	}
+	if(!/\d/.test(value)){
+		errors.push("数字を含めてください。");
+	}
+
+    errorCheck.textContent = value ? errors.join(" / ") : "";
+    return errors.length === 0;
+}
+
+passwordInput.addEventListener("input", passwordCheck);
+
 </script>
 <script src="js/agent.js"></script>
 <script
