@@ -47,10 +47,7 @@
 </section>
 
 <br><br>
-<% String error = (String) request.getAttribute("errorMessage"); %>
-<% if (error != null) { %>
-	<p class="error-message"><%= error %></p>
-<% } %>
+<jsp:include page="common/error.jsp" />
 <script src="js/agent.js"></script>
 <script
  src="https://udify.app/embed.min.js"

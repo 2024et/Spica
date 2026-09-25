@@ -44,10 +44,7 @@
 		<button onclick="location.href='purchase_request_listServlet'" class="back-btn">戻る</button>
 	</form>
 </section>
-<% String error = (String) request.getAttribute("errorMessage"); %>
-<% if (error != null) { %>
-	<p class="error-message"><%= error %></p>
-<% } %>
+<jsp:include page="common/error.jsp" />
 <br><br>
 
 

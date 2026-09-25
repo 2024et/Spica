@@ -220,6 +220,7 @@ document.querySelectorAll(".toggle-btn").forEach(btn => {
   });
 });
 </script>
+<jsp:include page="common/error.jsp" />
 <script src="js/agent.js"></script>
 <script
  src="https://udify.app/embed.min.js"
