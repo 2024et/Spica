@@ -24,16 +24,16 @@ import Dao.logDao;
 import Dao.proceed_documentDao;
 
 public class managementLogic {
-	//書類の作成
-	public boolean insertDocumentData(String name, String fileName, InputStream fileStream, String group_id,String user_name) {
-		//pdfファイル前処理
+	
+	//pdfのアップロード
+	public String uploadPdfFile(String fileName, InputStream fileStream) {
 		Properties props = new Properties();
 	    try (InputStream is = getClass().getClassLoader()
 	                            .getResourceAsStream("file.properties")) {
 	        props.load(is);
 	    } catch (IOException e) {
 	        e.printStackTrace();
-	        return false;
+	        return "error";
 	    }
 	    
 	    signupLogic signuplogic = new signupLogic();
@@ -48,8 +48,19 @@ public class managementLogic {
 		    Files.setPosixFilePermissions(file.toPath(), PosixFilePermissions.fromString("rw-r--r--"));
 		} catch (IOException e) {
 			e.printStackTrace();
+			return "error";
+		}
+	    return filePath;
+	}
+	//書類の作成
+	public boolean insertDocumentData(String name, String fileName, InputStream fileStream, String group_id,String user_name) {
+		
+		//pdfのアップロード
+		String filePath = uploadPdfFile(fileName, fileStream);
+		if(filePath.equals("error")) {
 			return false;
 		}
+
 	    //登録書類の前処理
 	    signupLogic signup_logic = new signupLogic();
 	    String id = signup_logic.RandomID();
@@ -237,25 +248,8 @@ public class managementLogic {
 		//pdfファイルの前処理
 		String filePath = null;
 		if(fileStream != null) {
-			Properties props = new Properties();
-		    try (InputStream is = getClass().getClassLoader()
-		                            .getResourceAsStream("file.properties")) {
-		        props.load(is);
-		    } catch (IOException e) {
-		        e.printStackTrace();
-		    }
-		    
-		    signupLogic signuplogic = new signupLogic();
-
-		    String uploadDir = props.getProperty("file.url");
-		    fileName = System.currentTimeMillis() + "_" + signuplogic.RandomID() + ".pdf";
-		    filePath = uploadDir + fileName;
-
-		    File file = new File(filePath);
-		    try {
-				Files.copy(fileStream, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
-			} catch (IOException e) {
-				e.printStackTrace();
+			filePath = uploadPdfFile(fileName,fileStream);
+			if(filePath.equals("error")) {
 				return false;
 			}
 		}
@@ -308,6 +302,7 @@ public class managementLogic {
 	            if(con != null) con.close();
 	        } catch (SQLException e) {
 	            e.printStackTrace();
+	            return false;
 	        }
 	    }
 	}

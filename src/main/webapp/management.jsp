@@ -421,10 +421,8 @@ function toggleReason(radio){
 function confirmDelete(){
   return confirm("本当に削除しますか？");
 }
+
 </script>
-
-
-<br><br>
 <jsp:include page="common/error.jsp" />
 <script src="js/agent.js"></script>
 <script

@@ -72,7 +72,7 @@ public class proceed_documentDao {
 			return null;
 		}
 	}
-	
+	//提出済み書類の取得
 	public List<documentApproverlDTOBeans> getSubmitedDocumentsData(String group_id){
 		List<documentApproverlDTOBeans> list = new ArrayList<>();
 		String sql = "SELECT id, name, created_at, pdf_path FROM proceed_document WHERE group_id = ? AND status = ?";

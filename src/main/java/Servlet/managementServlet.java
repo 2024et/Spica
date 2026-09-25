@@ -74,7 +74,7 @@ public class managementServlet extends HttpServlet {
 
 		    byte[] fileBytes;
 		    try (InputStream is = filePart.getInputStream()) {
-		        fileBytes = is.readAllBytes(); // Java 9+
+		        fileBytes = is.readAllBytes();
 		    }
 
 		    boolean fileChecker;
@@ -84,7 +84,7 @@ public class managementServlet extends HttpServlet {
 
 		    if (!fileChecker) {
 		        request.setAttribute("errorMessage", "PDFファイルを選択してください。");
-		        request.getRequestDispatcher("/management.jsp").forward(request, response);
+		        response.sendRedirect("/managementServlet");
 		        return;
 		    }
 
@@ -100,7 +100,7 @@ public class managementServlet extends HttpServlet {
 		        return;
 		    } else {
 		        request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：MA-insertDocumentData");
-		        request.getRequestDispatcher("/management.jsp").forward(request, response);
+		        response.sendRedirect("/managementServlet");
 		        return;
 		    }
 		}else if("approver".equals(submit)) {
@@ -128,30 +128,55 @@ public class managementServlet extends HttpServlet {
 				return;
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：MA-approverDocument");
-			    request.getRequestDispatcher("/management.jsp").forward(request, response);
+				response.sendRedirect("/managementServlet");
 			    return;
 			}
 		}else if("edit".equals(submit)) {
 			//書類の編集
-			InputStream fileStream = null;
-			String fileName = null;
 			String document_id = request.getParameter("document_id");
 			String name = request.getParameter("name");
 			String reset = request.getParameter("approver_reset");
 			
-			Part filePart = request.getPart("file");
-			if(filePart != null && filePart.getSize() > 0) {
+		    Part filePart = request.getPart("file");
+		    byte[] fileBytes = null;
+		    String fileName = null;
+
+		    if (filePart != null && filePart.getSize() > 0) {
 		        fileName = filePart.getSubmittedFileName();
-		        fileStream = filePart.getInputStream();
-			}
-			proceed_documentsBeans beans = new proceed_documentsBeans(document_id,accountData.getGroup_id(),name);
-			boolean updateFlag = man_logic.updateDocumentData(beans,fileName,fileStream,reset,accountData.getName());
+
+		        try (InputStream is = filePart.getInputStream()) {
+		            fileBytes = is.readAllBytes();
+		        }
+
+		        boolean fileChecker;
+		        try (InputStream checkStream = new ByteArrayInputStream(fileBytes)) {
+		            fileChecker = man_logic.fileChecker(checkStream);
+		        }
+
+		        if (!fileChecker) {
+		            request.setAttribute("errorMessage", "PDFファイルを選択してください。");
+		            response.sendRedirect("/managementServlet");
+		            return;
+		        }
+		    }
+		    
+		    proceed_documentsBeans beans = new proceed_documentsBeans(document_id, accountData.getGroup_id(), name);
+
+		    boolean updateFlag;
+		    if (fileBytes != null) {
+		        try (InputStream saveStream = new ByteArrayInputStream(fileBytes)) {
+		            updateFlag = man_logic.updateDocumentData(beans, fileName, saveStream, reset, accountData.getName());
+		        }
+		    } else {
+		        updateFlag = man_logic.updateDocumentData(beans, null, null, reset, accountData.getName());
+		    }
+
 			if(updateFlag) {
 				response.sendRedirect("/managementServlet");
 				return;
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：MA-updateDocumentData");
-			    request.getRequestDispatcher("/management.jsp").forward(request, response);
+				response.sendRedirect("/managementServlet");
 			    return;
 			}
 		}else if("delete".equals(submit)) {
@@ -168,7 +193,7 @@ public class managementServlet extends HttpServlet {
 				return;
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：MA-deleteDocumentData");
-			    request.getRequestDispatcher("/management.jsp").forward(request, response);
+				response.sendRedirect("/managementServlet");
 			    return;
 			}
 		}else if("submited".equals(submit)) {
@@ -182,7 +207,7 @@ public class managementServlet extends HttpServlet {
 				return;
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：MA-submitedDocumentData");
-			    request.getRequestDispatcher("/management.jsp").forward(request, response);
+				response.sendRedirect("/managementServlet");
 			    return;
 			}
 			
@@ -197,7 +222,7 @@ public class managementServlet extends HttpServlet {
 				return;
 			}else {
 				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：MA-noSubmitedDocumentData");
-			    request.getRequestDispatcher("/management.jsp").forward(request, response);
+				response.sendRedirect("/managementServlet");
 			    return;
 			}
 		}
