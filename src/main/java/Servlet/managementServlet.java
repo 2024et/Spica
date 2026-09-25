@@ -1,5 +1,6 @@
 package Servlet;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -65,32 +66,43 @@ public class managementServlet extends HttpServlet {
 		String submit = request.getParameter("submit");
 		
 		if("insert".equals(submit)) {
-			//書類の作成
-			String name = request.getParameter("name");
-			
-			Part filePart = request.getPart("file");
-	        String fileName = filePart.getSubmittedFileName(); 
-	        InputStream fileStream = filePart.getInputStream(); 
-	        
-	        boolean fileChecker = man_logic.fileChecker(fileStream);
-	        
-	        if(!fileChecker) {
-				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：MA-fileChecker");
-			    request.getRequestDispatcher("/management.jsp").forward(request, response);
-			    return;
-	        }
+		    String name = request.getParameter("name");
 
-	        boolean insertFlag = man_logic.insertDocumentData(name, fileName, fileStream,accountData.getGroup_id(),accountData.getName());
-	        
-			if(insertFlag) {
-				response.sendRedirect("/managementServlet");
-				return;
-			}else {
-				request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：MA-insertDocumentData");
-			    request.getRequestDispatcher("/management.jsp").forward(request, response);
-			    return;
-			}
-	        
+		 
+		    Part filePart = request.getPart("file");
+		    String fileName = filePart.getSubmittedFileName();
+
+		    byte[] fileBytes;
+		    try (InputStream is = filePart.getInputStream()) {
+		        fileBytes = is.readAllBytes(); // Java 9+
+		    }
+
+		    boolean fileChecker;
+		    try (InputStream checkStream = new ByteArrayInputStream(fileBytes)) {
+		        fileChecker = man_logic.fileChecker(checkStream);
+		    }
+
+		    if (!fileChecker) {
+		        request.setAttribute("errorMessage", "PDFファイルを選択してください。");
+		        request.getRequestDispatcher("/management.jsp").forward(request, response);
+		        return;
+		    }
+
+		    boolean insertFlag;
+		    try (InputStream saveStream = new ByteArrayInputStream(fileBytes)) {
+		        insertFlag = man_logic.insertDocumentData(
+		            name, fileName, saveStream,
+		            accountData.getGroup_id(), accountData.getName());
+		    }
+
+		    if(insertFlag) {
+		        response.sendRedirect("/managementServlet");
+		        return;
+		    } else {
+		        request.setAttribute("errorMessage", "予期しないエラーが発生しました。再度やり直してください。エラーコード：MA-insertDocumentData");
+		        request.getRequestDispatcher("/management.jsp").forward(request, response);
+		        return;
+		    }
 		}else if("approver".equals(submit)) {
 			//書類の承認
 			String document_id = request.getParameter("document_id");

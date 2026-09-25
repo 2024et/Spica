@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.nio.file.attribute.PosixFilePermissions;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -34,14 +35,17 @@ public class managementLogic {
 	        e.printStackTrace();
 	        return false;
 	    }
+	    
+	    signupLogic signuplogic = new signupLogic();
 
 	    String uploadDir = props.getProperty("file.url");
-	    fileName = System.currentTimeMillis() + "_" + fileName;
+	    fileName = System.currentTimeMillis() + "_" + signuplogic.RandomID() + ".pdf";
 	    String filePath = uploadDir + fileName;
 
 	    File file = new File(filePath);
 	    try {
 			Files.copy(fileStream, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+		    Files.setPosixFilePermissions(file.toPath(), PosixFilePermissions.fromString("rw-r--r--"));
 		} catch (IOException e) {
 			e.printStackTrace();
 			return false;
@@ -240,9 +244,11 @@ public class managementLogic {
 		    } catch (IOException e) {
 		        e.printStackTrace();
 		    }
+		    
+		    signupLogic signuplogic = new signupLogic();
 
 		    String uploadDir = props.getProperty("file.url");
-		    fileName = System.currentTimeMillis() + "_" + fileName;
+		    fileName = System.currentTimeMillis() + "_" + signuplogic.RandomID() + ".pdf";
 		    filePath = uploadDir + fileName;
 
 		    File file = new File(filePath);
